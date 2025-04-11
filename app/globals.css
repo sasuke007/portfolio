@@ -1,0 +1,264 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 270 95% 75%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 70% 60%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 190 90% 50%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 270 95% 75%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 270, 95%, 75%;
+    --chart-2: 240, 70%, 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-dark-300 text-foreground;
+    background-image: radial-gradient(
+      circle at center,
+      rgba(147, 51, 234, 0.05) 0%,
+      rgba(59, 130, 246, 0.05) 50%,
+      rgba(10, 10, 10, 1) 100%
+    );
+    background-size: 100% 100%;
+    background-attachment: fixed;
+  }
+}
+
+/* Animated background */
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  opacity: 0.07;
+  background: radial-gradient(circle at 15% 50%, rgba(147, 51, 234, 0.3) 0%, transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.3) 0%, transparent 25%);
+}
+
+/* Glow border effect */
+.glow-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(to right, #9333ea, #3b82f6, #06b6d4);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+/* Gradient text with wave animation */
+.gradient-text {
+  background: linear-gradient(90deg, #9333ea 0%, #3b82f6 50%, #06b6d4 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gradient-text {
+    animation: gradient-wave 8s ease infinite;
+  }
+}
+
+@keyframes gradient-wave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Shimmer effect */
+.shimmer {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shimmer {
+    animation: shimmer 2s infinite linear;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Hero section with Ghibli-style background */
+.hero-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/ghibli-portrait.webp");
+  background-size: cover;
+  background-position: center 25%;
+  opacity: 0.45; /* Perfect opacity for visibility while maintaining readability */
+  z-index: -1;
+  filter: saturate(0.95) brightness(0.85); /* Slightly adjusted colors to match theme */
+}
+
+/* Add a subtle gradient overlay for text readability */
+.hero-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.65));
+  z-index: -1;
+}
+
+/* Subtitle background with Ghibli landscape */
+.subtitle-container {
+  display: inline-block;
+  margin-top: 0.5rem;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  border: 1px solid rgba(147, 51, 234, 0.2);
+}
+
+.subtitle-bg {
+  background-image: url("/ghibli-portrait.webp");
+  background-size: cover;
+  background-position: center 30%;
+  opacity: 0.6; /* Increased opacity for better visibility */
+  filter: saturate(1) brightness(0.9);
+  z-index: -1;
+}
+
+/* Fade-in animation for sections */
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse animation for highlights */
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Hover scale effect */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
+}
+
+/* Floating animation */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Glow effect */
+.glow {
+  box-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+}
