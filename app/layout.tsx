@@ -10,7 +10,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "John Doe | Writer • Photographer • Filmmaker",
+  title: "Anesthetic Coder | Writer • Photographer • Filmmaker",
   description: "Personal portfolio showcasing blogs, vlogs, photography, and poetry.",
     generator: 'v0.dev'
 }
@@ -33,6 +33,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-import './globals.css'

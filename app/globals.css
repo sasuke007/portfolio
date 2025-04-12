@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  outline: 1px solid yellow;
+}
+
 @layer base {
   :root {
     --background: 0 0% 7%;
@@ -183,7 +187,6 @@
 }
 
 .subtitle-bg {
-  background-image: url("/ghibli-portrait.webp");
   background-size: cover;
   background-position: center 30%;
   opacity: 0.6; /* Increased opacity for better visibility */
