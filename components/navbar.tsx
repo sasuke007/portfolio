@@ -26,7 +26,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-dark-300/80 backdrop-blur supports-[backdrop-filter]:bg-dark-300/60">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold gradient-text float">John Doe</span>
+          <span className="text-xl font-bold gradient-text float">Anesthetic Coder</span>
         </Link>
         <nav className="hidden md:flex md:items-center md:space-x-6">
           {routes.map((route, index) => (
