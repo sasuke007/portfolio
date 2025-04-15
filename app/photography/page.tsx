@@ -1,45 +1,32 @@
-import type { Metadata } from "next"
 import { PageHeader } from "@/components/page-header"
-import { PhotoGallery } from "@/components/photo-gallery"
+import { ParallaxPhotos } from "@/components/parallax-grid-gallery"
 
-export const metadata: Metadata = {
-  title: "Photography | John Doe",
-  description: "A collection of photographs by John Doe.",
-}
+import { PhotographyGallery } from "@/components/photography-gallery"
+import { getHighlightedPhotos } from "@/lib/services/photo.service"
 
-export default function PhotographyPage() {
-  // In a real app, you would fetch this data from a CMS or API
-  const categories = [
-    {
-      title: "Urban Landscapes",
-      description: "Cityscapes and architectural photography",
-      slug: "urban-landscapes",
-      coverImage: "/placeholder.svg?height=600&width=800",
-    },
-    {
-      title: "Nature's Beauty",
-      description: "Landscapes and wildlife photography",
-      slug: "natures-beauty",
-      coverImage: "/placeholder.svg?height=600&width=800",
-    },
-    {
-      title: "Portraits",
-      description: "Capturing people and their stories",
-      slug: "portraits",
-      coverImage: "/placeholder.svg?height=600&width=800",
-    },
-    {
-      title: "Street Photography",
-      description: "Candid moments from everyday life",
-      slug: "street",
-      coverImage: "/placeholder.svg?height=600&width=800",
-    },
-  ]
+export default async function PhotographyPage() {
+  const photos = await getHighlightedPhotos()
+
+  // Map PhotoDTO to the Photo type expected by ParallaxGridGallery
+  const galleryPhotos: ParallaxPhotos[] = photos.map(photo => ({
+    id: photo.id,
+    title: photo.title || "Untitled",
+    description: photo.description || "",
+    category: photo.tags?.[0]?.tag?.name || "Uncategorized",
+    src: photo.image_url,
+    className: ""
+  }))
 
   return (
-    <div className="container px-4 py-12 md:px-6 md:py-24">
-      <PageHeader title="Photography" description="Capturing moments through my lens." />
-      <PhotoGallery categories={categories} />
+    <div className="min-h-screen bg-dark-300">
+      <div className="container px-4 py-8 md:py-16">
+        <PageHeader
+          title="Photography"
+          description="Capturing moments through my lens — a visual journey through landscapes, people, and stories."
+        />
+      </div>
+      <PhotographyGallery photos={galleryPhotos} />
     </div>
   )
+
 }

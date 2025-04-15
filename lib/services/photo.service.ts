@@ -33,7 +33,7 @@ export const getAllPhotos = async (): Promise<PhotoDTO[]> => {
           }
         }
       }
-    }) as PhotoDTO[];
+    });
     
     return photos;
   } catch (error) {
@@ -65,7 +65,7 @@ export const getPhotosByTag = async (tagSlug: string): Promise<PhotoDTO[]> => {
           }
         }
       }
-    }) as PhotoDTO[];
+    });
     
     return photos;
   } catch (error) {

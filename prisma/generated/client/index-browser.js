@@ -139,7 +139,7 @@ exports.Prisma.PhotoScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  file_url: 'file_url',
+  image_url: 'image_url',
   taken_at: 'taken_at',
   uploaded_at: 'uploaded_at',
   created_at: 'created_at',

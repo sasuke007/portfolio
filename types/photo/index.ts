@@ -8,7 +8,7 @@ export interface PhotoDTO {
   id: number
   title: string
   description: string | null
-  file_url: string
+  image_url: string
   taken_at: Date | null
   uploaded_at: Date
   location: string | null

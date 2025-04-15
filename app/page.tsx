@@ -1,17 +1,24 @@
-import { FeaturedPost } from "@/components/featured-post"
 import { FeaturedPhotos } from "@/components/featured-photos"
+import { FeaturedPost } from "@/components/featured-post"
 import { HeroSection } from "@/components/hero-section"
+import { PoemCard } from "@/components/poem-card"
 import { SectionHeading } from "@/components/section-heading"
+import { VideoCard } from "@/components/video-card"
 import { getHighlightedBlogs } from "@/lib/services/blog.service"
 import { getHighlightedPhotos } from "@/lib/services/photo.service"
-import { BlogDTO } from "@/types/blog"
-import { PhotoDTO } from "@/types/photo"
-import { ArrowRight } from "lucide-react"
-import Link from "next/link"
+import { getHighlightedPoems } from "@/lib/services/poem.service"
+import { getHighlightedVlogs } from "@/lib/services/vlog.service"
+import { formatDate } from "@/lib/utils"
 
 export default async function Home() {
-  const blogs: BlogDTO[] = await getHighlightedBlogs();
-  const photos: PhotoDTO[] = await getHighlightedPhotos();
+  // Make all API calls in parallel and wait for all to complete
+  const [blogs, photos, vlogs, poems] = await Promise.all([
+    getHighlightedBlogs().catch(() => []),
+    getHighlightedPhotos().catch(() => []),
+    getHighlightedVlogs().catch(() => []),
+    getHighlightedPoems().catch(() => [])
+  ]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <HeroSection />
@@ -54,7 +61,7 @@ export default async function Home() {
               photos.map((photo) => (
                 <FeaturedPhotos
                   key={photo.id}
-                  image={photo.file_url}
+                  image={photo.image_url}
                   title={photo.title}
                 />
               ))
@@ -73,21 +80,22 @@ export default async function Home() {
             linkText="Watch More"
           />
           <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
-            <div className="aspect-video bg-dark-100 rounded-lg overflow-hidden border border-border/50 hover-scale glow-border">
-              <div className="w-full h-full flex items-center justify-center">
-                <p className="text-gray-500">Video Thumbnail</p>
-              </div>
-            </div>
-            <div className="aspect-video bg-dark-100 rounded-lg overflow-hidden border border-border/50 hover-scale glow-border">
-              <div className="w-full h-full flex items-center justify-center">
-                <p className="text-gray-500">Video Thumbnail</p>
-              </div>
-            </div>
+            {vlogs.map((vlog) => (
+              <VideoCard
+                key={vlog.id}
+                title={vlog.title}
+                description={vlog.description}
+                thumbnail={vlog.thumbnail_url}
+                date={formatDate(vlog.published_at)}
+                duration={vlog.duration}
+                videoId={vlog.id}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Sister's Poems */}
+      {/* Featured Poems */}
       <section className="w-full py-1 md:py-2 lg:py-3">
         <div className="container px-4 md:px-6">
           <SectionHeading
@@ -97,41 +105,15 @@ export default async function Home() {
             linkText="Read More Poems"
           />
           <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3">
-            <div className="p-6 bg-dark-100 rounded-lg border border-border/50 glow-border hover-scale">
-              <h3 className="text-xl font-medium mb-2 text-gray-200 hover:gradient-text">Whispers of Dawn</h3>
-              <p className="text-gray-400 italic mb-4">
-                In the quiet hours when darkness fades,
-                <br />
-                And light begins to paint the sky,
-                <br />I find myself in peaceful glades,
-                <br />
-                Where dreams and reality lie...
-              </p>
-              <Link
-                href="/poems/whispers-of-dawn"
-                className="text-sm text-gray-400 hover:text-primary inline-flex items-center"
-              >
-                Read full poem <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-            <div className="p-6 bg-dark-100 rounded-lg border border-border/50 glow-border hover-scale">
-              <h3 className="text-xl font-medium mb-2 text-gray-200 hover:gradient-text">Ocean Memories</h3>
-              <p className="text-gray-400 italic mb-4">
-                Salt-kissed air and rolling waves,
-                <br />
-                Memories etched in grains of sand,
-                <br />
-                Time slips by as the ocean laves,
-                <br />
-                Shores of a distant, forgotten land...
-              </p>
-              <Link
-                href="/poems/ocean-memories"
-                className="text-sm text-gray-400 hover:text-primary inline-flex items-center"
-              >
-                Read full poem <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
+            {poems.map((poem) => (
+              <PoemCard
+                key={poem.id}
+                title={poem.title}
+                excerpt={poem.content.slice(0, 120) + "..."}
+                date={formatDate(poem.written_at || poem.created_at)}
+                slug={`/poems/${poem.id}`}
+              />
+            ))}
           </div>
         </div>
       </section>

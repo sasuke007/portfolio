@@ -11,7 +11,7 @@ interface FeaturedWorkProps {
   slug?: string
 }
 
-export function FeaturedPhotos({ image, title, slug: photosPage = "/photos" }: FeaturedWorkProps) {
+export function FeaturedPhotos({ image, title, slug: photosPage = "/photography" }: FeaturedWorkProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   // TODO: If image is not available, use shimmer not gradient

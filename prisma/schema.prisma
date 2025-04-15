@@ -32,7 +32,7 @@ model Photo {
   id          Int       @id @default(autoincrement())
   title       String
   description String?
-  file_url    String    @unique
+  image_url    String    @unique @map("file_url")
   taken_at    DateTime?
   uploaded_at DateTime  @default(now())
   created_at  DateTime  @default(now())

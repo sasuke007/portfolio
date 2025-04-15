@@ -2909,7 +2909,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
-    file_url: string | null
+    image_url: string | null
     taken_at: Date | null
     uploaded_at: Date | null
     created_at: Date | null
@@ -2921,7 +2921,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
-    file_url: string | null
+    image_url: string | null
     taken_at: Date | null
     uploaded_at: Date | null
     created_at: Date | null
@@ -2933,7 +2933,7 @@ export namespace Prisma {
     id: number
     title: number
     description: number
-    file_url: number
+    image_url: number
     taken_at: number
     uploaded_at: number
     created_at: number
@@ -2955,7 +2955,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    file_url?: true
+    image_url?: true
     taken_at?: true
     uploaded_at?: true
     created_at?: true
@@ -2967,7 +2967,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    file_url?: true
+    image_url?: true
     taken_at?: true
     uploaded_at?: true
     created_at?: true
@@ -2979,7 +2979,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
-    file_url?: true
+    image_url?: true
     taken_at?: true
     uploaded_at?: true
     created_at?: true
@@ -3078,7 +3078,7 @@ export namespace Prisma {
     id: number
     title: string
     description: string | null
-    file_url: string
+    image_url: string
     taken_at: Date | null
     uploaded_at: Date
     created_at: Date
@@ -3109,7 +3109,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    file_url?: boolean
+    image_url?: boolean
     taken_at?: boolean
     uploaded_at?: boolean
     created_at?: boolean
@@ -3123,7 +3123,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    file_url?: boolean
+    image_url?: boolean
     taken_at?: boolean
     uploaded_at?: boolean
     created_at?: boolean
@@ -3135,7 +3135,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    file_url?: boolean
+    image_url?: boolean
     taken_at?: boolean
     uploaded_at?: boolean
     created_at?: boolean
@@ -3147,7 +3147,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
-    file_url?: boolean
+    image_url?: boolean
     taken_at?: boolean
     uploaded_at?: boolean
     created_at?: boolean
@@ -3155,7 +3155,7 @@ export namespace Prisma {
     location?: boolean
   }
 
-  export type PhotoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "file_url" | "taken_at" | "uploaded_at" | "created_at" | "updated_at" | "location", ExtArgs["result"]["photo"]>
+  export type PhotoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "image_url" | "taken_at" | "uploaded_at" | "created_at" | "updated_at" | "location", ExtArgs["result"]["photo"]>
   export type PhotoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tags?: boolean | Photo$tagsArgs<ExtArgs>
     _count?: boolean | PhotoCountOutputTypeDefaultArgs<ExtArgs>
@@ -3172,7 +3172,7 @@ export namespace Prisma {
       id: number
       title: string
       description: string | null
-      file_url: string
+      image_url: string
       taken_at: Date | null
       uploaded_at: Date
       created_at: Date
@@ -3605,7 +3605,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Photo", 'Int'>
     readonly title: FieldRef<"Photo", 'String'>
     readonly description: FieldRef<"Photo", 'String'>
-    readonly file_url: FieldRef<"Photo", 'String'>
+    readonly image_url: FieldRef<"Photo", 'String'>
     readonly taken_at: FieldRef<"Photo", 'DateTime'>
     readonly uploaded_at: FieldRef<"Photo", 'DateTime'>
     readonly created_at: FieldRef<"Photo", 'DateTime'>
@@ -10685,7 +10685,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
-    file_url: 'file_url',
+    image_url: 'image_url',
     taken_at: 'taken_at',
     uploaded_at: 'uploaded_at',
     created_at: 'created_at',
@@ -10971,7 +10971,7 @@ export namespace Prisma {
     id?: IntFilter<"Photo"> | number
     title?: StringFilter<"Photo"> | string
     description?: StringNullableFilter<"Photo"> | string | null
-    file_url?: StringFilter<"Photo"> | string
+    image_url?: StringFilter<"Photo"> | string
     taken_at?: DateTimeNullableFilter<"Photo"> | Date | string | null
     uploaded_at?: DateTimeFilter<"Photo"> | Date | string
     created_at?: DateTimeFilter<"Photo"> | Date | string
@@ -10984,7 +10984,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
-    file_url?: SortOrder
+    image_url?: SortOrder
     taken_at?: SortOrderInput | SortOrder
     uploaded_at?: SortOrder
     created_at?: SortOrder
@@ -10995,7 +10995,7 @@ export namespace Prisma {
 
   export type PhotoWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    file_url?: string
+    image_url?: string
     AND?: PhotoWhereInput | PhotoWhereInput[]
     OR?: PhotoWhereInput[]
     NOT?: PhotoWhereInput | PhotoWhereInput[]
@@ -11007,13 +11007,13 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Photo"> | Date | string
     location?: StringNullableFilter<"Photo"> | string | null
     tags?: PhotoTagListRelationFilter
-  }, "id" | "file_url">
+  }, "id" | "image_url">
 
   export type PhotoOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
-    file_url?: SortOrder
+    image_url?: SortOrder
     taken_at?: SortOrderInput | SortOrder
     uploaded_at?: SortOrder
     created_at?: SortOrder
@@ -11033,7 +11033,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Photo"> | number
     title?: StringWithAggregatesFilter<"Photo"> | string
     description?: StringNullableWithAggregatesFilter<"Photo"> | string | null
-    file_url?: StringWithAggregatesFilter<"Photo"> | string
+    image_url?: StringWithAggregatesFilter<"Photo"> | string
     taken_at?: DateTimeNullableWithAggregatesFilter<"Photo"> | Date | string | null
     uploaded_at?: DateTimeWithAggregatesFilter<"Photo"> | Date | string
     created_at?: DateTimeWithAggregatesFilter<"Photo"> | Date | string
@@ -11528,7 +11528,7 @@ export namespace Prisma {
   export type PhotoCreateInput = {
     title: string
     description?: string | null
-    file_url: string
+    image_url: string
     taken_at?: Date | string | null
     uploaded_at?: Date | string
     created_at?: Date | string
@@ -11541,7 +11541,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    file_url: string
+    image_url: string
     taken_at?: Date | string | null
     uploaded_at?: Date | string
     created_at?: Date | string
@@ -11553,7 +11553,7 @@ export namespace Prisma {
   export type PhotoUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    file_url?: StringFieldUpdateOperationsInput | string
+    image_url?: StringFieldUpdateOperationsInput | string
     taken_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11566,7 +11566,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    file_url?: StringFieldUpdateOperationsInput | string
+    image_url?: StringFieldUpdateOperationsInput | string
     taken_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11579,7 +11579,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    file_url: string
+    image_url: string
     taken_at?: Date | string | null
     uploaded_at?: Date | string
     created_at?: Date | string
@@ -11590,7 +11590,7 @@ export namespace Prisma {
   export type PhotoUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    file_url?: StringFieldUpdateOperationsInput | string
+    image_url?: StringFieldUpdateOperationsInput | string
     taken_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11602,7 +11602,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    file_url?: StringFieldUpdateOperationsInput | string
+    image_url?: StringFieldUpdateOperationsInput | string
     taken_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12185,7 +12185,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    file_url?: SortOrder
+    image_url?: SortOrder
     taken_at?: SortOrder
     uploaded_at?: SortOrder
     created_at?: SortOrder
@@ -12201,7 +12201,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    file_url?: SortOrder
+    image_url?: SortOrder
     taken_at?: SortOrder
     uploaded_at?: SortOrder
     created_at?: SortOrder
@@ -12213,7 +12213,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    file_url?: SortOrder
+    image_url?: SortOrder
     taken_at?: SortOrder
     uploaded_at?: SortOrder
     created_at?: SortOrder
@@ -13349,7 +13349,7 @@ export namespace Prisma {
   export type PhotoCreateWithoutTagsInput = {
     title: string
     description?: string | null
-    file_url: string
+    image_url: string
     taken_at?: Date | string | null
     uploaded_at?: Date | string
     created_at?: Date | string
@@ -13361,7 +13361,7 @@ export namespace Prisma {
     id?: number
     title: string
     description?: string | null
-    file_url: string
+    image_url: string
     taken_at?: Date | string | null
     uploaded_at?: Date | string
     created_at?: Date | string
@@ -13408,7 +13408,7 @@ export namespace Prisma {
   export type PhotoUpdateWithoutTagsInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    file_url?: StringFieldUpdateOperationsInput | string
+    image_url?: StringFieldUpdateOperationsInput | string
     taken_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13420,7 +13420,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    file_url?: StringFieldUpdateOperationsInput | string
+    image_url?: StringFieldUpdateOperationsInput | string
     taken_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string

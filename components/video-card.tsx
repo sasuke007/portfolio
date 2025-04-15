@@ -4,11 +4,11 @@ import { Play } from "lucide-react"
 
 interface VideoCardProps {
   title: string
-  description: string
+  description: string | null
   date: string
-  duration: string
-  thumbnail: string
-  videoId: string
+  duration: string | null
+  thumbnail: string | null
+  videoId: number
 }
 
 export function VideoCard({ title, description, date, duration, thumbnail, videoId }: VideoCardProps) {
