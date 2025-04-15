@@ -1,5 +1,5 @@
 import { FeaturedPost } from "@/components/featured-post"
-import { FeaturedPhotos } from "@/components/featured-work"
+import { FeaturedPhotos } from "@/components/featured-photos"
 import { HeroSection } from "@/components/hero-section"
 import { SectionHeading } from "@/components/section-heading"
 import { getHighlightedBlogs } from "@/lib/services/blog.service"

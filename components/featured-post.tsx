@@ -22,7 +22,7 @@ export function FeaturedPost({ title, excerpt, date, category, slug }: FeaturedP
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="overflow-hidden rounded-lg bg-dark-100 transition-all group-hover:shadow-md border border-border/50 glow-border">
+      <div className="overflow-hidden rounded-lg bg-dark-100 transition-all group-hover:shadow-md border border-border/50">
         <div className="aspect-video bg-dark-100 shimmer" />
       </div>
       <div className="space-y-2">
