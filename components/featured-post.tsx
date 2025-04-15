@@ -1,13 +1,14 @@
 "use client"
 
-import Link from "next/link"
+import { cn, formatDate } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 import { useState } from "react"
 
 interface FeaturedPostProps {
   title: string
   excerpt: string
-  date: string
+  date: Date
   category: string
   slug: string
 }
@@ -26,12 +27,15 @@ export function FeaturedPost({ title, excerpt, date, category, slug }: FeaturedP
       </div>
       <div className="space-y-2">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <span>{date}</span>
+          <span>{formatDate(date)}</span>
           <span>•</span>
           <span>{category}</span>
         </div>
         <h3
-          className={`font-medium leading-tight text-gray-200 transition-all duration-300 ${isHovered ? "gradient-text" : ""}`}
+          className={cn(
+            "font-medium leading-tight text-gray-200 transition-all duration-300",
+            isHovered && "gradient-text"
+          )}
         >
           <Link href={slug}>{title}</Link>
         </h3>

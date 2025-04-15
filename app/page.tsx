@@ -1,18 +1,21 @@
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
 import { FeaturedPost } from "@/components/featured-post"
-import { FeaturedWork } from "@/components/featured-work"
-import { SectionHeading } from "@/components/section-heading"
+import { FeaturedPhotos } from "@/components/featured-work"
 import { HeroSection } from "@/components/hero-section"
+import { SectionHeading } from "@/components/section-heading"
+import { getHighlightedBlogs } from "@/lib/services/blog.service"
+import { getHighlightedPhotos } from "@/lib/services/photo.service"
+import { BlogDTO } from "@/types/blog"
+import { PhotoDTO } from "@/types/photo"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 
-export default function Home() {
+export default async function Home() {
+  const blogs: BlogDTO[] = await getHighlightedBlogs();
+  const photos: PhotoDTO[] = await getHighlightedPhotos();
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section with Background Photo */}
       <HeroSection />
-
-      {/* Featured Blog Posts */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-dark-200/50">
+      <section className="w-full pt-1 md:pt-4 lg:pt-6 bg-dark-200/50 outline-blue-500" >
         <div className="container px-4 md:px-6">
           <SectionHeading
             title="Latest Writing"
@@ -21,33 +24,24 @@ export default function Home() {
             linkText="View All Posts"
           />
           <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3">
-            <FeaturedPost
-              title="The Art of Minimalism"
-              excerpt="Exploring how less can truly be more in design and life."
-              date="April 2, 2023"
-              category="Design"
-              slug="/blog/the-art-of-minimalism"
-            />
-            <FeaturedPost
-              title="A Journey Through Iceland"
-              excerpt="Documenting my travels through the land of fire and ice."
-              date="March 15, 2023"
-              category="Travel"
-              slug="/blog/journey-through-iceland"
-            />
-            <FeaturedPost
-              title="The Future of Digital Content"
-              excerpt="How technology is reshaping the way we consume media."
-              date="February 28, 2023"
-              category="Technology"
-              slug="/blog/future-of-digital-content"
-            />
+            {
+              blogs.map((blog) => (
+                <FeaturedPost
+                  key={blog.title}
+                  title={blog.title}
+                  excerpt={blog.content}
+                  date={blog.published_at}
+                  category={blog.category}
+                  slug={blog.slug}
+                />
+              ))
+            }
           </div>
         </div>
       </section>
 
       {/* Featured Photography */}
-      <section className="w-full py-12 md:py-24 lg:py-32">
+      <section className="w-full py-1 md:py-2 lg:py-3">
         <div className="container px-4 md:px-6">
           <SectionHeading
             title="Photography"
@@ -56,32 +50,21 @@ export default function Home() {
             linkText="View Gallery"
           />
           <div className="grid grid-cols-2 gap-4 mt-8 md:grid-cols-3 lg:grid-cols-4">
-            <FeaturedWork
-              image="/placeholder.svg?height=400&width=600"
-              title="Urban Landscapes"
-              slug="/photography/urban-landscapes"
-            />
-            <FeaturedWork
-              image="/placeholder.svg?height=400&width=600"
-              title="Nature's Beauty"
-              slug="/photography/natures-beauty"
-            />
-            <FeaturedWork
-              image="/placeholder.svg?height=400&width=600"
-              title="Portraits"
-              slug="/photography/portraits"
-            />
-            <FeaturedWork
-              image="/placeholder.svg?height=400&width=600"
-              title="Street Photography"
-              slug="/photography/street"
-            />
+            {
+              photos.map((photo) => (
+                <FeaturedPhotos
+                  key={photo.id}
+                  image={photo.file_url}
+                  title={photo.title}
+                />
+              ))
+            }
           </div>
         </div>
       </section>
 
       {/* Featured Vlogs */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-dark-200/50">
+      <section className="w-full py-1 md:py-2 lg:py-3 bg-dark-200/50">
         <div className="container px-4 md:px-6">
           <SectionHeading
             title="Vlogs"
@@ -105,7 +88,7 @@ export default function Home() {
       </section>
 
       {/* Sister's Poems */}
-      <section className="w-full py-12 md:py-24 lg:py-32">
+      <section className="w-full py-1 md:py-2 lg:py-3">
         <div className="container px-4 md:px-6">
           <SectionHeading
             title="Poetry Corner"
@@ -113,7 +96,7 @@ export default function Home() {
             link="/poems"
             linkText="Read More Poems"
           />
-          <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3">
             <div className="p-6 bg-dark-100 rounded-lg border border-border/50 glow-border hover-scale">
               <h3 className="text-xl font-medium mb-2 text-gray-200 hover:gradient-text">Whispers of Dawn</h3>
               <p className="text-gray-400 italic mb-4">

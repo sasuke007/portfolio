@@ -7,14 +7,14 @@ import { useState } from "react"
 interface FeaturedWorkProps {
   image: string
   title: string
-  slug: string
+  slug?: string
 }
 
-export function FeaturedWork({ image, title, slug }: FeaturedWorkProps) {
-  const [isLoaded, setIsLoaded] = useState(false)
+export function FeaturedPhotos({ image, title, slug: photosPage = "/photos" }: FeaturedWorkProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <Link href={slug} className="group hover-scale">
+    <Link href={photosPage} className="group hover-scale">
       <div className="overflow-hidden rounded-lg transition-all group-hover:shadow-md border border-border/50 glow-border">
         <Image
           src={image || "/placeholder.svg"}

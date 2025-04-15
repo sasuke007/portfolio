@@ -12,7 +12,7 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 hero-section outline-2">
+    <section className="w-full pt-12 pb-1 md:pt-24 md:pb-2 lg:pt-32 lg:pb-3 xl:pt-48 xl:pb-4 hero-section">
       <div className="container px-4 md:px-6 relative z-10">
         <div className={`flex flex-col items-center space-y-4 text-center ${isLoaded ? "fade-in" : "opacity-0"}`}>
           <div className="space-y-2">
@@ -22,7 +22,7 @@ export function HeroSection() {
             <div className="subtitle-container relative py-3 px-8 rounded-lg mt-4">
               <div className="subtitle-bg absolute inset-0 rounded-lg"></div>
               <p className="mx-auto max-w-[700px] text-white md:text-xl relative z-10 font-medium tracking-wide">
-                Programmer • Photographer • Traveler
+                Programmer • Traveler • Photographer 
               </p>
             </div>
           </div>

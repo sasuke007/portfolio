@@ -1,0 +1,71 @@
+import { prisma } from '@/prisma'
+import { BlogDTO } from '@/types/blog'
+
+export const getHighlightedBlogs = async (): Promise<BlogDTO[]> => {
+  try {
+    const blogs: BlogDTO[] = await prisma.blog.findMany({
+      where: {
+        priority: {
+          gte: 5
+        },
+      },
+      select: {
+        title: true,
+        slug: true,
+        content: true,
+        published_at: true,
+        featured_image_url: true,
+        meta_description: true,
+        author: true,
+        description: true,
+        is_published: true,
+        category: true,
+        tags: {
+          include: {
+            tag: true
+          }
+        }
+      },
+      orderBy: {
+        priority: 'desc'
+      },
+      take: 6
+    })
+    return blogs 
+  } catch (error) {
+    //TODO: have metrics here
+    console.error('Error fetching blogs:', error)
+    throw error
+  }
+}
+
+export async function getAllPublishedBlogs() {
+  try {
+    const blogs = await prisma.blog.findMany({
+      where: {
+        is_published: true
+      },
+      orderBy: {
+        published_at: 'desc'
+      },
+      select: {
+        title: true,
+        slug: true,
+        content: true,
+        published_at: true,
+        featured_image_url: true,
+        meta_description: true,
+        author: true,
+        tags: {
+          include: {
+            tag: true
+          }
+        }
+      }
+    })
+    return blogs
+  } catch (error) {
+    console.error('Error fetching blogs:', error)
+    throw error
+  }
+}

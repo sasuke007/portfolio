@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Blog {
+  id                 Int       @id @default(autoincrement())
+  title              String
+  description        String
+  slug               String    @unique
+  content            String
+  author             String
+  // TODO: Priority should be between 0 and 10 
+  priority           Int       @default(0)
+  category           String
+  published_at       DateTime  @default(now())
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
+  is_published       Boolean   @default(false)
+  featured_image_url String?
+  meta_description   String?
+  meta_keywords      String?
+  tags               BlogTag[]
+}
+
+model Photo {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?
+  file_url    String     @unique
+  taken_at    DateTime?
+  uploaded_at DateTime   @default(now())
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  location    String?
+  tags        PhotoTag[]
+}
+
+model Poem {
+  id           Int       @id @default(autoincrement())
+  title        String
+  author       String
+  content      String
+  written_at   DateTime?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  is_published Boolean   @default(true)
+}
+
+model Tag {
+  id     Int        @id @default(autoincrement())
+  name   String     @unique
+  slug   String     @unique
+  blogs  BlogTag[]
+  photos PhotoTag[]
+  vlogs  VlogTag[]
+}
+
+model BlogTag {
+  blog_id Int
+  tag_id  Int
+  blog    Blog @relation(fields: [blog_id], references: [id], onDelete: Cascade)
+  tag     Tag  @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+
+  @@id([blog_id, tag_id])
+}
+
+model PhotoTag {
+  photo_id Int
+  tag_id   Int
+  photo    Photo @relation(fields: [photo_id], references: [id], onDelete: Cascade)
+  tag      Tag   @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+
+  @@id([photo_id, tag_id])
+}
+
+model Vlog {
+  id               Int       @id @default(autoincrement())
+  title            String
+  slug             String    @unique
+  description      String?
+  video_url        String    @unique
+  published_at     DateTime  @default(now())
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  is_published     Boolean   @default(false)
+  thumbnail_url    String?
+  duration         String? // Prisma doesn't have a direct INTERVAL type, using String
+  meta_description String?
+  meta_keywords    String?
+  tags             VlogTag[]
+}
+
+model VlogTag {
+  vlog_id Int
+  tag_id  Int
+  vlog    Vlog @relation(fields: [vlog_id], references: [id], onDelete: Cascade)
+  tag     Tag  @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+
+  @@id([vlog_id, tag_id])
+}
