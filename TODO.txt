@@ -1,0 +1,9 @@
+create the endpoint for /blogs where actual content of the blog is written. Align it with the theme of the page.
+Write logic to convert markdown to html
+Bento grid logic fix 
+featured video section
+make featured posts section much better with lot more text than image.
+Remove contact page.
+Write my information on about me page.
+Make poems page, and decide layout for poems main page.
+Have to build a journey page.

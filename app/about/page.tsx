@@ -3,21 +3,21 @@ import Image from "next/image"
 import { PageHeader } from "@/components/page-header"
 
 export const metadata: Metadata = {
-  title: "About | John Doe",
-  description: "Learn more about John Doe and his creative journey.",
+  title: "About | Rohit Pandit",
+  description: "Learn more about Rohit Pandit and his creative journey.",
 }
 
 export default function AboutPage() {
   return (
     <div className="container px-4 py-12 md:px-6 md:py-24">
-      <PageHeader title="About Me" description="Writer, photographer, and filmmaker based in New York." />
+      <PageHeader title="About Me" description="Writer, photographer, and traveller." />
 
       <div className="grid grid-cols-1 gap-12 mt-12 md:grid-cols-2">
         <div>
           <div className="rounded-lg overflow-hidden border border-border/50 glow-border">
             <Image
-              src="/placeholder.svg?height=800&width=600"
-              alt="John Doe"
+              src="/profile_photo.jpeg"
+              alt="Anesthetic Coder"
               width={600}
               height={800}
               className="rounded-lg object-cover w-full h-auto"
@@ -26,7 +26,7 @@ export default function AboutPage() {
         </div>
         <div className="space-y-6">
           <p className="text-lg text-gray-300">
-            Hello! I'm John Doe, a multidisciplinary creative with a passion for storytelling through various mediums.
+            Hello! I'm Rohit Pandit, a multidisciplinary creative with a passion for storytelling through various mediums.
             With over 10 years of experience in writing, photography, and filmmaking, I've dedicated my career to
             capturing and sharing meaningful stories.
           </p>
@@ -44,17 +44,11 @@ export default function AboutPage() {
           <div className="pt-6">
             <h3 className="text-xl font-semibold mb-4 gradient-text">Connect With Me</h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary">
+              <a href="https://x.com/RohitPandit16" className="text-gray-400 hover:text-primary">
                 Twitter
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary">
-                Instagram
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary">
+              <a href="https://www.linkedin.com/in/rohit-pandit-419b8215a/" className="text-gray-400 hover:text-primary">
                 LinkedIn
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary">
-                YouTube
               </a>
             </div>
           </div>

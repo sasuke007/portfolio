@@ -14,7 +14,6 @@ export type ParallaxPhotos = {
 }
 
 export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) => {
-
   const [selected, setSelected] = useState<ParallaxPhotos | null>(null)
   const [lastSelected, setLastSelected] = useState<ParallaxPhotos | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -25,10 +24,9 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
   })
 
   // Reduce the intensity of these values
-  // Original values were likely more extreme
-  const translateFirst = useTransform(scrollYProgress, [0, 1], [0, -200])  // Reduced from higher negative value
-  const translateSecond = useTransform(scrollYProgress, [0, 1], [0, 150])  // Reduced from higher value
-  const translateThird = useTransform(scrollYProgress, [0, 1], [0, -180])  // Reduced from higher negative value
+  const translateFirst = useTransform(scrollYProgress, [0, 1], [0, -200])
+  const translateSecond = useTransform(scrollYProgress, [0, 1], [0, 150])
+  const translateThird = useTransform(scrollYProgress, [0, 1], [0, -180])
 
   // Split photos into three columns
   const third = Math.ceil(photos.length / 3)
@@ -55,12 +53,11 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
       <div className="relative z-10 py-12 px-4 max-w-7xl mx-auto">
         {/* Gallery grid - further reduced gap */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-          {/* First column - starts at normal position */}
-          <div className="space-y-2">
+          {/* First column - Apply motion to the entire column */}
+          <motion.div className="space-y-2" style={{ y: translateFirst }}>
             {firstColumn.map((photo) => (
               <motion.div
                 key={photo.id}
-                style={{ y: translateFirst }}
                 className="relative overflow-hidden rounded-lg border border-border/50 shimmer hover-scale"
                 onClick={() => handleClick(photo)}
                 whileHover={{ scale: 1.02 }}
@@ -83,14 +80,13 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                 </motion.div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Second column - starts higher up */}
-          <div className="space-y-2 mt-[-80px]">
+          {/* Second column - Apply motion to the entire column */}
+          <motion.div className="space-y-2 mt-[-80px]" style={{ y: translateSecond }}>
             {secondColumn.map((photo) => (
               <motion.div
                 key={photo.id}
-                style={{ y: translateSecond }}
                 className="relative overflow-hidden rounded-lg border border-border/50 shimmer hover-scale"
                 onClick={() => handleClick(photo)}
                 whileHover={{ scale: 1.02 }}
@@ -113,14 +109,13 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                 </motion.div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Third column - starts lower */}
-          <div className="space-y-2 mt-[40px]">
+          {/* Third column - Apply motion to the entire column */}
+          <motion.div className="space-y-2 mt-[40px]" style={{ y: translateThird }}>
             {thirdColumn.map((photo) => (
               <motion.div
                 key={photo.id}
-                style={{ y: translateThird }}
                 className="relative overflow-hidden rounded-lg border border-border/50 shimmer hover-scale"
                 onClick={() => handleClick(photo)}
                 whileHover={{ scale: 1.02 }}
@@ -135,7 +130,6 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority={photo.id < 9 && photo.id >= 6}
                   />
-                  {/* have to make text of <h3> and <p> tags gradient in align with them of the site.  */}
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-300/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
                     <h3 className="text-lg font-medium gradient-text-simple">{photo.title}</h3>
@@ -144,7 +138,7 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                 </motion.div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
 

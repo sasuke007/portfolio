@@ -39,23 +39,16 @@ export const getHighlightedBlogs = async (): Promise<BlogDTO[]> => {
   }
 }
 
-export async function getAllPublishedBlogs() {
+export async function getAllPublishedBlogs(): Promise<BlogDTO[]> {
   try {
-    const blogs = await prisma.blog.findMany({
+    const blogs: BlogDTO[] = await prisma.blog.findMany({
       where: {
         is_published: true
       },
       orderBy: {
         published_at: 'desc'
       },
-      select: {
-        title: true,
-        slug: true,
-        content: true,
-        published_at: true,
-        featured_image_url: true,
-        meta_description: true,
-        author: true,
+      include: {
         tags: {
           include: {
             tag: true

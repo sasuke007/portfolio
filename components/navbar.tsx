@@ -19,7 +19,6 @@ export function Navbar() {
     { name: "Vlogs", path: "/vlogs" },
     { name: "Poems", path: "/poems" },
     { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
   ]
 
   return (

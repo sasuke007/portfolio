@@ -159,7 +159,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("/ghibli-portrait.webp");
+  background-image: url("/stylish_pic.jpeg");
   background-size: cover;
   background-position: center 25%;
   opacity: 0.45; /* Perfect opacity for visibility while maintaining readability */
