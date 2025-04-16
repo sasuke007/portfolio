@@ -100,7 +100,7 @@ export default async function Home() {
         <div className="container px-4 md:px-6">
           <SectionHeading
             title="Poetry Corner"
-            description="Featuring poems by my sister, Jane Doe."
+            description="Featuring poems by my sister, Shrishti Pandit."
             link="/poems"
             linkText="Read More Poems"
           />

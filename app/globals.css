@@ -265,3 +265,15 @@
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
   }
 }
+
+.text-glow {
+  color: #fff; /* Ensure text is white for the glow effect */
+  text-shadow: 0 0 5px rgba(147, 51, 234, 0.5), 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+
+/* Gradient text utility class */
+.gradient-text-simple {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(to right, #9333ea, #3b82f6, #06b6d4);
+}

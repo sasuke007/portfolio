@@ -77,8 +77,8 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-300/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-lg font-medium">{photo.title}</h3>
-                    <p className="text-sm text-gray-300">{photo.category}</p>
+                    <h3 className="text-lg font-medium gradient-text-simple">{photo.title}</h3>
+                    <p className="text-sm gradient-text-simple">{photo.category}</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -106,9 +106,9 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                     priority={photo.id < 6 && photo.id >= 3}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-300/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-lg font-medium">{photo.title}</h3>
-                    <p className="text-sm text-gray-300">{photo.category}</p>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                    <h3 className="text-lg font-medium gradient-text-simple">{photo.title}</h3>
+                    <p className="text-sm gradient-text-simple">{photo.category}</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -135,10 +135,11 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority={photo.id < 9 && photo.id >= 6}
                   />
+                  {/* have to make text of <h3> and <p> tags gradient in align with them of the site.  */}
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-300/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-lg font-medium">{photo.title}</h3>
-                    <p className="text-sm text-gray-300">{photo.category}</p>
+                    <h3 className="text-lg font-medium gradient-text-simple">{photo.title}</h3>
+                    <p className="text-sm gradient-text-simple">{photo.category}</p>
                   </div>
                 </motion.div>
               </motion.div>
