@@ -37,11 +37,11 @@ export function FeaturedPost({ title, excerpt, date, category, slug }: FeaturedP
             isHovered && "gradient-text"
           )}
         >
-          <Link href={slug}>{title}</Link>
+          {title}
         </h3>
         <p className="text-sm text-gray-400 line-clamp-2">{excerpt}</p>
         <Link
-          href={slug}
+          href={`/blog/${slug}`} // Use template literal for string interpolation
           className="inline-flex items-center text-sm font-medium text-gray-400 hover:text-primary group"
         >
           Read more <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

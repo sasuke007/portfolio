@@ -36,7 +36,7 @@ export default async function Home() {
                 <FeaturedPost
                   key={blog.title}
                   title={blog.title}
-                  excerpt={blog.content}
+                  excerpt={blog.description}
                   date={blog.published_at}
                   category={blog.category}
                   slug={blog.slug}
@@ -114,6 +114,29 @@ export default async function Home() {
                 slug={`/poems/${poem.id}`}
               />
             ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Journey Section Teaser */}
+      <section className="w-full py-1 md:py-2 lg:py-3 bg-dark-200/50">
+        <div className="container px-4 md:px-6">
+          <SectionHeading
+            title="My Journey"
+            description="Explore my professional experience and education."
+            link="/journey"
+            linkText="View Full Journey"
+          />
+          <div className="mt-8 p-6 border rounded-lg bg-card text-card-foreground shadow-sm">
+            <h3 className="text-xl font-semibold mb-2">Professional Timeline</h3>
+            <p className="text-muted-foreground mb-4">
+              From education to professional experience, discover the path that shaped my career in technology and creative work.
+            </p>
+            <div className="flex justify-end">
+              <a href="/journey" className="text-primary hover:underline">
+                Explore my journey →
+              </a>
+            </div>
           </div>
         </div>
       </section>

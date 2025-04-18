@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { BlogCard } from "@/components/blog-card"
 import { PageHeader } from "@/components/page-header"
 import { BentoGrid, BentoGridItem } from "@/components/bento-grid"
 import { getAllPublishedBlogs } from "@/lib/services/blog.service"

@@ -62,3 +62,62 @@ export async function getAllPublishedBlogs(): Promise<BlogDTO[]> {
     throw error
   }
 }
+
+export async function getBlogBySlug(slug: string): Promise<BlogDTO | null> {
+  try {
+    const blog: BlogDTO | null = await prisma.blog.findUnique({
+      where: {
+        slug
+      },
+      include: {
+        tags: {
+          include: {
+            tag: true
+          }
+        }
+      }
+    })
+    return blog
+  }catch (error) {
+    console.error('Error fetching blog:', error)
+    throw error
+  }
+}
+
+export async function createBlog(blogData: any): Promise<BlogDTO> {
+  try {
+    // Extract tags from the request
+    const { tags, ...blogFields } = blogData;
+    
+    // Create the blog post
+    const blog = await prisma.blog.create({
+      data: {
+        ...blogFields,
+        // Connect or create tags
+        tags: {
+          create: tags.map((tagName: string) => ({
+            tag: {
+              connectOrCreate: {
+                where: { name: tagName },
+                create: { name: tagName }
+              }
+            }
+          }))
+        }
+      },
+      include: {
+        tags: {
+          include: {
+            tag: true
+          }
+        }
+      }
+    });
+    
+    console.log(`Blog created successfully: ${blog.title} (${blog.slug})`);
+    return blog;
+  } catch (error) {
+    console.error('Error creating blog:', error);
+    throw error;
+  }
+}

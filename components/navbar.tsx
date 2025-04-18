@@ -14,6 +14,7 @@ export function Navbar() {
 
   const routes = [
     { name: "Home", path: "/" },
+    { name: "Journey", path: "/journey" },
     { name: "Blog", path: "/blog" },
     { name: "Photography", path: "/photography" },
     { name: "Vlogs", path: "/vlogs" },

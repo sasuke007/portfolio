@@ -6,6 +6,9 @@ export function Footer() {
       <div className="container flex flex-col items-center justify-between gap-4 px-4 md:flex-row md:px-6">
         <p className="text-sm text-gray-500">© {new Date().getFullYear()} Rohit Pandit. All rights reserved.</p>
         <nav className="flex gap-4 sm:gap-6">
+          <Link href = "/journey" className="text-sm text-gray-500 hover:text-primary">
+            Journey
+          </Link>
           <Link href="/blog" className="text-sm text-gray-500 hover:text-primary">
             Blog
           </Link>
