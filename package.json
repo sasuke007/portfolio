@@ -8,7 +8,7 @@
     "build": "npm run update-git-env && next build",
     "start": "next start",
     "lint": "next lint",
-    "scan": "npm run update-git-env && next dev && npx react-scan@latest localhost:3000"
+    "scan": "npm run update-git-env && next dev & npx react-scan@latest localhost:3000"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
