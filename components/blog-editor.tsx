@@ -7,7 +7,6 @@ import { TRANSFORMERS } from "@lexical/markdown";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
@@ -16,7 +15,7 @@ import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
-import { $getRoot, EditorState } from "lexical";
+import { EditorState } from "lexical";
 import ToolbarPlugin from "./editor/toolbar-plugin";
 
 interface BlogEditorProps {
@@ -71,16 +70,12 @@ export function BlogEditor({ content, setContent }: BlogEditorProps) {
       TableCellNode,
       TableRowNode,
       AutoLinkNode,
-      LinkNode,
+      LinkNode
     ],
   };
 
   const onChange = (editorState: EditorState) => {
-    editorState.read(() => {
-      const root = $getRoot();
-      const jsonString = JSON.stringify(root);
-      setContent(jsonString);
-    });
+      setContent(JSON.stringify(editorState.toJSON()));
   };
 
   return (
@@ -91,7 +86,7 @@ export function BlogEditor({ content, setContent }: BlogEditorProps) {
           <RichTextPlugin
             contentEditable={<ContentEditable className="editor-input min-h-[300px] p-4 focus:outline-none" />}
             placeholder={<Placeholder />}
-            ErrorBoundary={Placeholder}
+            ErrorBoundary={() => <></>}
           />
           <HistoryPlugin />
           <AutoFocusPlugin />

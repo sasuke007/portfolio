@@ -59,7 +59,7 @@ export default function CreateBlogPage() {
       }
 
       toast.success("Blog post created successfully!");
-      router.push("/admin/blogs");
+      router.push("/blog");
     } catch (error) {
       console.error("Error creating blog post:", error);
       toast.error("Failed to create blog post. Please try again.");

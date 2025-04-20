@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createBlog } from "@/lib/services/blog.service";
+import { CreateBlogInput } from "@/types/blog";
 
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.json();
+    const data: CreateBlogInput = await request.json();
+    
     
     // Validate required fields
     if (!data.title || !data.slug || !data.content) {

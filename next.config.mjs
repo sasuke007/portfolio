@@ -1,7 +1,10 @@
+import MillionLint from "@million/lint";
+import ReactComponentName from "react-scan/react-component-name/webpack";
+
 let userConfig = undefined
 try {
   // try to import ESM first
-  userConfig = await import('./v0-user-next.config.mjs')
+  userConfig = await import("./v0-user-next.config.mjs")
 } catch (e) {
   try {
     // fallback to CJS import
@@ -27,6 +30,10 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  webpack: (config) => {
+    config.plugins.push(ReactComponentName({}));
+    return config;
+  },
 }
 
 if (userConfig) {
@@ -35,7 +42,7 @@ if (userConfig) {
 
   for (const key in config) {
     if (
-      typeof nextConfig[key] === 'object' &&
+      typeof nextConfig[key] === "object" &&
       !Array.isArray(nextConfig[key])
     ) {
       nextConfig[key] = {
@@ -48,4 +55,7 @@ if (userConfig) {
   }
 }
 
-export default nextConfig
+export default MillionLint.next({
+  enabled: true,
+  rsc: true
+})(nextConfig);

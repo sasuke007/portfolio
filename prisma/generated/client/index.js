@@ -223,7 +223,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../../.env",
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
@@ -233,11 +233,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://sasuke_owner:npg_8pacyjU5BVRt@ep-noisy-cake-a55zbrl9-pooler.us-east-2.aws.neon.tech/sasuke?sslmode=require"
+        "value": null
       }
     }
   },

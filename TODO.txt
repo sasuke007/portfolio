@@ -9,4 +9,4 @@ Make poems page, and decide layout for poems main page.
 Have to build a journey page.
 Make an admin page to submit articles.
 Put authentication on admin page so that only I can post articles.
-Introduce a cacheing layer intermediate between ssr and ssg. isr
+Introduce a cacheing layer intermediate between ssr and ssg, isr

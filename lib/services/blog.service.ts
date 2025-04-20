@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma'
-import { BlogDTO } from '@/types/blog'
+import { BlogDTO, CreateBlogInput } from '@/types/blog'
 
 export const getHighlightedBlogs = async (): Promise<BlogDTO[]> => {
   try {
@@ -84,25 +84,18 @@ export async function getBlogBySlug(slug: string): Promise<BlogDTO | null> {
   }
 }
 
-export async function createBlog(blogData: any): Promise<BlogDTO> {
+export async function createBlog(blogData: CreateBlogInput): Promise<BlogDTO> {
   try {
     // Extract tags from the request
     const { tags, ...blogFields } = blogData;
     
-    // Create the blog post
+    // Create the blog post with a different approach for tags
     const blog = await prisma.blog.create({
       data: {
         ...blogFields,
-        // Connect or create tags
+        published_at: new Date(blogFields.published_at), // Convert string to Date
         tags: {
-          create: tags.map((tagName: string) => ({
-            tag: {
-              connectOrCreate: {
-                where: { name: tagName },
-                create: { name: tagName }
-              }
-            }
-          }))
+          
         }
       },
       include: {
