@@ -19,8 +19,8 @@ export default async function BlogPage() {
       <Monitoring
         apiKey="SLKBA2j_QoGPEPe2ODDaMQwxCW0TfHOz" // Safe to expose publically
         url="https://monitoring.react-scan.com/api/v1/ingest"
-        commit={process.env.GIT_COMMIT_HASH} // optional but recommended
-        branch={process.env.GIT_BRANCH} // optional but recommended
+        commit={process.env.GIT_COMMIT_HASH} 
+        branch={process.env.GIT_BRANCH}
       />
       <div className="container px-4 py-12 md:px-6 md:py-24">
         <PageHeader

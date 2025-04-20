@@ -35,7 +35,7 @@ export default async function BlogPostPage({ params }: BlogPageParams) {
 
     return (
         <div className="container mx-auto py-12 px-4">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 gradient-text-simple">{blog.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">{blog.title}</h1>
             <Article contentJSON={blog.content} />
         </div>
     );

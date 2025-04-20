@@ -1,5 +1,4 @@
-create the endpoint for /blogs where actual content of the blog is written. Align it with the theme of the page.
-Write logic to convert markdown to html
+create the endpoint for /blogs where actual content of the blog is written. Align it with the theme of the page. (partly done)
 Bento grid logic fix 
 featured video section
 make featured posts section much better with lot more text than image.
@@ -10,3 +9,6 @@ Have to build a journey page.
 Make an admin page to submit articles.
 Put authentication on admin page so that only I can post articles.
 Introduce a cacheing layer intermediate between ssr and ssg, isr
+
+figure out how to put tags while create blog posts or photos or everything else.
+in admin page there should be an option of what exactly you want to create and based on that the next page should open up.

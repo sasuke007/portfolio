@@ -1,4 +1,5 @@
 import { Timeline } from "@/components/timeline";
+import { Monitoring } from "react-scan/monitoring/next";
 
 export const metadata = {
   title: "My Journey | Professional Experience and Education",
@@ -12,7 +13,7 @@ const journeyData = [
     content: (
       <div>
         <p>
-          Leading development of cloud-native applications using React, Node.js, and AWS. 
+          Leading development of cloud-native applications using React, Node.js, and AWS.
           Mentoring junior developers and implementing CI/CD pipelines.
         </p>
         <ul className="mt-4 list-disc pl-5">
@@ -30,7 +31,7 @@ const journeyData = [
     content: (
       <div>
         <p>
-          Developed and maintained web applications for enterprise clients. Implemented 
+          Developed and maintained web applications for enterprise clients. Implemented
           responsive designs and optimized application performance.
         </p>
         <ul className="mt-4 list-disc pl-5">
@@ -48,7 +49,7 @@ const journeyData = [
     content: (
       <div>
         <p>
-          Specialized in artificial intelligence and machine learning. Thesis on neural 
+          Specialized in artificial intelligence and machine learning. Thesis on neural
           network optimization techniques.
         </p>
         <ul className="mt-4 list-disc pl-5">
@@ -66,7 +67,7 @@ const journeyData = [
     content: (
       <div>
         <p>
-          Graduated with honors. Coursework included data structures, algorithms, 
+          Graduated with honors. Coursework included data structures, algorithms,
           and software engineering principles.
         </p>
         <ul className="mt-4 list-disc pl-5">
@@ -82,10 +83,18 @@ const journeyData = [
 
 export default function JourneyPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-1">
-        <Timeline data={journeyData} />
-      </main>
-    </div>
+    <>
+      <Monitoring
+        apiKey="SLKBA2j_QoGPEPe2ODDaMQwxCW0TfHOz" // Safe to expose publically
+        url="https://monitoring.react-scan.com/api/v1/ingest"
+        commit={process.env.GIT_COMMIT_HASH} // optional but recommended
+        branch={process.env.GIT_BRANCH} // optional but recommended
+      />
+      <div className="flex flex-col min-h-screen">
+        <main className="flex-1">
+          <Timeline data={journeyData} />
+        </main>
+      </div>
+    </>
   );
 }

@@ -74,8 +74,8 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-300/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-lg font-medium gradient-text-simple">{photo.title}</h3>
-                    <p className="text-sm gradient-text-simple">{photo.category}</p>
+                    <h3 className="text-lg font-medium gradient-text">{photo.title}</h3>
+                    <p className="text-sm gradient-text">{photo.category}</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -103,8 +103,8 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-300/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-lg font-medium gradient-text-simple">{photo.title}</h3>
-                    <p className="text-sm gradient-text-simple">{photo.category}</p>
+                    <h3 className="text-lg font-medium gradient-text">{photo.title}</h3>
+                    <p className="text-sm gradient-text">{photo.category}</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -132,8 +132,8 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-300/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-lg font-medium gradient-text-simple">{photo.title}</h3>
-                    <p className="text-sm gradient-text-simple">{photo.category}</p>
+                    <h3 className="text-lg font-medium gradient-text">{photo.title}</h3>
+                    <p className="text-sm gradient-text">{photo.category}</p>
                   </div>
                 </motion.div>
               </motion.div>

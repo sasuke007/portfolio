@@ -40,6 +40,7 @@ export default async function Home() {
                   date={blog.published_at}
                   category={blog.category}
                   slug={blog.slug}
+                  featured_image_url={blog.featured_image_url || undefined}
                 />
               ))
             }

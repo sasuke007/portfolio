@@ -29,7 +29,7 @@ export function FeaturedPhotos({ image, title, slug: photosPage = "/photography"
           onLoad={() => setIsLoaded(true)}
         />
       </div>
-      <h3 className={cn(`mt-2 text-sm font-medium text-gray-300 group-hover:gradient-text transition-all duration-300`, isHovered && "gradient-text")}>
+      <h3 className={cn(`mt-2 text-sm font-medium group-hover:gradient-text transition-all duration-300`,`gradient-text`)}>
         {title}
       </h3>
     </Link>
