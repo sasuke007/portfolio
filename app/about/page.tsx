@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import { PageHeader } from "@/components/page-header"
+import { Monitoring } from "react-scan/monitoring/next"
+
 
 export const metadata: Metadata = {
   title: "About | Rohit Pandit",
@@ -9,6 +11,13 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
+    <>
+      <Monitoring
+        apiKey="SLKBA2j_QoGPEPe2ODDaMQwxCW0TfHOz" // Safe to expose publically
+        url="https://monitoring.react-scan.com/api/v1/ingest"
+        commit={process.env.GIT_COMMIT_HASH} // optional but recommended
+        branch={process.env.GIT_BRANCH} // optional but recommended
+      />
     <div className="container px-4 py-12 md:px-6 md:py-24">
       <PageHeader title="About Me" description="Writer, photographer, and traveller." />
 
@@ -55,5 +64,6 @@ export default function AboutPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }

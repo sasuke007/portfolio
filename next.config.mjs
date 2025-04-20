@@ -57,5 +57,5 @@ if (userConfig) {
 
 export default MillionLint.next({
   enabled: true,
-  rsc: true
+  rsc: true,
 })(nextConfig);

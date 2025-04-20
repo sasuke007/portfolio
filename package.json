@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "update-git-env": "node scripts/update-git-env.js",
+    "dev": "npm run update-git-env && next dev",
+    "build": "npm run update-git-env && next build",
     "start": "next start",
     "lint": "next lint",
-    "scan": "next dev --turbopack & npx react-scan@latest localhost:3000"
+    "scan": "npm run update-git-env && next dev && npx react-scan@latest localhost:3000"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
