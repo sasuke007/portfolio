@@ -54,7 +54,7 @@ export function HeroSection() {
       
       {/* Updated Content with new styling */}
       <div className="container px-4 md:px-6 relative z-10">
-        <div className={`flex flex-col items-center space-y-4 text-center ${isLoaded ? "fade-in" : "opacity-0"}`}>
+        <div className={`flex flex-col items-center space-y-4 text-center ${isLoaded ? "slow-fade-in" : "opacity-0"}`}>
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none gradient-text">
               Rohit Pandit

@@ -29,7 +29,7 @@ export function FeaturedPost({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       <article className="flex flex-col h-full overflow-hidden rounded-lg bg-card text-card-foreground shadow transition-all hover:shadow-md group-hover:shadow-md">
-        <div className={cn("flex flex-col md:flex-row p-6 h-full group-hover:scale-110", isHovered && "gradient-text")}>
+        <div className={cn("flex flex-col md:flex-row p-6 h-full group-hover:scale-105 transition-transform duration-500")}>
           <div className="flex flex-col flex-1 pr-0 md:pr-4">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/10 text-primary">

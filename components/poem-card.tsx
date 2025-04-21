@@ -1,30 +1,48 @@
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+"use client"
 
-interface PoemCardProps {
+import Link from "next/link"
+import { useState } from "react"
+import { PoemPopup } from "@/components/poem-popup"
+import { PoemDTO } from "@/types/poem"
+
+interface MainPoemCardProps {
   title: string
-  excerpt: string
+  content: string
   date: string
   slug: string
+  poemData: PoemDTO
 }
 
-export function PoemCard({ title, excerpt, date, slug }: PoemCardProps) {
+export function MainPoemCard({ title, content, date, slug, poemData }: MainPoemCardProps) {
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
+
   return (
-    <div className="group p-6 bg-dark-100 rounded-lg border border-border/50 transition-all hover:shadow-md glow-border hover-scale">
-      <div className="space-y-3">
-        <div className="text-sm text-gray-500">{date}</div>
-        <h3 className="text-xl font-medium text-gray-200 group-hover:gradient-text transition-all duration-300">
-          <Link href={slug}>{title}</Link>
-        </h3>
-        <p className="text-gray-400 italic whitespace-pre-line line-clamp-4">{excerpt}</p>
-        <Link
-          href={slug}
-          className="inline-flex items-center text-sm font-medium text-gray-400 hover:text-primary group"
+    <>
+      <div 
+        className="flex flex-col h-full p-5 rounded-lg bg-dark-100/40 border border-border/20 hover:border-border/40 transition-all cursor-pointer"
+        onClick={() => setIsPopupOpen(true)}
+      >
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-xl font-medium gradient-text-simple">{title}</h3>
+          <div className="text-sm text-gray-400">{date}</div>
+        </div>
+        <p className="text-gray-300 italic whitespace-pre-line line-clamp-6 mb-3 flex-1">{content}</p>
+        <button 
+          className="inline-flex items-center text-xs text-primary hover:underline mt-auto"
+          onClick={(e) => {
+            e.stopPropagation()
+            setIsPopupOpen(true)
+          }}
         >
-          Read full poem{" "}
-          <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-        </Link>
+          Read full poem <span className="ml-1">→</span>
+        </button>
       </div>
-    </div>
+
+      <PoemPopup 
+        poem={poemData} 
+        isOpen={isPopupOpen} 
+        onClose={() => setIsPopupOpen(false)} 
+      />
+    </>
   )
 }

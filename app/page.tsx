@@ -1,7 +1,7 @@
 import { FeaturedPhotos } from "@/components/featured-photos"
 import { FeaturedPost } from "@/components/featured-post"
 import { HeroSection } from "@/components/hero-section"
-import { PoemCard } from "@/components/poem-card"
+import { FeaturedPoems } from "@/components/featured-poems"
 import { SectionHeading } from "@/components/section-heading"
 import { VideoCard } from "@/components/video-card"
 import { getHighlightedBlogs } from "@/lib/services/blog.service"
@@ -90,6 +90,7 @@ export default async function Home() {
                 date={formatDate(vlog.published_at)}
                 duration={vlog.duration}
                 videoId={vlog.id}
+                videoUrl={vlog.video_url}
               />
             ))}
           </div>
@@ -107,10 +108,10 @@ export default async function Home() {
           />
           <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3">
             {poems.map((poem) => (
-              <PoemCard
+              <FeaturedPoems
                 key={poem.id}
                 title={poem.title}
-                excerpt={poem.content.slice(0, 120) + "..."}
+                content={poem.content.slice(0, 120) + "..."}
                 date={formatDate(poem.written_at || poem.created_at)}
                 slug={`/poems/${poem.id}`}
               />
@@ -118,7 +119,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      
+
       {/* Journey Section Teaser */}
       <section className="w-full py-1 md:py-2 lg:py-3 bg-dark-200/50">
         <div className="container px-4 md:px-6">

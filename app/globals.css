@@ -296,3 +296,37 @@
   @apply bg-clip-text text-transparent;
   background-image: linear-gradient(to right, #9333ea, #3b82f6, #06b6d4);
 }
+
+/* Add this to your existing globals.css */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Add this to your globals.css file */
+.slow-fade-in {
+  animation: slowFadeIn 2s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes slowFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
