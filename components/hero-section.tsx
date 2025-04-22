@@ -6,9 +6,16 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
 
+// Predefine image data to avoid recreating objects during renders
+const HERO_IMAGES = [
+  { src: "/nature_lover.jpeg", alt: "Good lighting portrait" },
+  { src: "/good_lighting.jpeg", alt: "Nature lover" },
+  { src: "/stylish_pic.jpeg", alt: "Stylish portrait" },
+]
+
 export function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false)
-  
+
   useEffect(() => {
     setIsLoaded(true)
   }, [])
@@ -17,41 +24,25 @@ export function HeroSection() {
     <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 relative overflow-hidden">
       {/* Image Collage */}
       <div className="absolute inset-0 w-full h-full flex">
-        <div className="w-1/3 h-full relative">
-          <Image
-            src="/nature_lover.jpeg"
-            alt="Good lighting portrait"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-dark-300/60"></div>
-        </div>
-        <div className="w-1/3 h-full relative">
-          <Image
-            src="/good_lighting.jpeg"
-            alt="Nature lover"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-dark-300/60"></div>
-        </div>
-        <div className="w-1/3 h-full relative">
-          <Image
-            src="/stylish_pic.jpeg"
-            alt="Stylish portrait"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-dark-300/60"></div>
-        </div>
+        {HERO_IMAGES.map((image, index) => (
+          <div key={index} className="w-1/3 h-full relative">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              sizes="33vw"
+              className="object-cover"
+              priority
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-dark-300/60"></div>
+          </div>
+        ))}
       </div>
-      
+
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-dark-300/80 via-dark-300/50 to-dark-300"></div>
-      
+
       {/* Updated Content with new styling */}
       <div className="container px-4 md:px-6 relative z-10">
         <div className={`flex flex-col items-center space-y-4 text-center ${isLoaded ? "slow-fade-in" : "opacity-0"}`}>

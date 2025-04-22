@@ -22,7 +22,6 @@
     "@lexical/selection": "^0.30.0",
     "@lexical/table": "^0.30.0",
     "@lexical/utils": "^0.30.0",
-    "@million/lint": "^1.0.14",
     "@prisma/client": "6.6.0",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.4",

@@ -1,4 +1,3 @@
-import MillionLint from "@million/lint";
 import ReactComponentName from "react-scan/react-component-name/webpack";
 
 let userConfig = undefined
@@ -55,7 +54,4 @@ if (userConfig) {
   }
 }
 
-export default MillionLint.next({
-  enabled: true,
-  rsc: true,
-})(nextConfig);
+export default nextConfig;
