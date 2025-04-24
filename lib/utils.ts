@@ -24,3 +24,21 @@ export const formatDate = (date: Date): string => {
 export const markDownToHTMLConverter = (markdown: string): string => {
   return converter.makeHtml(markdown);
 }
+
+
+/**
+ * A utility function to handle async operations with try-catch pattern
+ * @param promise The promise to be resolved
+ * @returns Object with data and error properties
+ */
+export async function tryCatch<T>(promise: Promise<T>): Promise<{ data: T | null; error: Error | null }> {
+  try {
+    const data = await promise;
+    return { data, error: null };
+  } catch (error) {
+    return { 
+      data: null, 
+      error: error instanceof Error ? error : new Error(String(error)) 
+    };
+  }
+} 

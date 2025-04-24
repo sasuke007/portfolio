@@ -1,4 +1,4 @@
-import { Tag } from '@prisma/client'
+import { Tag } from '@/prisma/generated/client'
 
 export interface PhotoTag {
   tag: Tag
