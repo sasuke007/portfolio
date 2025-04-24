@@ -18,6 +18,7 @@ export default async function Home() {
     getHighlightedVlogs().catch(() => []),
     getHighlightedPoems().catch(() => [])
   ]);
+  console.log('rohit',blogs);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -86,9 +87,7 @@ export default async function Home() {
                 key={vlog.id}
                 title={vlog.title}
                 description={vlog.description}
-                thumbnail={vlog.thumbnail_url}
                 date={formatDate(vlog.published_at)}
-                duration={vlog.duration}
                 videoId={vlog.id}
                 videoUrl={vlog.video_url}
               />
@@ -113,7 +112,7 @@ export default async function Home() {
                 title={poem.title}
                 content={poem.content.slice(0, 120) + "..."}
                 date={formatDate(poem.written_at || poem.created_at)}
-                slug={`/poems/${poem.id}`}
+                slug={`/poems/${poem.slug}`}
               />
             ))}
           </div>

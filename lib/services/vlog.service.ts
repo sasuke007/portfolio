@@ -10,7 +10,7 @@ export const getHighlightedVlogs = async (): Promise<VlogDTO[]> => {
       orderBy: {
         published_at: 'desc'
       },
-      take: 6,
+      take: 2,
       include: {
         tags: {
           include: {

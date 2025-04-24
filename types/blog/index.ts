@@ -15,7 +15,6 @@ export interface BlogDTO {
   content: string
   published_at: Date
   featured_image_url: string | null
-  meta_description: string | null
   author: string
   is_published: boolean
   category: string

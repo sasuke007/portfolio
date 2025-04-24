@@ -1683,8 +1683,6 @@ export namespace Prisma {
     updated_at: Date | null
     is_published: boolean | null
     featured_image_url: string | null
-    meta_description: string | null
-    meta_keywords: string | null
   }
 
   export type BlogMaxAggregateOutputType = {
@@ -1701,8 +1699,6 @@ export namespace Prisma {
     updated_at: Date | null
     is_published: boolean | null
     featured_image_url: string | null
-    meta_description: string | null
-    meta_keywords: string | null
   }
 
   export type BlogCountAggregateOutputType = {
@@ -1719,8 +1715,6 @@ export namespace Prisma {
     updated_at: number
     is_published: number
     featured_image_url: number
-    meta_description: number
-    meta_keywords: number
     _all: number
   }
 
@@ -1749,8 +1743,6 @@ export namespace Prisma {
     updated_at?: true
     is_published?: true
     featured_image_url?: true
-    meta_description?: true
-    meta_keywords?: true
   }
 
   export type BlogMaxAggregateInputType = {
@@ -1767,8 +1759,6 @@ export namespace Prisma {
     updated_at?: true
     is_published?: true
     featured_image_url?: true
-    meta_description?: true
-    meta_keywords?: true
   }
 
   export type BlogCountAggregateInputType = {
@@ -1785,8 +1775,6 @@ export namespace Prisma {
     updated_at?: true
     is_published?: true
     featured_image_url?: true
-    meta_description?: true
-    meta_keywords?: true
     _all?: true
   }
 
@@ -1890,8 +1878,6 @@ export namespace Prisma {
     updated_at: Date
     is_published: boolean
     featured_image_url: string | null
-    meta_description: string | null
-    meta_keywords: string | null
     _count: BlogCountAggregateOutputType | null
     _avg: BlogAvgAggregateOutputType | null
     _sum: BlogSumAggregateOutputType | null
@@ -1927,8 +1913,6 @@ export namespace Prisma {
     updated_at?: boolean
     is_published?: boolean
     featured_image_url?: boolean
-    meta_description?: boolean
-    meta_keywords?: boolean
     tags?: boolean | Blog$tagsArgs<ExtArgs>
     _count?: boolean | BlogCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["blog"]>
@@ -1947,8 +1931,6 @@ export namespace Prisma {
     updated_at?: boolean
     is_published?: boolean
     featured_image_url?: boolean
-    meta_description?: boolean
-    meta_keywords?: boolean
   }, ExtArgs["result"]["blog"]>
 
   export type BlogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1965,8 +1947,6 @@ export namespace Prisma {
     updated_at?: boolean
     is_published?: boolean
     featured_image_url?: boolean
-    meta_description?: boolean
-    meta_keywords?: boolean
   }, ExtArgs["result"]["blog"]>
 
   export type BlogSelectScalar = {
@@ -1983,11 +1963,9 @@ export namespace Prisma {
     updated_at?: boolean
     is_published?: boolean
     featured_image_url?: boolean
-    meta_description?: boolean
-    meta_keywords?: boolean
   }
 
-  export type BlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "slug" | "content" | "author" | "priority" | "category" | "published_at" | "created_at" | "updated_at" | "is_published" | "featured_image_url" | "meta_description" | "meta_keywords", ExtArgs["result"]["blog"]>
+  export type BlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "slug" | "content" | "author" | "priority" | "category" | "published_at" | "created_at" | "updated_at" | "is_published" | "featured_image_url", ExtArgs["result"]["blog"]>
   export type BlogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tags?: boolean | Blog$tagsArgs<ExtArgs>
     _count?: boolean | BlogCountOutputTypeDefaultArgs<ExtArgs>
@@ -2014,8 +1992,6 @@ export namespace Prisma {
       updated_at: Date
       is_published: boolean
       featured_image_url: string | null
-      meta_description: string | null
-      meta_keywords: string | null
     }, ExtArgs["result"]["blog"]>
     composites: {}
   }
@@ -2453,8 +2429,6 @@ export namespace Prisma {
     readonly updated_at: FieldRef<"Blog", 'DateTime'>
     readonly is_published: FieldRef<"Blog", 'Boolean'>
     readonly featured_image_url: FieldRef<"Blog", 'String'>
-    readonly meta_description: FieldRef<"Blog", 'String'>
-    readonly meta_keywords: FieldRef<"Blog", 'String'>
   }
     
 
@@ -4066,6 +4040,7 @@ export namespace Prisma {
     title: string | null
     author: string | null
     content: string | null
+    slug: string | null
     written_at: Date | null
     created_at: Date | null
     updated_at: Date | null
@@ -4077,6 +4052,7 @@ export namespace Prisma {
     title: string | null
     author: string | null
     content: string | null
+    slug: string | null
     written_at: Date | null
     created_at: Date | null
     updated_at: Date | null
@@ -4088,6 +4064,7 @@ export namespace Prisma {
     title: number
     author: number
     content: number
+    slug: number
     written_at: number
     created_at: number
     updated_at: number
@@ -4109,6 +4086,7 @@ export namespace Prisma {
     title?: true
     author?: true
     content?: true
+    slug?: true
     written_at?: true
     created_at?: true
     updated_at?: true
@@ -4120,6 +4098,7 @@ export namespace Prisma {
     title?: true
     author?: true
     content?: true
+    slug?: true
     written_at?: true
     created_at?: true
     updated_at?: true
@@ -4131,6 +4110,7 @@ export namespace Prisma {
     title?: true
     author?: true
     content?: true
+    slug?: true
     written_at?: true
     created_at?: true
     updated_at?: true
@@ -4229,6 +4209,7 @@ export namespace Prisma {
     title: string
     author: string
     content: string
+    slug: string
     written_at: Date | null
     created_at: Date
     updated_at: Date
@@ -4259,6 +4240,7 @@ export namespace Prisma {
     title?: boolean
     author?: boolean
     content?: boolean
+    slug?: boolean
     written_at?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -4270,6 +4252,7 @@ export namespace Prisma {
     title?: boolean
     author?: boolean
     content?: boolean
+    slug?: boolean
     written_at?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -4281,6 +4264,7 @@ export namespace Prisma {
     title?: boolean
     author?: boolean
     content?: boolean
+    slug?: boolean
     written_at?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -4292,13 +4276,14 @@ export namespace Prisma {
     title?: boolean
     author?: boolean
     content?: boolean
+    slug?: boolean
     written_at?: boolean
     created_at?: boolean
     updated_at?: boolean
     is_published?: boolean
   }
 
-  export type PoemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "author" | "content" | "written_at" | "created_at" | "updated_at" | "is_published", ExtArgs["result"]["poem"]>
+  export type PoemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "author" | "content" | "slug" | "written_at" | "created_at" | "updated_at" | "is_published", ExtArgs["result"]["poem"]>
 
   export type $PoemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Poem"
@@ -4308,6 +4293,7 @@ export namespace Prisma {
       title: string
       author: string
       content: string
+      slug: string
       written_at: Date | null
       created_at: Date
       updated_at: Date
@@ -4739,6 +4725,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Poem", 'String'>
     readonly author: FieldRef<"Poem", 'String'>
     readonly content: FieldRef<"Poem", 'String'>
+    readonly slug: FieldRef<"Poem", 'String'>
     readonly written_at: FieldRef<"Poem", 'DateTime'>
     readonly created_at: FieldRef<"Poem", 'DateTime'>
     readonly updated_at: FieldRef<"Poem", 'DateTime'>
@@ -8396,49 +8383,34 @@ export namespace Prisma {
   export type VlogMinAggregateOutputType = {
     id: number | null
     title: string | null
-    slug: string | null
     description: string | null
     video_url: string | null
     published_at: Date | null
     created_at: Date | null
     updated_at: Date | null
     is_published: boolean | null
-    thumbnail_url: string | null
-    duration: string | null
-    meta_description: string | null
-    meta_keywords: string | null
   }
 
   export type VlogMaxAggregateOutputType = {
     id: number | null
     title: string | null
-    slug: string | null
     description: string | null
     video_url: string | null
     published_at: Date | null
     created_at: Date | null
     updated_at: Date | null
     is_published: boolean | null
-    thumbnail_url: string | null
-    duration: string | null
-    meta_description: string | null
-    meta_keywords: string | null
   }
 
   export type VlogCountAggregateOutputType = {
     id: number
     title: number
-    slug: number
     description: number
     video_url: number
     published_at: number
     created_at: number
     updated_at: number
     is_published: number
-    thumbnail_url: number
-    duration: number
-    meta_description: number
-    meta_keywords: number
     _all: number
   }
 
@@ -8454,49 +8426,34 @@ export namespace Prisma {
   export type VlogMinAggregateInputType = {
     id?: true
     title?: true
-    slug?: true
     description?: true
     video_url?: true
     published_at?: true
     created_at?: true
     updated_at?: true
     is_published?: true
-    thumbnail_url?: true
-    duration?: true
-    meta_description?: true
-    meta_keywords?: true
   }
 
   export type VlogMaxAggregateInputType = {
     id?: true
     title?: true
-    slug?: true
     description?: true
     video_url?: true
     published_at?: true
     created_at?: true
     updated_at?: true
     is_published?: true
-    thumbnail_url?: true
-    duration?: true
-    meta_description?: true
-    meta_keywords?: true
   }
 
   export type VlogCountAggregateInputType = {
     id?: true
     title?: true
-    slug?: true
     description?: true
     video_url?: true
     published_at?: true
     created_at?: true
     updated_at?: true
     is_published?: true
-    thumbnail_url?: true
-    duration?: true
-    meta_description?: true
-    meta_keywords?: true
     _all?: true
   }
 
@@ -8589,17 +8546,12 @@ export namespace Prisma {
   export type VlogGroupByOutputType = {
     id: number
     title: string
-    slug: string
     description: string | null
     video_url: string
     published_at: Date
     created_at: Date
     updated_at: Date
     is_published: boolean
-    thumbnail_url: string | null
-    duration: string | null
-    meta_description: string | null
-    meta_keywords: string | null
     _count: VlogCountAggregateOutputType | null
     _avg: VlogAvgAggregateOutputType | null
     _sum: VlogSumAggregateOutputType | null
@@ -8624,17 +8576,12 @@ export namespace Prisma {
   export type VlogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    slug?: boolean
     description?: boolean
     video_url?: boolean
     published_at?: boolean
     created_at?: boolean
     updated_at?: boolean
     is_published?: boolean
-    thumbnail_url?: boolean
-    duration?: boolean
-    meta_description?: boolean
-    meta_keywords?: boolean
     tags?: boolean | Vlog$tagsArgs<ExtArgs>
     _count?: boolean | VlogCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vlog"]>
@@ -8642,52 +8589,37 @@ export namespace Prisma {
   export type VlogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    slug?: boolean
     description?: boolean
     video_url?: boolean
     published_at?: boolean
     created_at?: boolean
     updated_at?: boolean
     is_published?: boolean
-    thumbnail_url?: boolean
-    duration?: boolean
-    meta_description?: boolean
-    meta_keywords?: boolean
   }, ExtArgs["result"]["vlog"]>
 
   export type VlogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    slug?: boolean
     description?: boolean
     video_url?: boolean
     published_at?: boolean
     created_at?: boolean
     updated_at?: boolean
     is_published?: boolean
-    thumbnail_url?: boolean
-    duration?: boolean
-    meta_description?: boolean
-    meta_keywords?: boolean
   }, ExtArgs["result"]["vlog"]>
 
   export type VlogSelectScalar = {
     id?: boolean
     title?: boolean
-    slug?: boolean
     description?: boolean
     video_url?: boolean
     published_at?: boolean
     created_at?: boolean
     updated_at?: boolean
     is_published?: boolean
-    thumbnail_url?: boolean
-    duration?: boolean
-    meta_description?: boolean
-    meta_keywords?: boolean
   }
 
-  export type VlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "description" | "video_url" | "published_at" | "created_at" | "updated_at" | "is_published" | "thumbnail_url" | "duration" | "meta_description" | "meta_keywords", ExtArgs["result"]["vlog"]>
+  export type VlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "video_url" | "published_at" | "created_at" | "updated_at" | "is_published", ExtArgs["result"]["vlog"]>
   export type VlogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tags?: boolean | Vlog$tagsArgs<ExtArgs>
     _count?: boolean | VlogCountOutputTypeDefaultArgs<ExtArgs>
@@ -8703,17 +8635,12 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
-      slug: string
       description: string | null
       video_url: string
       published_at: Date
       created_at: Date
       updated_at: Date
       is_published: boolean
-      thumbnail_url: string | null
-      duration: string | null
-      meta_description: string | null
-      meta_keywords: string | null
     }, ExtArgs["result"]["vlog"]>
     composites: {}
   }
@@ -9140,17 +9067,12 @@ export namespace Prisma {
   interface VlogFieldRefs {
     readonly id: FieldRef<"Vlog", 'Int'>
     readonly title: FieldRef<"Vlog", 'String'>
-    readonly slug: FieldRef<"Vlog", 'String'>
     readonly description: FieldRef<"Vlog", 'String'>
     readonly video_url: FieldRef<"Vlog", 'String'>
     readonly published_at: FieldRef<"Vlog", 'DateTime'>
     readonly created_at: FieldRef<"Vlog", 'DateTime'>
     readonly updated_at: FieldRef<"Vlog", 'DateTime'>
     readonly is_published: FieldRef<"Vlog", 'Boolean'>
-    readonly thumbnail_url: FieldRef<"Vlog", 'String'>
-    readonly duration: FieldRef<"Vlog", 'String'>
-    readonly meta_description: FieldRef<"Vlog", 'String'>
-    readonly meta_keywords: FieldRef<"Vlog", 'String'>
   }
     
 
@@ -10673,9 +10595,7 @@ export namespace Prisma {
     created_at: 'created_at',
     updated_at: 'updated_at',
     is_published: 'is_published',
-    featured_image_url: 'featured_image_url',
-    meta_description: 'meta_description',
-    meta_keywords: 'meta_keywords'
+    featured_image_url: 'featured_image_url'
   };
 
   export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum]
@@ -10701,6 +10621,7 @@ export namespace Prisma {
     title: 'title',
     author: 'author',
     content: 'content',
+    slug: 'slug',
     written_at: 'written_at',
     created_at: 'created_at',
     updated_at: 'updated_at',
@@ -10738,17 +10659,12 @@ export namespace Prisma {
   export const VlogScalarFieldEnum: {
     id: 'id',
     title: 'title',
-    slug: 'slug',
     description: 'description',
     video_url: 'video_url',
     published_at: 'published_at',
     created_at: 'created_at',
     updated_at: 'updated_at',
-    is_published: 'is_published',
-    thumbnail_url: 'thumbnail_url',
-    duration: 'duration',
-    meta_description: 'meta_description',
-    meta_keywords: 'meta_keywords'
+    is_published: 'is_published'
   };
 
   export type VlogScalarFieldEnum = (typeof VlogScalarFieldEnum)[keyof typeof VlogScalarFieldEnum]
@@ -10874,8 +10790,6 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Blog"> | Date | string
     is_published?: BoolFilter<"Blog"> | boolean
     featured_image_url?: StringNullableFilter<"Blog"> | string | null
-    meta_description?: StringNullableFilter<"Blog"> | string | null
-    meta_keywords?: StringNullableFilter<"Blog"> | string | null
     tags?: BlogTagListRelationFilter
   }
 
@@ -10893,8 +10807,6 @@ export namespace Prisma {
     updated_at?: SortOrder
     is_published?: SortOrder
     featured_image_url?: SortOrderInput | SortOrder
-    meta_description?: SortOrderInput | SortOrder
-    meta_keywords?: SortOrderInput | SortOrder
     tags?: BlogTagOrderByRelationAggregateInput
   }
 
@@ -10915,8 +10827,6 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Blog"> | Date | string
     is_published?: BoolFilter<"Blog"> | boolean
     featured_image_url?: StringNullableFilter<"Blog"> | string | null
-    meta_description?: StringNullableFilter<"Blog"> | string | null
-    meta_keywords?: StringNullableFilter<"Blog"> | string | null
     tags?: BlogTagListRelationFilter
   }, "id" | "slug">
 
@@ -10934,8 +10844,6 @@ export namespace Prisma {
     updated_at?: SortOrder
     is_published?: SortOrder
     featured_image_url?: SortOrderInput | SortOrder
-    meta_description?: SortOrderInput | SortOrder
-    meta_keywords?: SortOrderInput | SortOrder
     _count?: BlogCountOrderByAggregateInput
     _avg?: BlogAvgOrderByAggregateInput
     _max?: BlogMaxOrderByAggregateInput
@@ -10960,8 +10868,6 @@ export namespace Prisma {
     updated_at?: DateTimeWithAggregatesFilter<"Blog"> | Date | string
     is_published?: BoolWithAggregatesFilter<"Blog"> | boolean
     featured_image_url?: StringNullableWithAggregatesFilter<"Blog"> | string | null
-    meta_description?: StringNullableWithAggregatesFilter<"Blog"> | string | null
-    meta_keywords?: StringNullableWithAggregatesFilter<"Blog"> | string | null
   }
 
   export type PhotoWhereInput = {
@@ -11049,6 +10955,7 @@ export namespace Prisma {
     title?: StringFilter<"Poem"> | string
     author?: StringFilter<"Poem"> | string
     content?: StringFilter<"Poem"> | string
+    slug?: StringFilter<"Poem"> | string
     written_at?: DateTimeNullableFilter<"Poem"> | Date | string | null
     created_at?: DateTimeFilter<"Poem"> | Date | string
     updated_at?: DateTimeFilter<"Poem"> | Date | string
@@ -11060,6 +10967,7 @@ export namespace Prisma {
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
+    slug?: SortOrder
     written_at?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -11068,23 +10976,25 @@ export namespace Prisma {
 
   export type PoemWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    title?: string
+    slug?: string
     AND?: PoemWhereInput | PoemWhereInput[]
     OR?: PoemWhereInput[]
     NOT?: PoemWhereInput | PoemWhereInput[]
-    title?: StringFilter<"Poem"> | string
     author?: StringFilter<"Poem"> | string
     content?: StringFilter<"Poem"> | string
     written_at?: DateTimeNullableFilter<"Poem"> | Date | string | null
     created_at?: DateTimeFilter<"Poem"> | Date | string
     updated_at?: DateTimeFilter<"Poem"> | Date | string
     is_published?: BoolFilter<"Poem"> | boolean
-  }, "id">
+  }, "id" | "title" | "slug">
 
   export type PoemOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
+    slug?: SortOrder
     written_at?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -11104,6 +11014,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Poem"> | string
     author?: StringWithAggregatesFilter<"Poem"> | string
     content?: StringWithAggregatesFilter<"Poem"> | string
+    slug?: StringWithAggregatesFilter<"Poem"> | string
     written_at?: DateTimeNullableWithAggregatesFilter<"Poem"> | Date | string | null
     created_at?: DateTimeWithAggregatesFilter<"Poem"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Poem"> | Date | string
@@ -11261,40 +11172,29 @@ export namespace Prisma {
     NOT?: VlogWhereInput | VlogWhereInput[]
     id?: IntFilter<"Vlog"> | number
     title?: StringFilter<"Vlog"> | string
-    slug?: StringFilter<"Vlog"> | string
     description?: StringNullableFilter<"Vlog"> | string | null
     video_url?: StringFilter<"Vlog"> | string
     published_at?: DateTimeFilter<"Vlog"> | Date | string
     created_at?: DateTimeFilter<"Vlog"> | Date | string
     updated_at?: DateTimeFilter<"Vlog"> | Date | string
     is_published?: BoolFilter<"Vlog"> | boolean
-    thumbnail_url?: StringNullableFilter<"Vlog"> | string | null
-    duration?: StringNullableFilter<"Vlog"> | string | null
-    meta_description?: StringNullableFilter<"Vlog"> | string | null
-    meta_keywords?: StringNullableFilter<"Vlog"> | string | null
     tags?: VlogTagListRelationFilter
   }
 
   export type VlogOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    slug?: SortOrder
     description?: SortOrderInput | SortOrder
     video_url?: SortOrder
     published_at?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     is_published?: SortOrder
-    thumbnail_url?: SortOrderInput | SortOrder
-    duration?: SortOrderInput | SortOrder
-    meta_description?: SortOrderInput | SortOrder
-    meta_keywords?: SortOrderInput | SortOrder
     tags?: VlogTagOrderByRelationAggregateInput
   }
 
   export type VlogWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    slug?: string
     video_url?: string
     AND?: VlogWhereInput | VlogWhereInput[]
     OR?: VlogWhereInput[]
@@ -11305,27 +11205,18 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Vlog"> | Date | string
     updated_at?: DateTimeFilter<"Vlog"> | Date | string
     is_published?: BoolFilter<"Vlog"> | boolean
-    thumbnail_url?: StringNullableFilter<"Vlog"> | string | null
-    duration?: StringNullableFilter<"Vlog"> | string | null
-    meta_description?: StringNullableFilter<"Vlog"> | string | null
-    meta_keywords?: StringNullableFilter<"Vlog"> | string | null
     tags?: VlogTagListRelationFilter
-  }, "id" | "slug" | "video_url">
+  }, "id" | "video_url">
 
   export type VlogOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    slug?: SortOrder
     description?: SortOrderInput | SortOrder
     video_url?: SortOrder
     published_at?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     is_published?: SortOrder
-    thumbnail_url?: SortOrderInput | SortOrder
-    duration?: SortOrderInput | SortOrder
-    meta_description?: SortOrderInput | SortOrder
-    meta_keywords?: SortOrderInput | SortOrder
     _count?: VlogCountOrderByAggregateInput
     _avg?: VlogAvgOrderByAggregateInput
     _max?: VlogMaxOrderByAggregateInput
@@ -11339,17 +11230,12 @@ export namespace Prisma {
     NOT?: VlogScalarWhereWithAggregatesInput | VlogScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Vlog"> | number
     title?: StringWithAggregatesFilter<"Vlog"> | string
-    slug?: StringWithAggregatesFilter<"Vlog"> | string
     description?: StringNullableWithAggregatesFilter<"Vlog"> | string | null
     video_url?: StringWithAggregatesFilter<"Vlog"> | string
     published_at?: DateTimeWithAggregatesFilter<"Vlog"> | Date | string
     created_at?: DateTimeWithAggregatesFilter<"Vlog"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Vlog"> | Date | string
     is_published?: BoolWithAggregatesFilter<"Vlog"> | boolean
-    thumbnail_url?: StringNullableWithAggregatesFilter<"Vlog"> | string | null
-    duration?: StringNullableWithAggregatesFilter<"Vlog"> | string | null
-    meta_description?: StringNullableWithAggregatesFilter<"Vlog"> | string | null
-    meta_keywords?: StringNullableWithAggregatesFilter<"Vlog"> | string | null
   }
 
   export type VlogTagWhereInput = {
@@ -11411,8 +11297,6 @@ export namespace Prisma {
     updated_at?: Date | string
     is_published?: boolean
     featured_image_url?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
     tags?: BlogTagCreateNestedManyWithoutBlogInput
   }
 
@@ -11430,8 +11314,6 @@ export namespace Prisma {
     updated_at?: Date | string
     is_published?: boolean
     featured_image_url?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
     tags?: BlogTagUncheckedCreateNestedManyWithoutBlogInput
   }
 
@@ -11448,8 +11330,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
     featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: BlogTagUpdateManyWithoutBlogNestedInput
   }
 
@@ -11467,8 +11347,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
     featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: BlogTagUncheckedUpdateManyWithoutBlogNestedInput
   }
 
@@ -11486,8 +11364,6 @@ export namespace Prisma {
     updated_at?: Date | string
     is_published?: boolean
     featured_image_url?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
   }
 
   export type BlogUpdateManyMutationInput = {
@@ -11503,8 +11379,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
     featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BlogUncheckedUpdateManyInput = {
@@ -11521,8 +11395,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
     featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PhotoCreateInput = {
@@ -11614,6 +11486,7 @@ export namespace Prisma {
     title: string
     author: string
     content: string
+    slug: string
     written_at?: Date | string | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -11625,6 +11498,7 @@ export namespace Prisma {
     title: string
     author: string
     content: string
+    slug: string
     written_at?: Date | string | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -11635,6 +11509,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     author?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     written_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11646,6 +11521,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     author?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     written_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11657,6 +11533,7 @@ export namespace Prisma {
     title: string
     author: string
     content: string
+    slug: string
     written_at?: Date | string | null
     created_at?: Date | string
     updated_at?: Date | string
@@ -11667,6 +11544,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     author?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     written_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11678,6 +11556,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     author?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     written_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11805,115 +11684,80 @@ export namespace Prisma {
 
   export type VlogCreateInput = {
     title: string
-    slug: string
     description?: string | null
     video_url: string
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
     is_published?: boolean
-    thumbnail_url?: string | null
-    duration?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
     tags?: VlogTagCreateNestedManyWithoutVlogInput
   }
 
   export type VlogUncheckedCreateInput = {
     id?: number
     title: string
-    slug: string
     description?: string | null
     video_url: string
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
     is_published?: boolean
-    thumbnail_url?: string | null
-    duration?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
     tags?: VlogTagUncheckedCreateNestedManyWithoutVlogInput
   }
 
   export type VlogUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
-    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: VlogTagUpdateManyWithoutVlogNestedInput
   }
 
   export type VlogUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
-    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: VlogTagUncheckedUpdateManyWithoutVlogNestedInput
   }
 
   export type VlogCreateManyInput = {
     id?: number
     title: string
-    slug: string
     description?: string | null
     video_url: string
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
     is_published?: boolean
-    thumbnail_url?: string | null
-    duration?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
   }
 
   export type VlogUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
-    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VlogUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
-    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VlogTagCreateInput = {
@@ -12036,8 +11880,6 @@ export namespace Prisma {
     updated_at?: SortOrder
     is_published?: SortOrder
     featured_image_url?: SortOrder
-    meta_description?: SortOrder
-    meta_keywords?: SortOrder
   }
 
   export type BlogAvgOrderByAggregateInput = {
@@ -12059,8 +11901,6 @@ export namespace Prisma {
     updated_at?: SortOrder
     is_published?: SortOrder
     featured_image_url?: SortOrder
-    meta_description?: SortOrder
-    meta_keywords?: SortOrder
   }
 
   export type BlogMinOrderByAggregateInput = {
@@ -12077,8 +11917,6 @@ export namespace Prisma {
     updated_at?: SortOrder
     is_published?: SortOrder
     featured_image_url?: SortOrder
-    meta_description?: SortOrder
-    meta_keywords?: SortOrder
   }
 
   export type BlogSumOrderByAggregateInput = {
@@ -12244,6 +12082,7 @@ export namespace Prisma {
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
+    slug?: SortOrder
     written_at?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -12259,6 +12098,7 @@ export namespace Prisma {
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
+    slug?: SortOrder
     written_at?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -12270,6 +12110,7 @@ export namespace Prisma {
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
+    slug?: SortOrder
     written_at?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -12394,17 +12235,12 @@ export namespace Prisma {
   export type VlogCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    slug?: SortOrder
     description?: SortOrder
     video_url?: SortOrder
     published_at?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     is_published?: SortOrder
-    thumbnail_url?: SortOrder
-    duration?: SortOrder
-    meta_description?: SortOrder
-    meta_keywords?: SortOrder
   }
 
   export type VlogAvgOrderByAggregateInput = {
@@ -12414,33 +12250,23 @@ export namespace Prisma {
   export type VlogMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    slug?: SortOrder
     description?: SortOrder
     video_url?: SortOrder
     published_at?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     is_published?: SortOrder
-    thumbnail_url?: SortOrder
-    duration?: SortOrder
-    meta_description?: SortOrder
-    meta_keywords?: SortOrder
   }
 
   export type VlogMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    slug?: SortOrder
     description?: SortOrder
     video_url?: SortOrder
     published_at?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     is_published?: SortOrder
-    thumbnail_url?: SortOrder
-    duration?: SortOrder
-    meta_description?: SortOrder
-    meta_keywords?: SortOrder
   }
 
   export type VlogSumOrderByAggregateInput = {
@@ -13227,8 +13053,6 @@ export namespace Prisma {
     updated_at?: Date | string
     is_published?: boolean
     featured_image_url?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
   }
 
   export type BlogUncheckedCreateWithoutTagsInput = {
@@ -13245,8 +13069,6 @@ export namespace Prisma {
     updated_at?: Date | string
     is_published?: boolean
     featured_image_url?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
   }
 
   export type BlogCreateOrConnectWithoutTagsInput = {
@@ -13298,8 +13120,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
     featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BlogUncheckedUpdateWithoutTagsInput = {
@@ -13316,8 +13136,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
     featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TagUpsertWithoutBlogsInput = {
@@ -13490,33 +13308,23 @@ export namespace Prisma {
 
   export type VlogCreateWithoutTagsInput = {
     title: string
-    slug: string
     description?: string | null
     video_url: string
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
     is_published?: boolean
-    thumbnail_url?: string | null
-    duration?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
   }
 
   export type VlogUncheckedCreateWithoutTagsInput = {
     id?: number
     title: string
-    slug: string
     description?: string | null
     video_url: string
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
     is_published?: boolean
-    thumbnail_url?: string | null
-    duration?: string | null
-    meta_description?: string | null
-    meta_keywords?: string | null
   }
 
   export type VlogCreateOrConnectWithoutTagsInput = {
@@ -13557,33 +13365,23 @@ export namespace Prisma {
 
   export type VlogUpdateWithoutTagsInput = {
     title?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
-    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VlogUncheckedUpdateWithoutTagsInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
-    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
-    duration?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_description?: NullableStringFieldUpdateOperationsInput | string | null
-    meta_keywords?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TagUpsertWithoutVlogsInput = {

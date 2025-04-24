@@ -39,7 +39,7 @@ export default async function BlogPage() {
                 title={blog.title}
                 description={
                   <div className="flex flex-col gap-2">
-                    <p className="line-clamp-2">{blog.meta_description || "Read more..."}</p>
+                    <p className="line-clamp-2">{"Read more..."}</p>
                     <div className="flex items-center gap-2 text-xs text-gray-500">
                       <CalendarIcon className="h-3 w-3" />
                       <span>{formatDate(blog.published_at)}</span>

@@ -1,49 +1,19 @@
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/page-header"
 import { VideoCard } from "@/components/video-card"
+import { getAllVlogs } from "@/lib/services/vlog.service";
+import { VlogDTO } from "@/types/vlog";
+import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Vlogs | John Doe",
-  description: "Video stories and documentaries by John Doe.",
+  title: "Vlogs | Rohit Pandit",
+  description: "Video stories and documentaries by Rohit Pandit.",
 }
 
-export default function VlogsPage() {
-  // In a real app, you would fetch this data from a CMS or API
-  const videos = [
-    {
-      title: "A Week in Tokyo",
-      description: "Exploring the vibrant streets and culture of Tokyo, Japan.",
-      date: "March 10, 2023",
-      duration: "12:34",
-      thumbnail: "/placeholder.svg?height=720&width=1280",
-      videoId: "video-1",
-    },
-    {
-      title: "Mountain Hiking Adventure",
-      description: "Documenting a challenging hike through the mountains.",
-      date: "February 15, 2023",
-      duration: "18:22",
-      thumbnail: "/placeholder.svg?height=720&width=1280",
-      videoId: "video-2",
-    },
-    {
-      title: "Day in the Life: Freelance Creator",
-      description: "Behind the scenes of my daily routine as a content creator.",
-      date: "January 28, 2023",
-      duration: "15:45",
-      thumbnail: "/placeholder.svg?height=720&width=1280",
-      videoId: "video-3",
-    },
-    {
-      title: "Street Food Tour",
-      description: "Tasting the best street food from around the world.",
-      date: "January 5, 2023",
-      duration: "21:18",
-      thumbnail: "/placeholder.svg?height=720&width=1280",
-      videoId: "video-4",
-    },
-  ]
+export default async function VlogsPage() {
 
+  const videos: VlogDTO[] = await getAllVlogs();
+  // In a real app, you would fetch this data from a CMS or API
   return (
     <div className="container px-4 py-12 md:px-6 md:py-24">
       <PageHeader title="Vlogs" description="Visual stories from my adventures." />
@@ -53,10 +23,9 @@ export default function VlogsPage() {
             key={index}
             title={video.title}
             description={video.description}
-            date={video.date}
-            duration={video.duration}
-            thumbnail={video.thumbnail}
-            videoId={video.videoId}
+            date={formatDate(video.published_at)}
+            videoId={video.id}
+            videoUrl={video.video_url}
           />
         ))}
       </div>

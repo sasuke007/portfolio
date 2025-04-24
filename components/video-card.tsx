@@ -1,18 +1,14 @@
 import Link from "next/link"
-import Image from "next/image"
-import { Play } from "lucide-react"
 
 interface VideoCardProps {
   title: string
   description: string | null
   date: string
-  duration: string | null
-  thumbnail: string | null
   videoId: number
   videoUrl: string
 }
 
-export function VideoCard({ title, description, date, duration, thumbnail, videoId, videoUrl }: VideoCardProps) {
+export function VideoCard({ title, description, date, videoId, videoUrl }: VideoCardProps) {
   return (
     <div className="group flex flex-col overflow-hidden rounded-lg border border-border/50 bg-dark-100 transition-all hover:shadow-md hover-scale">
       <Link href={`/vlogs/${videoId}`} className="relative overflow-hidden">

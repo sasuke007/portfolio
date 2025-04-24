@@ -6,7 +6,7 @@ export const getHighlightedBlogs = async (): Promise<BlogDTO[]> => {
     const blogs: BlogDTO[] = await prisma.blog.findMany({
       where: {
         priority: {
-          gte: 5
+          gte: 0
         },
       },
       select: {
@@ -15,7 +15,6 @@ export const getHighlightedBlogs = async (): Promise<BlogDTO[]> => {
         content: true,
         published_at: true,
         featured_image_url: true,
-        meta_description: true,
         author: true,
         description: true,
         is_published: true,

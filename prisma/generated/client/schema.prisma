@@ -15,7 +15,6 @@ model Blog {
   slug               String    @unique
   content            String
   author             String
-  // TODO: Priority should be between 0 and 10 
   priority           Int       @default(0)
   category           String
   published_at       DateTime  @default(now())
@@ -23,8 +22,6 @@ model Blog {
   updated_at         DateTime  @updatedAt
   is_published       Boolean   @default(false)
   featured_image_url String?
-  meta_description   String?
-  meta_keywords      String?
   tags               BlogTag[]
 }
 
@@ -32,7 +29,7 @@ model Photo {
   id          Int        @id @default(autoincrement())
   title       String
   description String?
-  image_url   String     @unique @map("file_url")
+  image_url   String     @unique @map("image_url")
   taken_at    DateTime?
   uploaded_at DateTime   @default(now())
   created_at  DateTime   @default(now())
@@ -43,9 +40,10 @@ model Photo {
 
 model Poem {
   id           Int       @id @default(autoincrement())
-  title        String
+  title        String    @unique
   author       String
   content      String
+  slug         String    @unique
   written_at   DateTime?
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
@@ -80,20 +78,15 @@ model PhotoTag {
 }
 
 model Vlog {
-  id               Int       @id @default(autoincrement())
-  title            String
-  slug             String    @unique
-  description      String?
-  video_url        String    @unique
-  published_at     DateTime  @default(now())
-  created_at       DateTime  @default(now())
-  updated_at       DateTime  @updatedAt
-  is_published     Boolean   @default(false)
-  thumbnail_url    String?
-  duration         String? // Prisma doesn't have a direct INTERVAL type, using String
-  meta_description String?
-  meta_keywords    String?
-  tags             VlogTag[]
+  id           Int       @id @default(autoincrement())
+  title        String
+  description  String?
+  video_url    String    @unique
+  published_at DateTime  @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  is_published Boolean   @default(false) // Prisma doesn't have a direct INTERVAL type, using String
+  tags         VlogTag[]
 }
 
 model VlogTag {

@@ -33,7 +33,7 @@ export function PoemsList({ poems }: PoemsListProps) {
               title={poem.title} 
               content={poem.content} 
               date={formatDate(poem.written_at || poem.created_at)} 
-              slug={poem.id.toString()}
+              slug={poem.slug}
               poemData={poem}
             />
           ))}

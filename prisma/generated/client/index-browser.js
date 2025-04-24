@@ -130,9 +130,7 @@ exports.Prisma.BlogScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   is_published: 'is_published',
-  featured_image_url: 'featured_image_url',
-  meta_description: 'meta_description',
-  meta_keywords: 'meta_keywords'
+  featured_image_url: 'featured_image_url'
 };
 
 exports.Prisma.PhotoScalarFieldEnum = {
@@ -152,6 +150,7 @@ exports.Prisma.PoemScalarFieldEnum = {
   title: 'title',
   author: 'author',
   content: 'content',
+  slug: 'slug',
   written_at: 'written_at',
   created_at: 'created_at',
   updated_at: 'updated_at',
@@ -177,17 +176,12 @@ exports.Prisma.PhotoTagScalarFieldEnum = {
 exports.Prisma.VlogScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  slug: 'slug',
   description: 'description',
   video_url: 'video_url',
   published_at: 'published_at',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  is_published: 'is_published',
-  thumbnail_url: 'thumbnail_url',
-  duration: 'duration',
-  meta_description: 'meta_description',
-  meta_keywords: 'meta_keywords'
+  is_published: 'is_published'
 };
 
 exports.Prisma.VlogTagScalarFieldEnum = {
