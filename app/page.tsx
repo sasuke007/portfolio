@@ -18,7 +18,6 @@ export default async function Home() {
     getHighlightedVlogs().catch(() => []),
     getHighlightedPoems().catch(() => [])
   ]);
-  console.log('rohit',blogs);
 
   return (
     <div className="flex flex-col min-h-screen">

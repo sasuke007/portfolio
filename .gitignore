@@ -2,13 +2,15 @@
 
 # dependencies
 /node_modules
-
+/lexical-playground
 # next.js
 /.next/
 /out/
-
+/.cursor
+/.idea
 # production
 /build
+/scripts
 
 # debug
 npm-debug.log*

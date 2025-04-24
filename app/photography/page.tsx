@@ -2,10 +2,10 @@ import { PageHeader } from "@/components/page-header"
 import { ParallaxPhotos } from "@/components/parallax-grid-gallery"
 
 import { PhotographyGallery } from "@/components/photography-gallery"
-import { getHighlightedPhotos } from "@/lib/services/photo.service"
+import { getAllPhotos, getHighlightedPhotos } from "@/lib/services/photo.service"
 
 export default async function PhotographyPage() {
-  const photos = await getHighlightedPhotos();
+  const photos = await getAllPhotos();
 
   // Map PhotoDTO to the Photo type expected by ParallaxGridGallery
   const galleryPhotos: ParallaxPhotos[] = photos.map(photo => ({

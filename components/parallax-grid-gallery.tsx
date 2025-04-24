@@ -23,10 +23,10 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
     offset: ["start start", "end start"],
   })
 
-  // Reduce the intensity of these values
+  // Increase the intensity of these values for stronger parallax effect
   const translateFirst = useTransform(scrollYProgress, [0, 1], [0, -200])
   const translateSecond = useTransform(scrollYProgress, [0, 1], [0, 150])
-  const translateThird = useTransform(scrollYProgress, [0, 1], [0, -180])
+  const translateThird = useTransform(scrollYProgress, [0, 1], [0, -500])
 
   // Split photos into three columns
   const third = Math.ceil(photos.length / 3)
