@@ -23,8 +23,11 @@ export function VideoCard({ title, description, date, duration, thumbnail, video
           height={720}
           className="aspect-video h-auto w-full object-cover transition-transform duration-500 group-hover:scale-110"
         /> */}
-        <iframe className="aspect-video h-auto w-full object-cover transition-transform duration-500 group-hover:scale-103"
-          src={videoUrl}>
+        <iframe 
+          className="aspect-video h-auto w-full object-cover transition-transform duration-500 group-hover:scale-103"
+          src={videoUrl}
+          title={`${title} - Video Player`}
+          allowFullScreen>
         </iframe>
         {/* <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/90 transform scale-75 transition-transform group-hover:scale-100 pulse">

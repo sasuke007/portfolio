@@ -18,7 +18,7 @@ export function HeroSection() {
 
   useEffect(() => {
     setIsLoaded(true)
-  }, [])
+  }, []);
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 relative overflow-hidden">
@@ -28,8 +28,9 @@ export function HeroSection() {
           <div key={index} className="w-1/3 h-full relative">
             <Image
               src={image.src}
-              alt={image.alt}
-              fill
+              alt={``}
+              height={1000}
+              width={1000}
               sizes="33vw"
               className="object-cover"
               priority
