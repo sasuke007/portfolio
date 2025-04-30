@@ -12,3 +12,11 @@ Introduce a cacheing layer intermediate between ssr and ssg, isr
 
 figure out how to put tags while create blog posts or photos or everything else.
 in admin page there should be an option of what exactly you want to create and based on that the next page should open up.
+Mock data - would be fetched from API in production in admin page recent activities section, total items published, total items created, total items updated, recent activity section.
+Optimize unnecessary re-renders in admin page.
+We have to make pages for update blog, update poem, update photo, update vlog.
+Learn tanstack and diffrent use cases it solves.
+Learn framer motion.
+
+when in preview mode, make the editor big take the whole space and make the editor uneditable.
+

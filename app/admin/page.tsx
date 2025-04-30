@@ -3,7 +3,7 @@ import { FileText, BookOpen, Image as ImageIcon, Video } from "lucide-react"
 import Link from "next/link"
 
 export default function AdminDashboard() {
-  // Mock data - would be fetched from API in production
+  //TODO: Mock data - would be fetched from API in production
   const stats = [
     { title: "Blog Posts", count: 12, icon: FileText, path: "create-blog" },
     { title: "Poems", count: 8, icon: BookOpen, path: "create-poem" },

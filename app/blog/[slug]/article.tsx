@@ -28,7 +28,6 @@ function ErrorBoundary({ children }: { children: React.ReactNode }) {
 
 export function Article({ contentJSON }: ArticleProps) {
     const initialConfig = createBaseLexicalConfig(contentJSON);
-
     return (
         <LexicalComposer initialConfig={initialConfig}>
             <div className="editor-container">

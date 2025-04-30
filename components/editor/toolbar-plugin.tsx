@@ -86,23 +86,20 @@ export default function ToolbarPlugin() {
         selection.insertNodes([linkNode]);
       }
     });
-    
     setLinkUrl('');
     setIsLinkDialogOpen(false);
   }, [editor, linkUrl]);
   
-  const insertImage = useCallback(() => {
+  const insertImage = () => {
     if (!imageUrl) return;
-    
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
       src: imageUrl,
       altText: imageAlt
     });
-    
     setImageUrl('');
     setImageAlt('');
     setIsImageDialogOpen(false);
-  }, [editor, imageUrl, imageAlt]);
+  };
   
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -209,7 +206,7 @@ export default function ToolbarPlugin() {
         <Quote className="h-4 w-4" />
       </Button>
       <div className="border-r mx-1 h-6" />
-      <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
+      {/* <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
         <DialogTrigger asChild>
           <Button
             variant="ghost"
@@ -247,9 +244,9 @@ export default function ToolbarPlugin() {
             </Button>
           </div>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
       
-      <Dialog open={isImageDialogOpen} onOpenChange={setIsImageDialogOpen}>
+      {/* <Dialog open={isImageDialogOpen} onOpenChange={setIsImageDialogOpen}>
         <DialogTrigger asChild>
           <Button
             variant="ghost"
@@ -272,7 +269,7 @@ export default function ToolbarPlugin() {
               <Input 
                 id="image-url" 
                 value={imageUrl} 
-                onChange={(e) => setImageUrl(e.target.value)} 
+                onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="https://example.com/image.jpg"
               />
             </div>
@@ -319,7 +316,7 @@ export default function ToolbarPlugin() {
             </DialogClose>
             <Button 
               type="button" 
-              onClick={insertImage} 
+              onClick={insertImage}
               disabled={!imageUrl}
               className="bg-glow-purple hover:bg-glow-purple/90"
             >
@@ -327,7 +324,7 @@ export default function ToolbarPlugin() {
             </Button>
           </div>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }

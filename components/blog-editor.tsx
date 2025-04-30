@@ -1,53 +1,52 @@
 "use client";
 
-import { CodeHighlightNode, CodeNode } from "@lexical/code";
-import { AutoLinkNode, LinkNode } from "@lexical/link";
-import { ListItemNode, ListNode } from "@lexical/list";
-import { TRANSFORMERS } from "@lexical/markdown";
-import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
-import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
-import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
-import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
-import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
-import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
-import { HorizontalRuleNode } from "@lexical/react/LexicalHorizontalRuleNode";
-import { HorizontalRulePlugin } from "@lexical/react/LexicalHorizontalRulePlugin";
-import { ClickableLinkPlugin } from "@lexical/react/LexicalClickableLinkPlugin";
-import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
-import { CharacterLimitPlugin } from "@lexical/react/LexicalCharacterLimitPlugin";
-import { OverflowNode } from "@lexical/overflow";
-import { CodeHighlightPlugin } from "./editor/plugins/CodeHighlightPlugin";
-import { ImagesPlugin } from "./editor/plugins/ImagesPlugin";
-import { EditorState } from "lexical";
+import {CodeHighlightNode, CodeNode} from "@lexical/code";
+import {AutoLinkNode, LinkNode} from "@lexical/link";
+import {ListItemNode, ListNode} from "@lexical/list";
+import {TRANSFORMERS} from "@lexical/markdown";
+import {AutoFocusPlugin} from "@lexical/react/LexicalAutoFocusPlugin";
+import {LexicalComposer} from "@lexical/react/LexicalComposer";
+import {ContentEditable} from "@lexical/react/LexicalContentEditable";
+import {HistoryPlugin} from "@lexical/react/LexicalHistoryPlugin";
+import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
+import {ListPlugin} from "@lexical/react/LexicalListPlugin";
+import {MarkdownShortcutPlugin} from "@lexical/react/LexicalMarkdownShortcutPlugin";
+import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
+import {RichTextPlugin} from "@lexical/react/LexicalRichTextPlugin";
+import {HeadingNode, QuoteNode} from "@lexical/rich-text";
+import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
+import {TablePlugin} from "@lexical/react/LexicalTablePlugin";
+import {CheckListPlugin} from "@lexical/react/LexicalCheckListPlugin";
+import {HorizontalRuleNode} from "@lexical/react/LexicalHorizontalRuleNode";
+import {HorizontalRulePlugin} from "@lexical/react/LexicalHorizontalRulePlugin";
+import {ClickableLinkPlugin} from "@lexical/react/LexicalClickableLinkPlugin";
+import {TabIndentationPlugin} from "@lexical/react/LexicalTabIndentationPlugin";
+import {CharacterLimitPlugin} from "@lexical/react/LexicalCharacterLimitPlugin";
+import {OverflowNode} from "@lexical/overflow";
+import {CodeHighlightPlugin} from "./editor/plugins/CodeHighlightPlugin";
+import {ImagesPlugin, ImageNode} from "./editor/plugins/ImagesPlugin";
+import {EditorState} from "lexical";
 import ToolbarPlugin from "./editor/toolbar-plugin";
-import { useState } from "react";
+import {useState} from "react";
+
 
 interface BlogEditorProps {
   content: string;
-  setContent: (content: string) => void;
-  readOnly?: boolean;
+  setContentAction: (content: string) => void;
   placeholder?: string;
   maxLength?: number;
 }
 
-function Placeholder({ text }: { text: string }) {
+function Placeholder({text}: { text: string }) {
   return <div className="absolute top-[1.125rem] left-[1.125rem] text-gray-400">{text}</div>;
 }
 
-export function BlogEditor({ 
-  content, 
-  setContent, 
-  readOnly = false,
-  placeholder = "Start writing your blog post...",
-  maxLength
-}: BlogEditorProps) {
+export function BlogEditor({
+                             content,
+                             setContentAction,
+                             placeholder = "Start writing your blog post...",
+                             maxLength
+                           }: BlogEditorProps) {
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 
   // Initialize with content if it exists and is valid JSON
@@ -65,7 +64,7 @@ export function BlogEditor({
 
   const initialConfig = {
     namespace: "BlogEditor",
-    editable: !readOnly,
+    editable: true,
     theme: {
       ltr: "ltr",
       rtl: "rtl",
@@ -120,11 +119,12 @@ export function BlogEditor({
       LinkNode,
       HorizontalRuleNode,
       OverflowNode,
+      ImageNode
     ],
   };
 
   const onChange = (editorState: EditorState) => {
-    setContent(JSON.stringify(editorState.toJSON()));
+    setContentAction(JSON.stringify(editorState.toJSON()));
   };
 
   const onRef = (ref: HTMLDivElement) => {
@@ -134,52 +134,51 @@ export function BlogEditor({
   };
 
   // Function to render the remaining characters count
-  const renderCharacterLimit = maxLength ? ({remainingCharacters}: {remainingCharacters: number}) => (
+  const renderCharacterLimit = maxLength ? ({remainingCharacters}: { remainingCharacters: number }) => (
     <div className="absolute bottom-2 right-2 text-xs text-muted-foreground px-2 py-1 bg-background/80 rounded">
       {remainingCharacters} characters remaining
     </div>
   ) : undefined;
 
   return (
-    <LexicalComposer initialConfig={initialConfig}>
-      <div className="editor-container rounded-md border">
-        {!readOnly && <ToolbarPlugin />}
-        <div className="editor-inner relative">
-          <RichTextPlugin
-            contentEditable={
-              <div className="editor-scroller">
-                <div className="editor" ref={onRef}>
-                  <ContentEditable 
-                    className="editor-input min-h-[300px] p-4 focus:outline-none prose prose-sm max-w-none" 
-                  />
+      <LexicalComposer initialConfig={initialConfig}>
+        <div className="editor-container rounded-md border">
+          <ToolbarPlugin/>
+          <div className="editor-inner relative">
+            <RichTextPlugin
+              contentEditable={
+                <div className="editor-scroller">
+                  <div className="editor" ref={onRef}>
+                    <ContentEditable
+                      className="editor-input min-h-[300px] p-4 focus:outline-none prose prose-sm max-w-none"
+                    />
+                  </div>
                 </div>
-              </div>
-            }
-            placeholder={<Placeholder text={placeholder} />}
-            ErrorBoundary={() => <div>Something went wrong with the editor</div>}
-          />
-          <HistoryPlugin />
-          {!readOnly && <AutoFocusPlugin />}
-          <ListPlugin />
-          <LinkPlugin />
-          <TablePlugin />
-          <CodeHighlightPlugin />
-          <ImagesPlugin />
-          <CheckListPlugin />
-          <HorizontalRulePlugin />
-          <TabIndentationPlugin />
-          <ClickableLinkPlugin />
-          {maxLength && (
-            <CharacterLimitPlugin 
-              charset="UTF-8" 
-              maxLength={maxLength} 
-              renderer={renderCharacterLimit}
+              }
+              placeholder={<Placeholder text={placeholder}/>}
+              ErrorBoundary={() => <div>Something went wrong with the editor</div>}
             />
-          )}
-          {!readOnly && <MarkdownShortcutPlugin transformers={TRANSFORMERS} />}
-          <OnChangePlugin onChange={onChange} />
+            <HistoryPlugin/>
+            <AutoFocusPlugin/>
+            <ListPlugin/>
+            <LinkPlugin/>
+            <TablePlugin/>
+            <CodeHighlightPlugin/>
+            <CheckListPlugin/>
+            <HorizontalRulePlugin/>
+            <TabIndentationPlugin/>
+            <ClickableLinkPlugin/>
+            {maxLength && (
+              <CharacterLimitPlugin
+                charset="UTF-8"
+                maxLength={maxLength}
+                renderer={renderCharacterLimit}
+              />
+            )}
+            <MarkdownShortcutPlugin transformers={TRANSFORMERS}/>
+            <OnChangePlugin onChange={onChange}/>
+          </div>
         </div>
-      </div>
-    </LexicalComposer>
+      </LexicalComposer>
   );
 }
