@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText, BookOpen, Image as ImageIcon, Video } from "lucide-react"
+import { FileText, BookOpen, Image as ImageIcon, Video, Edit, PanelTopOpen } from "lucide-react"
 import Link from "next/link"
 
 export default function AdminDashboard() {
@@ -97,6 +97,9 @@ export default function AdminDashboard() {
               <Link href="/admin/create-vlog" className="text-sm text-blue-500 hover:underline flex items-center gap-1">
                 <Video className="h-3 w-3" /> New vlog
               </Link>
+              <Link href="/admin/manage-content" className="text-sm text-blue-500 hover:underline flex items-center gap-1">
+                <Edit className="h-3 w-3" /> Edit existing content
+              </Link>
             </div>
           </CardContent>
         </Card>
@@ -129,6 +132,33 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+      
+      {/* Content Management Card */}
+      <Card className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 border-indigo-100 dark:border-indigo-900/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <PanelTopOpen className="h-5 w-5 text-indigo-500" />
+            Content Management
+          </CardTitle>
+          <CardDescription>
+            Edit and update your existing content
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col gap-4">
+            <p className="text-sm">
+              Need to make changes to your existing content? Use the content management dashboard to edit your blogs, poems, photos, and vlogs.
+            </p>
+            <Link 
+              href="/admin/manage-content" 
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md inline-flex items-center justify-center gap-2 transition-colors w-full sm:w-auto"
+            >
+              <Edit className="h-4 w-4" />
+              Manage Content
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 } 

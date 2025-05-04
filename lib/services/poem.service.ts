@@ -76,3 +76,82 @@ export const getAllPoems = async (): Promise<PoemDTO[]> => {
 
   return poems
 }
+
+/**
+ * Retrieves a specific poem by its slug
+ * @param slug The unique slug identifier for the poem
+ * @returns Promise resolving to the poem or null if not found
+ */
+export async function getPoemBySlug(slug: string): Promise<PoemDTO | null> {
+  try {
+    // Validate slug
+    if (!slug || typeof slug !== 'string') {
+      throw new PoemServiceError(`Invalid slug: '${slug}'`, 'VALIDATION_ERROR');
+    }
+    
+    const { data: poem, error } = await tryCatch(prisma.poem.findUnique({
+      where: { slug }
+    }));
+
+    if (error) {
+      handleServiceError(error, `fetching poem by slug '${slug}'`);
+    }
+
+    return poem;
+  } catch (error) {
+    handleServiceError(error, `validating poem slug '${slug}'`);
+  }
+}
+
+// Zod schema for poem data validation
+const poemSchema = z.object({
+  title: z.string().min(3).max(200),
+  slug: z.string().min(3).max(100).regex(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers, and hyphens'),
+  content: z.string().min(3),
+  author: z.string().min(2),
+  published_at: z.string().nullable().refine(val => val === null || !isNaN(Date.parse(val)), {
+    message: 'Invalid date format'
+  }),
+  is_published: z.boolean().default(false)
+});
+
+/**
+ * Updates an existing poem
+ * @param slug The slug of the poem to update
+ * @param poemData The updated poem data
+ * @returns Promise resolving to the updated poem
+ */
+export async function updatePoem(slug: string, poemData: any): Promise<PoemDTO> {
+  try {
+    // Validate input
+    const validatedData = poemSchema.parse(poemData);
+    
+    // Check if poem exists
+    const existingPoem = await getPoemBySlug(slug);
+    if (!existingPoem) {
+      throw new PoemServiceError(`Poem with slug '${slug}' not found`, 'NOT_FOUND');
+    }
+    
+    // Use tryCatch for the database operation
+    const { data: updatedPoem, error } = await tryCatch(prisma.poem.update({
+      where: { slug },
+      data: {
+        ...validatedData,
+        published_at: validatedData.published_at ? new Date(validatedData.published_at) : null,
+        updated_at: new Date()
+      }
+    }));
+
+    if (error) {
+      handleServiceError(error, `updating poem with slug '${slug}'`);
+    }
+
+    if (!updatedPoem) {
+      throw new PoemServiceError(`Failed to update poem with slug '${slug}'`, 'UPDATE_FAILED');
+    }
+
+    return updatedPoem;
+  } catch (error) {
+    handleServiceError(error, `updating poem with slug '${slug}'`);
+  }
+}

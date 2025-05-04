@@ -207,3 +207,89 @@ export async function createBlog(blogData: CreateBlogInput): Promise<BlogDTO> {
     handleServiceError(validationError, 'validating blog data')
   }
 }
+
+/**
+ * Updates an existing blog post
+ * @param slug The slug of the blog post to update
+ * @param blogData The updated blog data
+ * @returns Promise resolving to the updated blog
+ */
+export async function updateBlog(slug: string, blogData: CreateBlogInput): Promise<BlogDTO> {
+  try {
+    // Validate input
+    const validatedData = createBlogSchema.parse(blogData);
+    
+    // Check if blog exists
+    const existingBlog = await getBlogBySlug(slug);
+    if (!existingBlog) {
+      throw new BlogServiceError(`Blog with slug '${slug}' not found`, 'NOT_FOUND');
+    }
+    
+    // Extract tags from the validated data
+    const { tags, ...blogFields } = validatedData;
+
+    // Use tryCatch for the database operation
+    const { data: updatedBlog, error } = await tryCatch(prisma.blog.update({
+      where: { slug },
+      data: {
+        ...blogFields,
+        published_at: new Date(blogFields.published_at), // Convert string to Date
+        tags: {
+          // First delete existing tag relations
+          deleteMany: {},
+          // Then create new ones
+          create: tags.map(tagId => ({
+            tag: {
+              connect: { id: tagId }
+            }
+          }))
+        }
+      },
+      include: {
+        tags: {
+          include: {
+            tag: true
+          }
+        }
+      }
+    }));
+
+    if (error) {
+      handleServiceError(error, `updating blog with slug '${slug}'`);
+    }
+
+    if (!updatedBlog) {
+      throw new BlogServiceError(`Failed to update blog with slug '${slug}'`, 'UPDATE_FAILED');
+    }
+
+    return updatedBlog;
+  } catch (error) {
+    handleServiceError(error, `updating blog with slug '${slug}'`);
+  }
+}
+
+// Get all blogs (including drafts) for admin panel
+export async function getAllBlogs(): Promise<BlogDTO[]> {
+  const { data: blogs, error } = await tryCatch(prisma.blog.findMany({
+    orderBy: {
+      created_at: 'desc'
+    },
+    include: {
+      tags: {
+        include: {
+          tag: true
+        }
+      }
+    }
+  }));
+
+  if (error) {
+    handleServiceError(error, 'fetching all blogs');
+  }
+
+  if (!blogs) {
+    return [];
+  }
+
+  return blogs;
+}

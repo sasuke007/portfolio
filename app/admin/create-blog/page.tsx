@@ -333,9 +333,8 @@ export default function CreateBlogPage() {
                     >
                       <BlogEditor
                         content={content}
-                        setContentAction={setContent}
-                        placeholder="Start writing your blog post here..."
-                        maxLength={50000}
+                        onChange={setContent}
+                        previewMode={previewMode}
                       />
                     </div>
                   </div>

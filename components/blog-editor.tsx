@@ -30,11 +30,12 @@ import ToolbarPlugin from "./editor/toolbar-plugin";
 import {useState} from "react";
 
 
-interface BlogEditorProps {
+export interface BlogEditorProps {
   content: string;
-  setContentAction: (content: string) => void;
+  onChange: (content: string) => void;
   placeholder?: string;
   maxLength?: number;
+  previewMode?: boolean;
 }
 
 function Placeholder({text}: { text: string }) {
@@ -43,9 +44,10 @@ function Placeholder({text}: { text: string }) {
 
 export function BlogEditor({
                              content,
-                             setContentAction,
+                             onChange,
                              placeholder = "Start writing your blog post...",
-                             maxLength
+                             maxLength,
+                             previewMode = false
                            }: BlogEditorProps) {
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 
@@ -64,7 +66,7 @@ export function BlogEditor({
 
   const initialConfig = {
     namespace: "BlogEditor",
-    editable: true,
+    editable: !previewMode,
     theme: {
       ltr: "ltr",
       rtl: "rtl",
@@ -123,8 +125,8 @@ export function BlogEditor({
     ],
   };
 
-  const onChange = (editorState: EditorState) => {
-    setContentAction(JSON.stringify(editorState.toJSON()));
+  const handleChange = (editorState: EditorState) => {
+    onChange(JSON.stringify(editorState.toJSON()));
   };
 
   const onRef = (ref: HTMLDivElement) => {
@@ -143,23 +145,23 @@ export function BlogEditor({
   return (
       <LexicalComposer initialConfig={initialConfig}>
         <div className="editor-container rounded-md border">
-          <ToolbarPlugin/>
+          {!previewMode && <ToolbarPlugin/>}
           <div className="editor-inner relative">
             <RichTextPlugin
               contentEditable={
                 <div className="editor-scroller">
                   <div className="editor" ref={onRef}>
                     <ContentEditable
-                      className="editor-input min-h-[300px] p-4 focus:outline-none prose prose-sm max-w-none"
+                      className={`editor-input ${previewMode ? 'prose prose-sm max-w-none p-6' : 'min-h-[300px] p-4 focus:outline-none prose prose-sm max-w-none'} ${previewMode ? 'bg-gray-50 dark:bg-gray-900/50' : ''}`}
                     />
                   </div>
                 </div>
               }
-              placeholder={<Placeholder text={placeholder}/>}
+              placeholder={!previewMode ? <Placeholder text={placeholder}/> : null}
               ErrorBoundary={() => <div>Something went wrong with the editor</div>}
             />
             <HistoryPlugin/>
-            <AutoFocusPlugin/>
+            {!previewMode && <AutoFocusPlugin/>}
             <ListPlugin/>
             <LinkPlugin/>
             <TablePlugin/>
@@ -168,7 +170,7 @@ export function BlogEditor({
             <HorizontalRulePlugin/>
             <TabIndentationPlugin/>
             <ClickableLinkPlugin/>
-            {maxLength && (
+            {maxLength && !previewMode && (
               <CharacterLimitPlugin
                 charset="UTF-8"
                 maxLength={maxLength}
@@ -176,7 +178,7 @@ export function BlogEditor({
               />
             )}
             <MarkdownShortcutPlugin transformers={TRANSFORMERS}/>
-            <OnChangePlugin onChange={onChange}/>
+            <OnChangePlugin onChange={handleChange}/>
           </div>
         </div>
       </LexicalComposer>

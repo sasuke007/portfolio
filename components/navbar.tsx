@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Lock } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
+  const isAdminPage = pathname?.startsWith('/admin')
 
   const routes = [
     { name: "Home", path: "/" },
@@ -22,14 +23,32 @@ export function Navbar() {
     { name: "About", path: "/about" },
   ]
 
+  // Admin-specific routes
+  const adminRoutes = [
+    { name: "Dashboard", path: "/admin" },
+    { name: "Manage Content", path: "/admin/manage-content" },
+  ]
+
+  // Select which routes to display based on path
+  const displayRoutes = isAdminPage ? adminRoutes : routes
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-dark-300/80 backdrop-blur supports-[backdrop-filter]:bg-dark-300/60">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold gradient-text float">Anesthetic Coder</span>
+          <span className="text-xl font-bold gradient-text float">
+            {isAdminPage ? (
+              <>
+                <Lock className="inline-block h-4 w-4 mr-1" />
+                Admin Panel
+              </>
+            ) : (
+              "Anesthetic Coder"
+            )}
+          </span>
         </Link>
         <nav className="hidden md:flex md:items-center md:space-x-6">
-          {routes.map((route, index) => (
+          {displayRoutes.map((route, index) => (
             <Link
               key={route.path}
               href={route.path}
@@ -45,6 +64,24 @@ export function Navbar() {
               )}
             </Link>
           ))}
+
+          {/* Admin link */}
+          {!isAdminPage ? (
+            <Link
+              href="/admin"
+              className="text-sm font-medium transition-colors hover:text-primary relative text-gray-400"
+            >
+              <Lock className="inline-block h-3 w-3 mr-1" />
+              Admin
+            </Link>
+          ) : (
+            <Link
+              href="/"
+              className="text-sm font-medium transition-colors hover:text-primary relative text-gray-400"
+            >
+              Exit Admin
+            </Link>
+          )}
         </nav>
         <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -54,7 +91,7 @@ export function Navbar() {
       {isMenuOpen && (
         <div className="container md:hidden">
           <nav className="flex flex-col space-y-4 py-4 stagger-children">
-            {routes.map((route) => (
+            {displayRoutes.map((route) => (
               <Link
                 key={route.path}
                 href={route.path}
@@ -67,6 +104,26 @@ export function Navbar() {
                 {route.name}
               </Link>
             ))}
+            
+            {/* Admin link for mobile */}
+            {!isAdminPage ? (
+              <Link
+                href="/admin"
+                className="text-sm font-medium transition-colors hover:text-primary px-4 py-2 text-gray-400"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Lock className="inline-block h-3 w-3 mr-1" />
+                Admin
+              </Link>
+            ) : (
+              <Link
+                href="/"
+                className="text-sm font-medium transition-colors hover:text-primary px-4 py-2 text-gray-400"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Exit Admin
+              </Link>
+            )}
           </nav>
         </div>
       )}
