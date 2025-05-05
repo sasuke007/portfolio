@@ -137,7 +137,6 @@ export async function updatePoem(slug: string, poemData: any): Promise<PoemDTO> 
       where: { slug },
       data: {
         ...validatedData,
-        published_at: validatedData.published_at ? new Date(validatedData.published_at) : null,
         updated_at: new Date()
       }
     }));

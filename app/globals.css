@@ -253,23 +253,6 @@
   transform: scale(1.03);
 }
 
-/* Floating animation */
-.float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
 /* Glow effect */
 .glow {
   box-shadow: 0 0 10px rgba(147, 51, 234, 0.3);

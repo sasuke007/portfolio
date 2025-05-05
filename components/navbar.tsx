@@ -36,7 +36,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-dark-300/80 backdrop-blur supports-[backdrop-filter]:bg-dark-300/60">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold gradient-text float">
+          <span className="text-xl font-bold gradient-text">
             {isAdminPage ? (
               <>
                 <Lock className="inline-block h-4 w-4 mr-1" />

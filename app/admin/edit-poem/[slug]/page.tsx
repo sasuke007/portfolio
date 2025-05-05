@@ -1,13 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import {
   Card,
   CardContent,
@@ -15,21 +9,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Tag,
-  FileText,
-  Search,
-  Calendar,
-  Save,
-  ArrowLeft,
-  BookOpen,
-} from "lucide-react";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { PoemDTO } from "@/types/poem";
+import { format } from "date-fns";
+import {
+  ArrowLeft,
+  Calendar,
+  FileText,
+  Save,
+  Search
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function EditPoemPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
