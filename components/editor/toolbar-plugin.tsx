@@ -117,6 +117,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
         title="Undo"
       >
@@ -125,6 +126,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
         title="Redo"
       >
@@ -134,6 +136,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")}
         title="Bold"
       >
@@ -142,6 +145,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic")}
         title="Italic"
       >
@@ -150,6 +154,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline")}
         title="Underline"
       >
@@ -159,6 +164,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => formatHeading("h1")}
         title="Heading 1"
       >
@@ -167,6 +173,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => formatHeading("h2")}
         title="Heading 2"
       >
@@ -175,6 +182,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => formatHeading("h3")}
         title="Heading 3"
       >
@@ -184,6 +192,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined)}
         title="Bullet List"
       >
@@ -192,6 +201,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={() => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined)}
         title="Numbered List"
       >
@@ -200,6 +210,7 @@ export default function ToolbarPlugin() {
       <Button
         variant="ghost"
         size="icon"
+        type="button"
         onClick={formatQuote}
         title="Quote"
       >

@@ -1,23 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createBlog } from "@/lib/services/blog.service";
-import { CreateBlogInput } from "@/types/blog";
+import { CreateBlog, createBlogSchema } from "@/types/blog";
 
 export async function POST(request: NextRequest) {
   try {
-    const data: CreateBlogInput = await request.json();
-    
-    
-    // Validate required fields
-    if (!data.title || !data.slug || !data.content) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    const createBlogRequest: CreateBlog = createBlogSchema.parse(
+      request.json()
+    );
+    const blog = await createBlog(createBlogRequest);
 
-    // Create the blog post
-    const blog = await createBlog(data);
-    
     return NextResponse.json({ success: true, blog }, { status: 201 });
   } catch (error: any) {
     console.error("Error creating blog post:", error);

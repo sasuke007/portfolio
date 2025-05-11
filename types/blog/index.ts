@@ -1,5 +1,6 @@
 // Update imports to use the correct path
 import { Tag } from '@/prisma/generated/client'
+import { z } from 'zod'
 
 // Remove duplicate import
 // import { BlogTag } from '@/prisma/generated/client'
@@ -22,18 +23,25 @@ export interface BlogDTO {
 }
 
 
+export const slugSchema = z.string().min(3).max(100).regex(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers, and hyphens')
 
-export interface CreateBlogInput {
-  title: string;
-  slug: string;
-  content: string;
-  description: string;
-  meta_description: string;
-  author: string;
-  category: string;
-  featured_image_url: string;
-  is_published: boolean;
-  priority: number;
-  published_at: string;
-  tags: string[];
-}
+// Validation schema for blog creation
+export const createBlogSchema = z.object({
+  title: z.string().min(3).max(200),
+  description: z.string().min(10),
+  slug: slugSchema,
+  content: z.string().min(50),
+  author: z.string().min(2),
+  priority: z.number().int().min(0).max(10).default(0),
+  category: z.string(),
+  published_at: z.string().refine(val => !isNaN(Date.parse(val)), {
+    message: 'Invalid date format'
+  }),
+  is_published: z.boolean().default(false),
+  featured_image_url: z.string().url().optional(),
+  tags: z.array(z.number()).default([])
+})
+
+
+export type CreateBlog = z.infer<typeof createBlogSchema>
+

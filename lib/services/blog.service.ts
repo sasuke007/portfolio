@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma'
-import { BlogDTO, CreateBlogInput } from '@/types/blog'
+import { BlogDTO, CreateBlog, createBlogSchema, slugSchema } from '@/types/blog'
 import { z } from 'zod' // For input validation
 import { tryCatch } from '../utils'
 
@@ -28,9 +28,6 @@ function handleServiceError(error: unknown, operation: string): never {
   // Generic fallback
   throw new BlogServiceError(`Failed to ${operation}`, 'UNKNOWN_ERROR', error)
 }
-
-// Zod schemas for input validation
-const slugSchema = z.string().min(3).max(100).regex(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers, and hyphens')
 
 /**
  * Retrieves blogs with priority >= 5 for highlighting on the homepage
@@ -141,35 +138,18 @@ export async function getBlogBySlug(slug: string): Promise<BlogDTO | null> {
   }
 }
 
-// Validation schema for blog creation
-const createBlogSchema = z.object({
-  title: z.string().min(3).max(200),
-  description: z.string().min(10),
-  slug: slugSchema,
-  content: z.string().min(50),
-  author: z.string().min(2),
-  priority: z.number().int().min(0).max(10).default(0),
-  category: z.string(),
-  published_at: z.string().refine(val => !isNaN(Date.parse(val)), {
-    message: 'Invalid date format'
-  }),
-  is_published: z.boolean().default(false),
-  featured_image_url: z.string().url().optional(),
-  tags: z.array(z.number()).default([])
-})
 
 /**
  * Creates a new blog post with associated tags
  * @param blogData Input data for the new blog post
  * @returns Promise resolving to the created blog
  */
-export async function createBlog(blogData: CreateBlogInput): Promise<BlogDTO> {
+
+export async function createBlog(blogData: CreateBlog): Promise<BlogDTO> {
   try {
-    // Validate all input fields
-    const validatedData = createBlogSchema.parse(blogData)
 
     // Extract tags from the validated data
-    const { tags, ...blogFields } = validatedData
+    const { tags, ...blogFields } = blogData
 
     // Use tryCatch for the database operation
     const { data: blog, error } = await tryCatch(prisma.blog.create({
@@ -214,7 +194,7 @@ export async function createBlog(blogData: CreateBlogInput): Promise<BlogDTO> {
  * @param blogData The updated blog data
  * @returns Promise resolving to the updated blog
  */
-export async function updateBlog(slug: string, blogData: CreateBlogInput): Promise<BlogDTO> {
+export async function updateBlog(slug: string, blogData: CreateBlog): Promise<BlogDTO> {
   try {
     // Validate input
     const validatedData = createBlogSchema.parse(blogData);

@@ -24,7 +24,7 @@ function AdminUI({ children }: { children: ReactNode }) {
       {/* Admin Header */}
       <header className="border-b border-border/50 sticky top-0 z-50 w-full bg-dark-200/80 backdrop-blur-md">
         <div className="container flex h-14 items-center px-4">
-          <Link href="/admin" className="mr-4 flex items-center space-x-2">
+              <Link href="/admin" className="mr-4 flex items-center space-x-2">
             <LayoutDashboard className="h-5 w-5 text-glow-purple" />
             <span className="font-bold">Admin Dashboard</span>
           </Link>

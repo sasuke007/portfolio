@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -28,262 +27,149 @@ import {
   ArrowLeft,
   Upload,
 } from "lucide-react";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarUI } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { useBlogForm } from "@/lib/hooks/useBlogForm";
 
 export default function CreateBlogPage() {
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [activeTab, setActiveTab] = useState("content");
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [previewMode, setPreviewMode] = useState(false);
+  
+  const {
+    formData,
+    content,
+    setContent,
+    formErrors,
+    isSubmitting,
+    activeTab,
+    setActiveTab,
+    imagePreview,
+    imageUrl,
+    datePickerOpen,
+    setDatePickerOpen,
+    handleInputChange,
+    handleSwitchChange,
+    handleTagsChange,
+    handleSlugGenerate,
+    handleMetaGenerate,
+    handleImageUrlChange,
+    handleImagePreviewError,
+    handleDateChange,
+    handleContentChange,
+    handleSubmit,
+    hasError
+  } = useBlogForm({
+    initialValues: {},
+    initialContent: "",
+    onSubmit: async (formData, content) => {
+      try {
+        // Prepare data for submission
+        const dataToSubmit = {
+          ...formData,
+          // If in draft mode, set published_at to null
+          published_at: formData.is_published ? formData.published_at : null
+        };
+        
+        const response = await fetch("/api/blogs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToSubmit),
+        });
 
-  const [formData, setFormData] = useState({
-    title: "",
-    slug: "",
-    description: "",
-    meta_description: "",
-    meta_keywords: "",
-    meta_title: "",
-    author: "Rohit Pandit", // Default author
-    category: "",
-    featured_image_url: "",
-    is_published: false,
-    priority: 0,
-    tags: [] as string[],
-    published_at: new Date().toISOString().split("T")[0],
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || "Failed to create blog post");
+        }
+
+        toast.success("Blog post created successfully!");
+        router.push("/admin");
+      } catch (error) {
+        console.error("Error creating blog post:", error);
+        toast.error("Failed to create blog post. Please try again.");
+      }
+    }
   });
-  const [content, setContent] = useState("");
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSwitchChange = (checked: boolean) => {
-    setFormData((prev) => ({ ...prev, is_published: checked }));
-  };
-
-  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const tagsArray = e.target.value.split(",").map((tag) => tag.trim());
-    setFormData((prev) => ({ ...prev, tags: tagsArray }));
-  };
-
-  const handleSlugGenerate = () => {
-    if (!formData.title) {
-      toast.error("Please enter a title first");
-      return;
-    }
-
-    const slug = formData.title
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, "") // Remove special chars
-      .replace(/\s+/g, "-") // Replace spaces with hyphens
-      .replace(/-+/g, "-") // Remove consecutive hyphens
-      .trim();
-
-    setFormData((prev) => ({ ...prev, slug }));
-    toast.success("Slug generated from title");
-  };
-
-  const handleMetaGenerate = () => {
-    if (!formData.description) {
-      toast.error("Please enter a description first");
-      return;
-    }
-
-    // Use description for meta description (truncated if needed)
-    const metaDescription =
-      formData.description.length > 160
-        ? formData.description.substring(0, 157) + "..."
-        : formData.description;
-
-    // Use title for meta title if empty
-    const metaTitle = formData.meta_title || formData.title;
-
-    setFormData((prev) => ({
-      ...prev,
-      meta_description: metaDescription,
-      meta_title: metaTitle,
-    }));
-
-    toast.success("Meta data generated from content");
-  };
-
-  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const url = e.target.value;
-    setImageUrl(url);
-    setFormData((prev) => ({ ...prev, featured_image_url: url }));
-    console.log(`handleImageUrlChange: url: ${url}`);
-    // Only show preview if the URL isn't empty
-    if (url) {
-      setImagePreview(url);
-    } else {
-      setImagePreview(null);
-    }
-  };
-
-  const handleImagePreviewError = () => {
-    toast.error("Invalid image URL. Please check the URL and try again.");
-    // You could set a placeholder image here if desired
-    // setImagePreview("https://placehold.co/600x400?text=Invalid+Image+URL");
-  };
-
-  const handleDateChange = (date: Date | undefined) => {
-    if (date) {
-      const dateString = date.toISOString().split("T")[0];
-      setFormData((prev) => ({ ...prev, published_at: dateString }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Validate the image URL if provided
-      if (
-        formData.featured_image_url &&
-        !formData.featured_image_url.match(
-          /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i
-        )
-      ) {
-        toast.warning(
-          "Image URL format may be invalid. Please check and try again."
-        );
-      }
-
-      const blogData = {
-        ...formData,
-        content,
-        published_at: formData.is_published ? formData.published_at : null, // Only set published date if publishing
-      };
-
-      const response = await fetch("/api/admin/blog", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(blogData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create blog post");
-      }
-
-      const action = formData.is_published ? "published" : "saved as draft";
-      toast.success(`Blog post ${action} successfully!`);
-      router.push("/admin");
-    } catch (error) {
-      console.error("Error creating blog post:", error);
-      toast.error("Failed to create blog post. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
+    <div className="space-y-4 py-4 lg:py-8">
+      <div className="flex items-center justify-between p-2">
+        <div className="flex items-center gap-2">
           <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => router.back()}
-            className="h-8 w-8"
+            size="sm"
+            variant="outline"
+            onClick={() => router.push("/admin")}
           >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <h1 className="text-2xl font-bold">Create New Blog Post</h1>
-        </div>
-
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <Label
-              htmlFor="is_published"
-              className={formData.is_published ? "text-green-500" : ""}
-            >
-              {formData.is_published ? "Publish" : "Draft"}
-            </Label>
-            <Switch
-              id="is_published"
-              checked={formData.is_published}
-              onCheckedChange={handleSwitchChange}
-            />
-          </div>
-
-          <Button
-            type="submit"
-            form="blog-form"
-            disabled={isSubmitting}
-            className="bg-glow-purple hover:bg-glow-purple/90"
-          >
-            {isSubmitting ? (
-              <>Saving...</>
-            ) : (
-              <>
-                <Save className="mr-2 h-4 w-4" />
-                {formData.is_published ? "Publish" : "Save Draft"}
-              </>
-            )}
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Blogs
           </Button>
         </div>
       </div>
 
-      <Tabs
-        defaultValue="content"
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="w-full"
-      >
-        <TabsList className="grid grid-cols-3 mb-6">
-          <TabsTrigger value="content" className="flex items-center">
-            <FileText className="mr-2 h-4 w-4" />
-            Content
-          </TabsTrigger>
-          <TabsTrigger value="media" className="flex items-center">
-            <ImagePlus className="mr-2 h-4 w-4" />
-            Media & Tags
-          </TabsTrigger>
-          <TabsTrigger value="seo" className="flex items-center">
-            <Search className="mr-2 h-4 w-4" />
-            SEO
-          </TabsTrigger>
-        </TabsList>
+      <form onSubmit={handleSubmit} className="container p-0" noValidate>
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="content">
+              <FileText className="mr-2 h-4 w-4" />
+              Content
+            </TabsTrigger>
+            <TabsTrigger value="media">
+              <ImagePlus className="mr-2 h-4 w-4" />
+              Media & Tags
+            </TabsTrigger>
+            <TabsTrigger value="seo">
+              <Search className="mr-2 h-4 w-4" />
+              SEO
+            </TabsTrigger>
+          </TabsList>
 
-        <form id="blog-form" onSubmit={handleSubmit}>
-          <TabsContent value="content" className="space-y-6">
+          <TabsContent value="content" className="space-y-4">
             <Card>
-              <CardContent className="pt-6 space-y-6">
-                <div className="grid grid-cols-1 gap-6">
+              <CardHeader>
+                <CardTitle>Blog Content</CardTitle>
+                <CardDescription>The core content of your blog post.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                <div className="space-y-2">
                   <div className="space-y-2">
-                    <Label htmlFor="title">Post Title</Label>
+                    <Label
+                      htmlFor="title"
+                      className={cn(hasError("title") && "text-red-500")}
+                    >
+                      Title
+                      <span className="text-red-500">*</span>
+                    </Label>
                     <Input
                       id="title"
                       name="title"
+                      placeholder="My Awesome Blog Post"
                       value={formData.title}
                       onChange={handleInputChange}
-                      required
-                      placeholder="Enter your blog post title"
-                      className="text-lg"
+                      className={cn(
+                        hasError("title") && "border-red-500 focus-visible:ring-red-500"
+                      )}
                     />
+                    {hasError("title") && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>
+                    )}
                   </div>
-
+                  
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="slug">URL Slug</Label>
+                    <div className="flex justify-between items-center">
+                      <Label 
+                        htmlFor="slug"
+                        className={cn(hasError("slug") && "text-red-500")}
+                      >
+                        URL Slug
+                        <span className="text-red-500">*</span>
+                      </Label>
                       <Button
                         type="button"
                         variant="ghost"
                         size="sm"
                         onClick={handleSlugGenerate}
-                        className="h-8 text-xs text-muted-foreground"
                       >
                         Generate from title
                       </Button>
@@ -291,107 +177,161 @@ export default function CreateBlogPage() {
                     <Input
                       id="slug"
                       name="slug"
+                      placeholder="my-awesome-blog-post"
                       value={formData.slug}
                       onChange={handleInputChange}
-                      required
-                      placeholder="your-post-slug"
+                      className={cn(
+                        hasError("slug") && "border-red-500 focus-visible:ring-red-500"
+                      )}
                     />
+                    {hasError("slug") && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.slug}</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="description">Short Description</Label>
+                    <Label 
+                      htmlFor="description"
+                      className={cn(hasError("description") && "text-red-500")}
+                    >
+                      Description
+                      <span className="text-red-500">*</span>
+                    </Label>
                     <Textarea
                       id="description"
                       name="description"
+                      placeholder="A brief description of your blog post..."
                       value={formData.description}
                       onChange={handleInputChange}
-                      required
-                      placeholder="A brief description of your blog post (used in previews)"
-                      rows={3}
+                      className={cn(
+                        hasError("description") && "border-red-500 focus-visible:ring-red-500"
+                      )}
                     />
+                    {hasError("description") && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.description}</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Content</Label>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground">
-                        Write your blog content using the editor below
-                      </span>
-                      <div className="flex items-center space-x-2">
-                        <Label htmlFor="preview-mode" className="text-sm">
-                          Preview
-                        </Label>
-                        <Switch
-                          id="preview-mode"
-                          checked={previewMode}
-                          onCheckedChange={setPreviewMode}
-                        />
-                      </div>
-                    </div>
-                    <div
-                      className={`border rounded-md min-h-[400px] ${previewMode ? "bg-card/50" : "bg-card"}`}
+                    <Label 
+                      htmlFor="content"
+                      className={cn(hasError("content") && "text-red-500")}
                     >
-                      <BlogEditor
-                        content={content}
-                        onChange={setContent}
-                        previewMode={previewMode}
-                      />
-                    </div>
+                      Content
+                      <span className="text-red-500">*</span>
+                    </Label>
+                    <BlogEditor
+                      content={content}
+                      onChange={handleContentChange}
+                      placeholder="Start writing your blog post..."
+                    />
+                    {hasError("content") && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.content}</p>
+                    )}
                   </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="media" className="space-y-6">
+          <TabsContent value="media" className="space-y-4">
             <Card>
-              <CardContent className="pt-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <Label>Featured Image</Label>
-                    <div className="space-y-4">
-                      <div className="flex flex-col justify-center items-center space-y-2">
-                        <Label htmlFor="image-url">Image URL</Label>
-                        <Input
-                          id="image-url"
-                          placeholder="https://example.com/image.jpg"
-                          value={imageUrl}
-                          onChange={handleImageUrlChange}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-6">
+              <CardHeader>
+                <CardTitle>Media & Tags</CardTitle>
+                <CardDescription>
+                  Upload media and assign tags to your blog post
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                <div className="grid lg:grid-cols-2 gap-4">
+                  <div className="space-y-2">
                     <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Tag className="h-4 w-4" />
-                        <Label htmlFor="tags">Tags (comma separated)</Label>
-                      </div>
-                      <Input
-                        id="tags"
-                        name="tags"
-                        placeholder="nextjs, react, javascript"
-                        onChange={handleTagsChange}
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Add relevant tags to help readers find your content
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <FileText className="h-4 w-4" />
-                        <Label htmlFor="category">Category</Label>
-                      </div>
+                      <Label 
+                        htmlFor="category"
+                        className={cn(hasError("category") && "text-red-500")}
+                      >
+                        Category
+                        <span className="text-red-500">*</span>
+                      </Label>
                       <Input
                         id="category"
                         name="category"
+                        placeholder="E.g., Technology, Health, Finance"
                         value={formData.category}
                         onChange={handleInputChange}
-                        required
-                        placeholder="e.g. Technology, Travel, Personal"
+                        className={cn(
+                          hasError("category") && "border-red-500 focus-visible:ring-red-500"
+                        )}
                       />
+                      {hasError("category") && (
+                        <p className="text-red-500 text-sm mt-1">{formErrors.category}</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="tags">
+                        <div className="flex items-center gap-2">
+                          <Tag className="h-4 w-4" />
+                          Tags (comma separated)
+                        </div>
+                      </Label>
+                      <Input
+                        id="tags"
+                        placeholder="web, development, coding"
+                        value={formData.tags.join(", ")}
+                        onChange={handleTagsChange}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label 
+                        htmlFor="author"
+                        className={cn(hasError("author") && "text-red-500")}
+                      >
+                        Author Name
+                      </Label>
+                      <Input
+                        id="author"
+                        name="author"
+                        placeholder="Your Name"
+                        value={formData.author}
+                        onChange={handleInputChange}
+                        className={cn(
+                          hasError("author") && "border-red-500 focus-visible:ring-red-500"
+                        )}
+                      />
+                      {hasError("author") && (
+                        <p className="text-red-500 text-sm mt-1">{formErrors.author}</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="priority">Priority (0-10)</Label>
+                      <Input
+                        id="priority"
+                        name="priority"
+                        type="number"
+                        min={0}
+                        max={10}
+                        value={formData.priority}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2 mt-4">
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          id="is_published"
+                          checked={formData.is_published}
+                          onCheckedChange={handleSwitchChange}
+                        />
+                        <Label htmlFor="is_published">Published</Label>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {formData.is_published
+                          ? "This blog post will be visible to the public"
+                          : "This blog post will be saved as a draft"}
+                      </p>
                     </div>
 
                     <div className="space-y-2">
@@ -399,7 +339,7 @@ export default function CreateBlogPage() {
                         <Calendar className="h-4 w-4" />
                         <Label htmlFor="published_at">Publish Date</Label>
                       </div>
-                      <Popover>
+                      <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
@@ -409,36 +349,66 @@ export default function CreateBlogPage() {
                             )}
                             disabled={!formData.is_published}
                           >
-                            <Calendar className="mr-2 h-4 w-4" />
                             {formData.published_at ? (
                               format(new Date(formData.published_at), "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              "Pick a date"
                             )}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <CalendarComponent
+                        <PopoverContent className="w-auto p-0">
+                          <CalendarUI
                             mode="single"
-                            selected={formData.published_at ? new Date(formData.published_at) : undefined}
+                            selected={
+                              formData.published_at ? new Date(formData.published_at) : undefined
+                            }
                             onSelect={handleDateChange}
                             initialFocus
                           />
                         </PopoverContent>
                       </Popover>
-                      <p className="text-xs text-muted-foreground">
-                        {formData.is_published
-                          ? "Date when the post will be published"
-                          : "Set 'Publish' to enable date selection"}
-                      </p>
                     </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label 
+                        htmlFor="image-url"
+                        className={cn(hasError("featured_image_url") && "text-red-500")}
+                      >
+                        Image URL
+                      </Label>
+                      <Input
+                        id="image-url"
+                        placeholder="https://example.com/image.jpg"
+                        value={imageUrl}
+                        onChange={handleImageUrlChange}
+                        className={cn(
+                          hasError("featured_image_url") && "border-red-500 focus-visible:ring-red-500"
+                        )}
+                      />
+                      {hasError("featured_image_url") && (
+                        <p className="text-red-500 text-sm mt-1">{formErrors.featured_image_url}</p>
+                      )}
+                    </div>
+
+                    {imagePreview && (
+                      <div className="relative aspect-video rounded-md overflow-hidden border">
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          className="object-cover w-full h-full"
+                          onError={handleImagePreviewError}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="seo" className="space-y-6">
+          <TabsContent value="seo" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>SEO Settings</CardTitle>
@@ -446,96 +416,97 @@ export default function CreateBlogPage() {
                   Optimize your blog post for search engines
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="meta_title">SEO Title</Label>
-                      <p className="text-xs text-muted-foreground">
-                        {formData.meta_title?.length || 0}/60
-                      </p>
-                    </div>
-                    <Input
-                      id="meta_title"
-                      name="meta_title"
-                      value={formData.meta_title}
-                      onChange={handleInputChange}
-                      placeholder="SEO optimized title (defaults to post title)"
-                      maxLength={60}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="meta_description">Meta Description</Label>
-                      <p className="text-xs text-muted-foreground">
-                        {formData.meta_description?.length || 0}/160
-                      </p>
-                    </div>
-                    <Textarea
-                      id="meta_description"
-                      name="meta_description"
-                      value={formData.meta_description}
-                      onChange={handleInputChange}
-                      placeholder="Brief description for search results (max 160 characters)"
-                      rows={3}
-                      maxLength={160}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="meta_keywords">Meta Keywords</Label>
-                    <Input
-                      id="meta_keywords"
-                      name="meta_keywords"
-                      value={formData.meta_keywords}
-                      onChange={handleInputChange}
-                      placeholder="keyword1, keyword2, keyword3"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Comma separated keywords (less important nowadays, but
-                      still used by some search engines)
-                    </p>
-                  </div>
-
+              <CardContent className="space-y-8">
+                <div className="flex justify-end">
                   <Button
                     type="button"
                     variant="outline"
+                    size="sm"
                     onClick={handleMetaGenerate}
-                    className="mt-2"
                   >
-                    Generate Meta Data from Content
+                    Generate from content
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>SEO Preview</CardTitle>
-                <CardDescription>
-                  How your post might appear in search results
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="p-4 border rounded-md">
-                  <p className="text-blue-500 text-xl font-medium truncate">
-                    {formData.meta_title || formData.title || "Blog Post Title"}
-                  </p>
-                  <p className="text-green-700 text-sm truncate">
-                    www.yoursite.com/blog/{formData.slug || "post-slug"}
-                  </p>
-                  <p className="text-gray-700 text-sm mt-1 line-clamp-2">
-                    {formData.meta_description ||
-                      formData.description ||
-                      "Your blog post description will appear here in search results. Make sure it's compelling and includes relevant keywords."}
-                  </p>
+                <div className="space-y-2">
+                  <Label 
+                    htmlFor="meta_title"
+                    className={cn(hasError("meta_title") && "text-red-500")}
+                  >
+                    Meta Title
+                  </Label>
+                  <Input
+                    id="meta_title"
+                    name="meta_title"
+                    placeholder="SEO Title (Default: Post Title)"
+                    value={formData.meta_title}
+                    onChange={handleInputChange}
+                    className={cn(
+                      hasError("meta_title") && "border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {hasError("meta_title") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_title}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label 
+                    htmlFor="meta_description"
+                    className={cn(hasError("meta_description") && "text-red-500")}
+                  >
+                    Meta Description
+                  </Label>
+                  <Textarea
+                    id="meta_description"
+                    name="meta_description"
+                    placeholder="SEO Description (Default: Post Description)"
+                    value={formData.meta_description}
+                    onChange={handleInputChange}
+                    className={cn(
+                      hasError("meta_description") && "border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {hasError("meta_description") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_description}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label 
+                    htmlFor="meta_keywords"
+                    className={cn(hasError("meta_keywords") && "text-red-500")}
+                  >
+                    Meta Keywords
+                  </Label>
+                  <Input
+                    id="meta_keywords"
+                    name="meta_keywords"
+                    placeholder="SEO Keywords (comma separated)"
+                    value={formData.meta_keywords}
+                    onChange={handleInputChange}
+                    className={cn(
+                      hasError("meta_keywords") && "border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {hasError("meta_keywords") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_keywords}</p>
+                  )}
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
-        </form>
-      </Tabs>
+        </Tabs>
+
+        <div className="mt-4 flex justify-end">
+          <Button disabled={isSubmitting} type="submit">
+            {isSubmitting && (
+              <Upload className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            {isSubmitting ? "Creating..." : "Create Blog Post"}
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

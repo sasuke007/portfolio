@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -27,614 +27,537 @@ import {
   Save,
   ArrowLeft,
   Upload,
+  Loader2,
 } from "lucide-react";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { BlogDTO } from "@/types/blog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarUI } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { useBlogForm } from "@/lib/hooks/useBlogForm";
 
-export default function EditBlogPage({ params }: { params: { slug: string } }) {
+// Define the params type to satisfy TypeScript
+type EditBlogParams = {
+  slug: string;
+};
+
+export default function EditBlogPage({ params }: { params: EditBlogParams | Promise<EditBlogParams> }) {
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const resolvedParams = React.use(params as Promise<EditBlogParams>);
+  const { slug } = resolvedParams;
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("content");
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [previewMode, setPreviewMode] = useState(false);
-
-  const [formData, setFormData] = useState({
-    title: "",
-    slug: "",
-    description: "",
-    meta_description: "",
-    meta_keywords: "",
-    meta_title: "",
-    author: "Rohit Pandit", // Default author
-    category: "",
-    featured_image_url: "",
-    is_published: false,
-    priority: 0,
-    tags: [] as string[],
-    published_at: new Date().toISOString().split("T")[0],
-  });
-  const [content, setContent] = useState("");
-
-  const { slug } = params;
-
+  const [blogData, setBlogData] = useState<any>(null);
+  const [initialContent, setInitialContent] = useState("");
+  console.log(`slug ${slug}`);
+  // Fetch the blog post data
   useEffect(() => {
     const fetchBlog = async () => {
       setIsLoading(true);
       try {
         const response = await fetch(`/api/admin/blog/${slug}`);
-        
         if (!response.ok) {
-          throw new Error("Failed to fetch blog");
+          throw new Error("Failed to fetch blog post");
         }
         
         const data = await response.json();
-        const blog = data.blog;
         
-        if (!blog) {
-          toast.error("Blog not found");
-          router.push("/admin/manage-content");
-          return;
+        // Handle tags (transform from tag objects to tag IDs)
+        const transformedData = {
+          ...data,
+          tags: data.tags?.map((tagRel: any) => tagRel.tag.id) || []
+        };
+        
+        setBlogData(transformedData);
+        if (data.content) {
+          setInitialContent(data.content);
         }
-
-        // Format the tags as an array of strings (tag IDs)
-        const tagIds = blog.tags.map((tagRelation: any) => tagRelation.tag.id.toString());
-        
-        // Set form data with the fetched blog details
-        setFormData({
-          title: blog.title,
-          slug: blog.slug,
-          description: blog.description || "",
-          meta_description: blog.meta_description || "",
-          meta_keywords: blog.meta_keywords || "",
-          meta_title: blog.meta_title || "",
-          author: blog.author,
-          category: blog.category || "",
-          featured_image_url: blog.featured_image_url || "",
-          is_published: blog.is_published,
-          priority: blog.priority || 0,
-          tags: tagIds,
-          published_at: blog.published_at 
-            ? new Date(blog.published_at).toISOString().split("T")[0] 
-            : new Date().toISOString().split("T")[0],
-        });
-        
-        // Set content for the editor
-        setContent(blog.content);
-        
-        // Set image preview if there's a featured image
-        if (blog.featured_image_url) {
-          setImageUrl(blog.featured_image_url);
-          setImagePreview(blog.featured_image_url);
-        }
-        
       } catch (error) {
-        console.error("Error fetching blog:", error);
-        toast.error("Failed to load blog. Please try again.");
-        router.push("/admin/manage-content");
+        console.error("Error fetching blog post:", error);
+        toast.error("Failed to load blog post. Please try again.");
       } finally {
         setIsLoading(false);
       }
     };
-
+    
     if (slug) {
       fetchBlog();
     }
   }, [slug, router]);
+  
+  const formHook = useBlogForm({
+    // Initialize with blog data once it's loaded
+    initialValues: blogData || {},
+    // Set initial content
+    initialContent,
+    onSubmit: async (formData, content) => {
+      try {
+        // Prepare data for submission
+        const dataToSubmit = {
+          ...formData,
+          // If in draft mode, set published_at to null
+          published_at: formData.is_published ? formData.published_at : null
+        };
+        
+        const response = await fetch(`/api/blogs/${slug}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToSubmit),
+        });
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || "Failed to update blog post");
+        }
 
-  const handleSwitchChange = (checked: boolean) => {
-    setFormData((prev) => ({ ...prev, is_published: checked }));
-  };
-
-  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const tagsArray = e.target.value.split(",").map((tag) => tag.trim());
-    setFormData((prev) => ({ ...prev, tags: tagsArray }));
-  };
-
-  const handleSlugGenerate = () => {
-    if (!formData.title) {
-      toast.error("Please enter a title first");
-      return;
-    }
-
-    const slug = formData.title
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, "") // Remove special chars
-      .replace(/\s+/g, "-") // Replace spaces with hyphens
-      .replace(/-+/g, "-") // Remove consecutive hyphens
-      .trim();
-
-    setFormData((prev) => ({ ...prev, slug }));
-    toast.success("Slug generated from title");
-  };
-
-  const handleMetaGenerate = () => {
-    if (!formData.description) {
-      toast.error("Please enter a description first");
-      return;
-    }
-
-    // Use description for meta description (truncated if needed)
-    const metaDescription =
-      formData.description.length > 160
-        ? formData.description.substring(0, 157) + "..."
-        : formData.description;
-
-    // Use title for meta title if empty
-    const metaTitle = formData.meta_title || formData.title;
-
-    setFormData((prev) => ({
-      ...prev,
-      meta_description: metaDescription,
-      meta_title: metaTitle,
-    }));
-
-    toast.success("Meta data generated from content");
-  };
-
-  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const url = e.target.value;
-    setImageUrl(url);
-    setFormData((prev) => ({ ...prev, featured_image_url: url }));
-    
-    // Only show preview if the URL isn't empty
-    if (url) {
-      setImagePreview(url);
-    } else {
-      setImagePreview(null);
-    }
-  };
-
-  const handleImagePreviewError = () => {
-    toast.error("Invalid image URL. Please check the URL and try again.");
-  };
-
-  const handleDateChange = (date: Date | undefined) => {
-    if (date) {
-      const dateString = date.toISOString().split("T")[0];
-      setFormData((prev) => ({ ...prev, published_at: dateString }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Validate the image URL if provided
-      if (
-        formData.featured_image_url &&
-        !formData.featured_image_url.match(
-          /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i
-        )
-      ) {
-        toast.warning(
-          "Image URL format may be invalid. Please check and try again."
-        );
+        toast.success("Blog post updated successfully!");
+        router.push("/admin");
+      } catch (error) {
+        console.error("Error updating blog post:", error);
+        toast.error("Failed to update blog post. Please try again.");
       }
-
-      const blogData = {
-        ...formData,
-        content,
-        published_at: formData.is_published ? formData.published_at : null, // Only set published date if publishing
-      };
-
-      // Send an update request to the API
-      const response = await fetch(`/api/admin/blog/${slug}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(blogData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update blog post");
-      }
-
-      const action = formData.is_published ? "published" : "saved as draft";
-      toast.success(`Blog post ${action} successfully!`);
-      router.push("/admin/manage-content");
-    } catch (error) {
-      console.error("Error updating blog post:", error);
-      toast.error("Failed to update blog post. Please try again.");
-    } finally {
-      setIsSubmitting(false);
     }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-lg">Loading blog content...</p>
-        </div>
-      </div>
-    );
-  }
+  });
+  
+  // Destructure all the values from our form hook
+  const {
+    formData,
+    content,
+    setContent,
+    formErrors,
+    isSubmitting,
+    activeTab,
+    setActiveTab,
+    imagePreview,
+    imageUrl,
+    datePickerOpen,
+    setDatePickerOpen,
+    handleInputChange,
+    handleSwitchChange,
+    handleTagsChange,
+    handleSlugGenerate,
+    handleMetaGenerate,
+    handleImageUrlChange,
+    handleImagePreviewError,
+    handleDateChange,
+    handleContentChange,
+    handleSubmit,
+    hasError
+  } = formHook;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
+    <div className="space-y-4 py-4 lg:py-8">
+      <div className="flex items-center justify-between p-2">
+        <div className="flex items-center gap-2">
           <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => router.back()}
-            className="h-8 w-8"
+            size="sm"
+            variant="outline"
+            onClick={() => router.push("/admin/blogs")}
           >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <h1 className="text-2xl font-bold">Edit Blog Post</h1>
-        </div>
-        
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <Label
-              htmlFor="is_published"
-              className={formData.is_published ? "text-green-500" : ""}
-            >
-              {formData.is_published ? "Published" : "Draft"}
-            </Label>
-            <Switch 
-              id="is_published" 
-              checked={formData.is_published} 
-              onCheckedChange={handleSwitchChange} 
-            />
-          </div>
-          
-          <Button
-            type="submit"
-            form="blog-form"
-            disabled={isSubmitting}
-            className="bg-glow-purple hover:bg-glow-purple/90"
-          >
-            {isSubmitting ? (
-              <>Saving...</>
-            ) : (
-              <>
-                <Save className="mr-2 h-4 w-4" />
-                {formData.is_published ? "Update & Publish" : "Update Draft"}
-              </>
-            )}
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Blogs
           </Button>
         </div>
       </div>
 
-      <form id="blog-form" onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="container p-0" noValidate>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="content">Content</TabsTrigger>
-            <TabsTrigger value="metadata">Metadata</TabsTrigger>
-            <TabsTrigger value="media">Media</TabsTrigger>
-            <TabsTrigger value="publishing">Publishing</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="content">
+              <FileText className="mr-2 h-4 w-4" />
+              Content
+            </TabsTrigger>
+            <TabsTrigger value="media">
+              <ImagePlus className="mr-2 h-4 w-4" />
+              Media & Tags
+            </TabsTrigger>
+            <TabsTrigger value="seo">
+              <Search className="mr-2 h-4 w-4" />
+              SEO
+            </TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="content" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>Blog Content</CardTitle>
-                <CardDescription>
-                  Write your blog post content in the editor below.
-                </CardDescription>
+                <CardDescription>The core content of your blog post.</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-8">
                 <div className="space-y-2">
-                  <Label htmlFor="title">Title</Label>
-                  <Input
-                    id="title"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleInputChange}
-                    placeholder="Enter blog title"
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    placeholder="Brief description of your blog post"
-                    rows={3}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="content">Content</Label>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setPreviewMode(!previewMode)}
+                  <div className="space-y-2">
+                    <Label
+                      htmlFor="title"
+                      className={cn(hasError("title") && "text-red-500")}
                     >
-                      {previewMode ? "Edit" : "Preview"}
-                    </Button>
+                      Title
+                      <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="title"
+                      name="title"
+                      placeholder="My Awesome Blog Post"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      className={cn(
+                        hasError("title") && "border-red-500 focus-visible:ring-red-500"
+                      )}
+                    />
+                    {hasError("title") && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>
+                    )}
                   </div>
                   
-                  <BlogEditor
-                    content={content}
-                    onChange={setContent}
-                    previewMode={previewMode}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="metadata" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Metadata & SEO</CardTitle>
-                <CardDescription>
-                  Optimize your blog post for search engines.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="slug">
-                      Slug <span className="text-sm text-muted-foreground">(URL path)</span>
-                    </Label>
-                    <div className="flex space-x-2">
-                      <Input
-                        id="slug"
-                        name="slug"
-                        value={formData.slug}
-                        onChange={handleInputChange}
-                        placeholder="blog-post-url"
-                        required
-                      />
+                    <div className="flex justify-between items-center">
+                      <Label 
+                        htmlFor="slug"
+                        className={cn(hasError("slug") && "text-red-500")}
+                      >
+                        URL Slug
+                        <span className="text-red-500">*</span>
+                      </Label>
                       <Button
                         type="button"
-                        variant="outline"
+                        variant="ghost"
                         size="sm"
                         onClick={handleSlugGenerate}
-                        className="shrink-0"
                       >
-                        <FileText className="h-4 w-4 mr-2" />
-                        Generate
+                        Generate from title
                       </Button>
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Category</Label>
                     <Input
-                      id="category"
-                      name="category"
-                      value={formData.category}
+                      id="slug"
+                      name="slug"
+                      placeholder="my-awesome-blog-post"
+                      value={formData.slug}
                       onChange={handleInputChange}
-                      placeholder="e.g. Technology, Travel"
+                      className={cn(
+                        hasError("slug") && "border-red-500 focus-visible:ring-red-500"
+                      )}
                     />
+                    {hasError("slug") && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.slug}</p>
+                    )}
                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="tags">
-                    Tags <span className="text-sm text-muted-foreground">(comma separated)</span>
-                  </Label>
-                  <Input
-                    id="tags"
-                    name="tags"
-                    value={formData.tags.join(", ")}
-                    onChange={handleTagsChange}
-                    placeholder="tech, programming, web, etc."
-                  />
-                </div>
-                
-                <div className="space-y-4 pt-4">
-                  <div className="flex items-center justify-between">
-                    <Label>SEO Details</Label>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={handleMetaGenerate}
+
+                  <div className="space-y-2">
+                    <Label 
+                      htmlFor="description"
+                      className={cn(hasError("description") && "text-red-500")}
                     >
-                      <Search className="h-4 w-4 mr-2" />
-                      Generate SEO Meta
-                    </Button>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="meta_title">Meta Title</Label>
-                    <Input
-                      id="meta_title"
-                      name="meta_title"
-                      value={formData.meta_title}
-                      onChange={handleInputChange}
-                      placeholder="SEO title (defaults to post title)"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="meta_description">Meta Description</Label>
+                      Description
+                      <span className="text-red-500">*</span>
+                    </Label>
                     <Textarea
-                      id="meta_description"
-                      name="meta_description"
-                      value={formData.meta_description}
+                      id="description"
+                      name="description"
+                      placeholder="A brief description of your blog post..."
+                      value={formData.description}
                       onChange={handleInputChange}
-                      placeholder="Brief description for search engines"
-                      rows={2}
+                      className={cn(
+                        hasError("description") && "border-red-500 focus-visible:ring-red-500"
+                      )}
                     />
+                    {hasError("description") && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.description}</p>
+                    )}
                   </div>
-                  
+
                   <div className="space-y-2">
-                    <Label htmlFor="meta_keywords">Meta Keywords</Label>
-                    <Input
-                      id="meta_keywords"
-                      name="meta_keywords"
-                      value={formData.meta_keywords}
-                      onChange={handleInputChange}
-                      placeholder="Comma-separated keywords"
+                    <Label 
+                      htmlFor="content"
+                      className={cn(hasError("content") && "text-red-500")}
+                    >
+                      Content
+                      <span className="text-red-500">*</span>
+                    </Label>
+                    <BlogEditor
+                      content={content}
+                      onChange={handleContentChange}
+                      placeholder="Start writing your blog post..."
                     />
+                    {hasError("content") && (
+                      <p className="text-red-500 text-sm mt-1">{formErrors.content}</p>
+                    )}
                   </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="media" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Featured Image</CardTitle>
+                <CardTitle>Media & Tags</CardTitle>
                 <CardDescription>
-                  Add a featured image for your blog post.
+                  Upload media and assign tags to your blog post
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="featured_image_url">Image URL</Label>
-                  <Input
-                    id="featured_image_url"
-                    name="featured_image_url"
-                    value={imageUrl}
-                    onChange={handleImageUrlChange}
-                    placeholder="https://example.com/image.jpg"
-                  />
-                </div>
-                
-                {imagePreview && (
-                  <div className="mt-4 relative">
-                    <div className="rounded-md overflow-hidden border border-border">
-                      <img
-                        src={imagePreview}
-                        alt="Featured image preview"
-                        className="w-full h-auto max-h-[300px] object-cover"
-                        onError={handleImagePreviewError}
+              <CardContent className="space-y-8">
+                <div className="grid lg:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <div className="space-y-2">
+                      <Label 
+                        htmlFor="category"
+                        className={cn(hasError("category") && "text-red-500")}
+                      >
+                        Category
+                        <span className="text-red-500">*</span>
+                      </Label>
+                      <Input
+                        id="category"
+                        name="category"
+                        placeholder="E.g., Technology, Health, Finance"
+                        value={formData.category}
+                        onChange={handleInputChange}
+                        className={cn(
+                          hasError("category") && "border-red-500 focus-visible:ring-red-500"
+                        )}
+                      />
+                      {hasError("category") && (
+                        <p className="text-red-500 text-sm mt-1">{formErrors.category}</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="tags">
+                        <div className="flex items-center gap-2">
+                          <Tag className="h-4 w-4" />
+                          Tags (comma separated)
+                        </div>
+                      </Label>
+                      <Input
+                        id="tags"
+                        placeholder="web, development, coding"
+                        value={formData.tags.join(", ")}
+                        onChange={handleTagsChange}
                       />
                     </div>
-                    <div className="text-sm text-muted-foreground mt-2">
-                      Featured image preview
+
+                    <div className="space-y-2">
+                      <Label 
+                        htmlFor="author"
+                        className={cn(hasError("author") && "text-red-500")}
+                      >
+                        Author Name
+                      </Label>
+                      <Input
+                        id="author"
+                        name="author"
+                        placeholder="Your Name"
+                        value={formData.author}
+                        onChange={handleInputChange}
+                        className={cn(
+                          hasError("author") && "border-red-500 focus-visible:ring-red-500"
+                        )}
+                      />
+                      {hasError("author") && (
+                        <p className="text-red-500 text-sm mt-1">{formErrors.author}</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="priority">Priority (0-10)</Label>
+                      <Input
+                        id="priority"
+                        name="priority"
+                        type="number"
+                        min={0}
+                        max={10}
+                        value={formData.priority}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2 mt-4">
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          id="is_published"
+                          checked={formData.is_published}
+                          onCheckedChange={handleSwitchChange}
+                        />
+                        <Label htmlFor="is_published">Published</Label>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {formData.is_published
+                          ? "This blog post will be visible to the public"
+                          : "This blog post will be saved as a draft"}
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Calendar className="h-4 w-4" />
+                        <Label htmlFor="published_at">Publish Date</Label>
+                      </div>
+                      <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full justify-start text-left font-normal",
+                              !formData.published_at && "text-muted-foreground"
+                            )}
+                            disabled={!formData.is_published}
+                          >
+                            {formData.published_at ? (
+                              format(new Date(formData.published_at), "PPP")
+                            ) : (
+                              "Pick a date"
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <CalendarUI
+                            mode="single"
+                            selected={
+                              formData.published_at ? new Date(formData.published_at) : undefined
+                            }
+                            onSelect={handleDateChange}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
                     </div>
                   </div>
-                )}
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label 
+                        htmlFor="image-url"
+                        className={cn(hasError("featured_image_url") && "text-red-500")}
+                      >
+                        Image URL
+                      </Label>
+                      <Input
+                        id="image-url"
+                        placeholder="https://example.com/image.jpg"
+                        value={imageUrl}
+                        onChange={handleImageUrlChange}
+                        className={cn(
+                          hasError("featured_image_url") && "border-red-500 focus-visible:ring-red-500"
+                        )}
+                      />
+                      {hasError("featured_image_url") && (
+                        <p className="text-red-500 text-sm mt-1">{formErrors.featured_image_url}</p>
+                      )}
+                    </div>
+
+                    {imagePreview && (
+                      <div className="relative aspect-video rounded-md overflow-hidden border">
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          className="object-cover w-full h-full"
+                          onError={handleImagePreviewError}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
-          
-          <TabsContent value="publishing" className="space-y-4">
+
+          <TabsContent value="seo" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Publishing Options</CardTitle>
+                <CardTitle>SEO Settings</CardTitle>
                 <CardDescription>
-                  Configure how and when your blog post will be published.
+                  Optimize your blog post for search engines
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="author">Author</Label>
-                    <Input
-                      id="author"
-                      name="author"
-                      value={formData.author}
-                      onChange={handleInputChange}
-                      placeholder="Author name"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="priority">
-                      Priority <span className="text-sm text-muted-foreground">(0-10)</span>
-                    </Label>
-                    <Input
-                      id="priority"
-                      name="priority"
-                      type="number"
-                      min="0"
-                      max="10"
-                      value={formData.priority}
-                      onChange={handleInputChange}
-                      placeholder="0"
-                    />
-                  </div>
+              <CardContent className="space-y-8">
+                <div className="flex justify-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleMetaGenerate}
+                  >
+                    Generate from content
+                  </Button>
                 </div>
-                
-                <div className="space-y-2 pt-2">
-                  <Label htmlFor="published_date">Publication Date</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !formData.published_at && "text-muted-foreground"
-                        )}
-                        disabled={!formData.is_published}
-                      >
-                        <Calendar className="mr-2 h-4 w-4" />
-                        {formData.published_at ? (
-                          format(new Date(formData.published_at), "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <CalendarComponent
-                        mode="single"
-                        selected={formData.published_at ? new Date(formData.published_at) : undefined}
-                        onSelect={handleDateChange}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                
-                <div className="flex items-center space-x-2 pt-2">
-                  <Switch 
-                    id="is_published" 
-                    checked={formData.is_published} 
-                    onCheckedChange={handleSwitchChange} 
-                  />
-                  <Label htmlFor="is_published" className="cursor-pointer">
-                    {formData.is_published ? "Published" : "Draft"}
+
+                <div className="space-y-2">
+                  <Label 
+                    htmlFor="meta_title"
+                    className={cn(hasError("meta_title") && "text-red-500")}
+                  >
+                    Meta Title
                   </Label>
+                  <Input
+                    id="meta_title"
+                    name="meta_title"
+                    placeholder="SEO Title (Default: Post Title)"
+                    value={formData.meta_title}
+                    onChange={handleInputChange}
+                    className={cn(
+                      hasError("meta_title") && "border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {hasError("meta_title") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_title}</p>
+                  )}
                 </div>
-                
-                <div className="text-sm text-muted-foreground">
-                  {formData.is_published
-                    ? `This blog post will be visible to the public.`
-                    : `This blog post will be saved as a draft and won't be visible to the public.`}
+
+                <div className="space-y-2">
+                  <Label 
+                    htmlFor="meta_description"
+                    className={cn(hasError("meta_description") && "text-red-500")}
+                  >
+                    Meta Description
+                  </Label>
+                  <Textarea
+                    id="meta_description"
+                    name="meta_description"
+                    placeholder="SEO Description (Default: Post Description)"
+                    value={formData.meta_description}
+                    onChange={handleInputChange}
+                    className={cn(
+                      hasError("meta_description") && "border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {hasError("meta_description") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_description}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label 
+                    htmlFor="meta_keywords"
+                    className={cn(hasError("meta_keywords") && "text-red-500")}
+                  >
+                    Meta Keywords
+                  </Label>
+                  <Input
+                    id="meta_keywords"
+                    name="meta_keywords"
+                    placeholder="SEO Keywords (comma separated)"
+                    value={formData.meta_keywords}
+                    onChange={handleInputChange}
+                    className={cn(
+                      hasError("meta_keywords") && "border-red-500 focus-visible:ring-red-500"
+                    )}
+                  />
+                  {hasError("meta_keywords") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_keywords}</p>
+                  )}
                 </div>
               </CardContent>
-              <CardFooter className="border-t px-6 py-4">
-                <Button
-                  type="submit"
-                  className="w-full bg-glow-purple hover:bg-glow-purple/90"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <span>Saving...</span>
-                  ) : (
-                    <>
-                      <Save className="mr-2 h-4 w-4" />
-                      {formData.is_published ? "Update & Publish" : "Update Draft"}
-                    </>
-                  )}
-                </Button>
-              </CardFooter>
             </Card>
           </TabsContent>
         </Tabs>
+
+        <div className="mt-4 flex justify-end">
+          <Button disabled={isSubmitting} type="submit">
+            {isSubmitting && (
+              <Upload className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            {isSubmitting ? "Updating..." : "Update Blog Post"}
+          </Button>
+        </div>
       </form>
     </div>
   );
