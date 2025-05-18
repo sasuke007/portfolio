@@ -1,55 +1,90 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { BlogEditor } from "@/components/blog-editor";
+import { Button } from "@/components/ui/button";
+import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  ImagePlus,
-  Tag,
-  FileText,
-  Search,
-  Calendar,
-  Save,
-  ArrowLeft,
-  Upload,
-  Loader2,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar as CalendarUI } from "@/components/ui/calendar";
-import { format } from "date-fns";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { useBlogForm } from "@/lib/hooks/useBlogForm";
+import { cn } from "@/lib/utils";
+import { BlogDTO, CreateBlog } from "@/types/blog";
+import { format } from "date-fns";
+import {
+  ArrowLeft,
+  Calendar,
+  FileText,
+  ImagePlus,
+  Search,
+  Tag,
+  Upload
+} from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { z } from "zod";
+import BlogShimmer from "../blog-shimmer";
 
 // Define the params type to satisfy TypeScript
-type EditBlogParams = {
-  slug: string;
+const EditBlogParamsSchema = z.object({
+  slug: z.string()
+});
+
+type EditBlogParams = z.infer<typeof EditBlogParamsSchema>;
+
+// Default form values
+const defaultFormValues: CreateBlog = {
+  title: "",
+  slug: "",
+  description: "",
+  content: "",
+  author: "Rohit Pandit",
+  category: "",
+  featured_image_url: "",
+  is_published: false,
+  priority: 0,
+  tags: [],
+  published_at: new Date().toISOString().split("T")[0],
 };
 
-export default function EditBlogPage({ params }: { params: EditBlogParams | Promise<EditBlogParams> }) {
+// 1. Update the hook props type
+type UseBlogFormProps = {
+  initialValues: BlogDTO;
+  initialContent?: string;
+  externalFormState: [CreateBlog, React.Dispatch<React.SetStateAction<CreateBlog>>];
+  onSubmit: (formData: CreateBlog, content: string) => Promise<void>;
+};
+
+export default function EditBlogPage() {
+
   const router = useRouter();
-  const resolvedParams = React.use(params as Promise<EditBlogParams>);
-  const { slug } = resolvedParams;
+  const params = useParams();
+  const slug = params.slug;
+  console.log("Params:", params);
+  // if (!parseResult.success) {
+  //   router.push('/500');
+  //   return null;
+  // }
   const [isLoading, setIsLoading] = useState(true);
-  const [blogData, setBlogData] = useState<any>(null);
+  const [blogData, setBlogData] = useState<BlogDTO>({} as BlogDTO);
   const [initialContent, setInitialContent] = useState("");
-  console.log(`slug ${slug}`);
+  const [formData, setFormData] = useState<CreateBlog>({
+    ...defaultFormValues,
+  });
+  
   // Fetch the blog post data
   useEffect(() => {
+    console.log("useEffect running, slug:", slug);
     const fetchBlog = async () => {
       setIsLoading(true);
       try {
@@ -57,19 +92,30 @@ export default function EditBlogPage({ params }: { params: EditBlogParams | Prom
         if (!response.ok) {
           throw new Error("Failed to fetch blog post");
         }
-        
-        const data = await response.json();
+        const data: BlogDTO = await response.json();
         
         // Handle tags (transform from tag objects to tag IDs)
         const transformedData = {
           ...data,
           tags: data.tags?.map((tagRel: any) => tagRel.tag.id) || []
         };
-        
-        setBlogData(transformedData);
+        console.log(`transformedData : ${JSON.stringify(transformedData)}`);
         if (data.content) {
           setInitialContent(data.content);
         }
+        setFormData({
+          content: transformedData.content,
+          title: transformedData.title,
+          description: transformedData.description,
+          author: transformedData.author,
+          category: transformedData.category,
+          tags: transformedData.tags,
+          featured_image_url: transformedData.featured_image_url ?? "",
+          slug: transformedData.slug,
+          priority: transformedData.priority,
+          published_at: new Date().toISOString() ,
+          is_published: transformedData.is_published,
+        });
       } catch (error) {
         console.error("Error fetching blog post:", error);
         toast.error("Failed to load blog post. Please try again.");
@@ -81,13 +127,12 @@ export default function EditBlogPage({ params }: { params: EditBlogParams | Prom
     if (slug) {
       fetchBlog();
     }
-  }, [slug, router]);
+  }, [slug]);
   
   const formHook = useBlogForm({
-    // Initialize with blog data once it's loaded
-    initialValues: blogData || {},
-    // Set initial content
+    initialValues: blogData,
     initialContent,
+    externalFormState: [formData, setFormData],
     onSubmit: async (formData, content) => {
       try {
         // Prepare data for submission
@@ -109,9 +154,8 @@ export default function EditBlogPage({ params }: { params: EditBlogParams | Prom
           const error = await response.json();
           throw new Error(error.message || "Failed to update blog post");
         }
-
         toast.success("Blog post updated successfully!");
-        router.push("/admin");
+        router.push("/admin/maange-content");
       } catch (error) {
         console.error("Error updating blog post:", error);
         toast.error("Failed to update blog post. Please try again.");
@@ -121,7 +165,6 @@ export default function EditBlogPage({ params }: { params: EditBlogParams | Prom
   
   // Destructure all the values from our form hook
   const {
-    formData,
     content,
     setContent,
     formErrors,
@@ -144,6 +187,11 @@ export default function EditBlogPage({ params }: { params: EditBlogParams | Prom
     handleSubmit,
     hasError
   } = formHook;
+
+  // Show shimmer UI while loading
+  if (isLoading) {
+    return <BlogShimmer />;
+  }
 
   return (
     <div className="space-y-4 py-4 lg:py-8">
@@ -491,14 +539,14 @@ export default function EditBlogPage({ params }: { params: EditBlogParams | Prom
                     id="meta_title"
                     name="meta_title"
                     placeholder="SEO Title (Default: Post Title)"
-                    value={formData.meta_title}
+                    value={formData.title}
                     onChange={handleInputChange}
                     className={cn(
                       hasError("meta_title") && "border-red-500 focus-visible:ring-red-500"
                     )}
                   />
-                  {hasError("meta_title") && (
-                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_title}</p>
+                  {hasError("title") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>
                   )}
                 </div>
 
@@ -513,14 +561,14 @@ export default function EditBlogPage({ params }: { params: EditBlogParams | Prom
                     id="meta_description"
                     name="meta_description"
                     placeholder="SEO Description (Default: Post Description)"
-                    value={formData.meta_description}
+                    value={formData.description}
                     onChange={handleInputChange}
                     className={cn(
                       hasError("meta_description") && "border-red-500 focus-visible:ring-red-500"
                     )}
                   />
-                  {hasError("meta_description") && (
-                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_description}</p>
+                  {hasError("description") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.description}</p>
                   )}
                 </div>
 
@@ -535,14 +583,14 @@ export default function EditBlogPage({ params }: { params: EditBlogParams | Prom
                     id="meta_keywords"
                     name="meta_keywords"
                     placeholder="SEO Keywords (comma separated)"
-                    value={formData.meta_keywords}
+                    value={formData.title}
                     onChange={handleInputChange}
                     className={cn(
                       hasError("meta_keywords") && "border-red-500 focus-visible:ring-red-500"
                     )}
                   />
                   {hasError("meta_keywords") && (
-                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_keywords}</p>
+                    <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>
                   )}
                 </div>
               </CardContent>

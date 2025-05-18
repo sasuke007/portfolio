@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { format } from 'date-fns';
+import { BlogDTO, CreateBlog } from '@/types/blog';
 
 // Define the slug schema
 export const slugSchema = z.string().min(1).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
@@ -39,35 +40,19 @@ export const blogPostSchema = z.object({
 // Create a type from the schema
 export type BlogPostFormData = z.infer<typeof blogPostSchema>;
 
-// Default form values
-export const defaultFormValues: BlogPostFormData = {
-  title: "",
-  slug: "",
-  description: "",
-  content: "",
-  meta_description: "",
-  meta_keywords: "",
-  meta_title: "",
-  author: "Rohit Pandit",
-  category: "",
-  featured_image_url: "",
-  is_published: false,
-  priority: 0,
-  tags: [],
-  published_at: new Date().toISOString().split("T")[0],
-};
+
 
 type UseBlogFormProps = {
-  initialValues?: Partial<BlogPostFormData>;
+  initialValues: BlogDTO;
   initialContent?: string;
-  onSubmit: (formData: BlogPostFormData, content: string) => Promise<void>;
+  externalFormState: [CreateBlog, React.Dispatch<React.SetStateAction<CreateBlog>>];
+  onSubmit: (formData: CreateBlog, content: string) => Promise<void>;
 };
 
 type UseBlogFormReturn = {
-  formData: BlogPostFormData;
   content: string;
   setContent: (content: string) => void;
-  formErrors: Partial<Record<keyof BlogPostFormData, string>>;
+  formErrors: Partial<Record<keyof CreateBlog, string>>;
   isSubmitting: boolean;
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -89,15 +74,13 @@ type UseBlogFormReturn = {
 };
 
 export function useBlogForm({
-  initialValues = {},
+  initialValues,
   initialContent = "",
+  externalFormState,
   onSubmit
 }: UseBlogFormProps): UseBlogFormReturn {
-  // Form state
-  const [formData, setFormData] = useState<BlogPostFormData>({
-    ...defaultFormValues,
-    ...initialValues
-  });
+  // Use external form state if provided, otherwise create local state
+  const [formData, setFormData] = externalFormState;
   
   // Content state
   const [content, setContent] = useState(initialContent);
@@ -148,7 +131,7 @@ export function useBlogForm({
 
   const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const tagsArray = e.target.value.split(",").map((tag) => tag.trim());
-    setFormData((prev) => ({ ...prev, tags: tagsArray }));
+    // setFormData((prev) => ({ ...prev, tags: tagsArray }));
   };
 
   const handleSlugGenerate = () => {
@@ -191,7 +174,7 @@ export function useBlogForm({
         : formData.description;
 
     // Use title for meta title if empty
-    const metaTitle = formData.meta_title || formData.title;
+    const metaTitle = formData.title;
 
     setFormData((prev) => ({
       ...prev,
@@ -345,7 +328,6 @@ export function useBlogForm({
   const hasError = (field: keyof BlogPostFormData) => Boolean(formErrors[field]);
 
   return {
-    formData,
     content,
     setContent,
     formErrors,

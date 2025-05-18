@@ -50,6 +50,7 @@ export const getHighlightedBlogs = async (): Promise<BlogDTO[]> => {
       author: true,
       description: true,
       is_published: true,
+      priority: true,
       category: true,
       tags: {
         include: {

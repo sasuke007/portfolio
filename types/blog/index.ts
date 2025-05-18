@@ -18,6 +18,7 @@ export interface BlogDTO {
   featured_image_url: string | null
   author: string
   is_published: boolean
+  priority: number
   category: string
   tags: BlogTag[]
 }

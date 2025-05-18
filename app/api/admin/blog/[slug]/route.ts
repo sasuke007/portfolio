@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getBlogBySlug } from "@/lib/services/blog.service";
 import { updateBlog } from "@/lib/services/blog.service";
-import { CreateBlogInput } from "@/types/blog";
+import { BlogDTO, CreateBlog } from "@/types/blog";
 
 // GET request handler to fetch a blog by slug
 export async function GET(
@@ -9,7 +9,10 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   try {
-    const slug = params.slug;
+    // Make sure params is not a Promise before accessing slug
+    const resolvedParams = params instanceof Promise ? await params : params;
+    const slug = resolvedParams.slug;
+    
     const blog = await getBlogBySlug(slug);
 
     if (!blog) {
@@ -36,18 +39,8 @@ export async function PUT(
 ) {
   try {
     const slug = params.slug;
-    const data: CreateBlogInput = await request.json();
-
-    // Validate required fields
-    if (!data.title || !data.content) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
-
-    // Update the blog post
-    const updatedBlog = await updateBlog(slug, data);
+    const data: CreateBlog = await request.json();
+    const updatedBlog: BlogDTO = await updateBlog(slug, data);
 
     return NextResponse.json({ success: true, blog: updatedBlog }, { status: 200 });
   } catch (error: any) {

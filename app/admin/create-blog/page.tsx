@@ -32,12 +32,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useBlogForm } from "@/lib/hooks/useBlogForm";
+import { BlogDTO } from "@/types/blog";
 
 export default function CreateBlogPage() {
   const router = useRouter();
   
   const {
-    formData,
     content,
     setContent,
     formErrors,
@@ -60,7 +60,7 @@ export default function CreateBlogPage() {
     handleSubmit,
     hasError
   } = useBlogForm({
-    initialValues: {},
+    initialValues: {} as BlogDTO,
     initialContent: "",
     onSubmit: async (formData, content) => {
       try {
@@ -439,14 +439,14 @@ export default function CreateBlogPage() {
                     id="meta_title"
                     name="meta_title"
                     placeholder="SEO Title (Default: Post Title)"
-                    value={formData.meta_title}
+                    value={formData.title}
                     onChange={handleInputChange}
                     className={cn(
-                      hasError("meta_title") && "border-red-500 focus-visible:ring-red-500"
+                      hasError("title") && "border-red-500 focus-visible:ring-red-500"
                     )}
                   />
                   {hasError("meta_title") && (
-                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_title}</p>
+                    <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>
                   )}
                 </div>
 
@@ -461,14 +461,14 @@ export default function CreateBlogPage() {
                     id="meta_description"
                     name="meta_description"
                     placeholder="SEO Description (Default: Post Description)"
-                    value={formData.meta_description}
+                    value={formData.description}
                     onChange={handleInputChange}
                     className={cn(
                       hasError("meta_description") && "border-red-500 focus-visible:ring-red-500"
                     )}
                   />
-                  {hasError("meta_description") && (
-                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_description}</p>
+                  {hasError("description") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.description}</p>
                   )}
                 </div>
 
@@ -483,14 +483,14 @@ export default function CreateBlogPage() {
                     id="meta_keywords"
                     name="meta_keywords"
                     placeholder="SEO Keywords (comma separated)"
-                    value={formData.meta_keywords}
+                    value={formData.description}
                     onChange={handleInputChange}
                     className={cn(
                       hasError("meta_keywords") && "border-red-500 focus-visible:ring-red-500"
                     )}
                   />
-                  {hasError("meta_keywords") && (
-                    <p className="text-red-500 text-sm mt-1">{formErrors.meta_keywords}</p>
+                  {hasError("title") && (
+                    <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>
                   )}
                 </div>
               </CardContent>
