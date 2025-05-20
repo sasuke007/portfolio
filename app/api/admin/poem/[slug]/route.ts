@@ -8,7 +8,8 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   try {
-    const slug = params.slug;
+    const resolvedParams = await params;
+    const slug = resolvedParams.slug;
     const poem = await getPoemBySlug(slug);
 
     if (!poem) {
@@ -34,7 +35,8 @@ export async function PUT(
   { params }: { params: { slug: string } }
 ) {
   try {
-    const slug = params.slug;
+    const resolvedParams = await params;
+    const slug = resolvedParams.slug;
     const data = await request.json();
 
     // Validate required fields

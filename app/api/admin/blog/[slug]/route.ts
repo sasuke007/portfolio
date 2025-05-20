@@ -10,7 +10,7 @@ export async function GET(
 ) {
   try {
     // Make sure params is not a Promise before accessing slug
-    const resolvedParams = params instanceof Promise ? await params : params;
+    const resolvedParams = params instanceof Promise ? await params: params;
     const slug = resolvedParams.slug;
     
     const blog = await getBlogBySlug(slug);
@@ -38,7 +38,8 @@ export async function PUT(
   { params }: { params: { slug: string } }
 ) {
   try {
-    const slug = params.slug;
+    const resolvedParams = params instanceof Promise ? await params : params;
+    const slug = resolvedParams.slug;
     const data: CreateBlog = await request.json();
     const updatedBlog: BlogDTO = await updateBlog(slug, data);
 

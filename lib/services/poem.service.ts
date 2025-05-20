@@ -85,7 +85,7 @@ export const getAllPoems = async (): Promise<PoemDTO[]> => {
 export async function getPoemBySlug(slug: string): Promise<PoemDTO | null> {
   try {
     // Validate slug
-    if (!slug || typeof slug !== 'string') {
+    if (!slug) {
       throw new PoemServiceError(`Invalid slug: '${slug}'`, 'VALIDATION_ERROR');
     }
     
@@ -109,9 +109,11 @@ const poemSchema = z.object({
   slug: z.string().min(3).max(100).regex(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers, and hyphens'),
   content: z.string().min(3),
   author: z.string().min(2),
-  published_at: z.string().nullable().refine(val => val === null || !isNaN(Date.parse(val)), {
-    message: 'Invalid date format'
-  }),
+  written_at: z.string().nullable()
+    .refine(val => val === null || !isNaN(Date.parse(val)), {
+      message: 'Invalid date format'
+    })
+    .transform(val => val === null ? null : new Date(val)),
   is_published: z.boolean().default(false)
 });
 

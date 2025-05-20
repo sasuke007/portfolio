@@ -24,11 +24,11 @@ import {
   Save,
   Search
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function EditPoemPage({ params }: { params: { slug: string } }) {
+export default function EditPoemPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,10 +47,10 @@ export default function EditPoemPage({ params }: { params: { slug: string } }) {
     is_published: false,
     priority: 0,
     tags: [] as string[],
-    published_at: new Date().toISOString().split("T")[0],
+    written_at: new Date().toISOString().split("T")[0],
   });
-
-  const { slug } = params;
+  const params = useParams();
+  const  slug  = params.slug;
 
   useEffect(() => {
     const fetchPoem = async () => {
@@ -85,8 +85,8 @@ export default function EditPoemPage({ params }: { params: { slug: string } }) {
           is_published: poem.is_published,
           priority: poem.priority || 0,
           tags: poem.tags || [],
-          published_at: poem.published_at 
-            ? new Date(poem.published_at).toISOString().split("T")[0] 
+          written_at: poem.written_at 
+            ? new Date(poem.written_at).toISOString().split("T")[0] 
             : new Date().toISOString().split("T")[0],
         });
         
@@ -123,7 +123,7 @@ export default function EditPoemPage({ params }: { params: { slug: string } }) {
   const handleDateChange = (date: Date | undefined) => {
     if (date) {
       const dateString = date.toISOString().split("T")[0];
-      setFormData((prev) => ({ ...prev, published_at: dateString }));
+      setFormData((prev) => ({ ...prev, written_at: dateString }));
     }
   };
 
@@ -181,7 +181,7 @@ export default function EditPoemPage({ params }: { params: { slug: string } }) {
 
       const poemData = {
         ...formData,
-        published_at: formData.is_published ? formData.published_at : null, // Only set published date if publishing
+        written_at: formData.is_published ? formData.written_at : null, // Only set published date if publishing
       };
       
       // Send an update request to the API
@@ -469,13 +469,13 @@ export default function EditPoemPage({ params }: { params: { slug: string } }) {
                         variant={"outline"}
                         className={cn(
                           "w-full justify-start text-left font-normal",
-                          !formData.published_at && "text-muted-foreground"
+                          !formData.written_at && "text-muted-foreground"
                         )}
                         disabled={!formData.is_published}
                       >
                         <Calendar className="mr-2 h-4 w-4" />
-                        {formData.published_at ? (
-                          format(new Date(formData.published_at), "PPP")
+                        {formData.written_at ? (
+                          format(new Date(formData.written_at), "PPP")
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -484,7 +484,7 @@ export default function EditPoemPage({ params }: { params: { slug: string } }) {
                     <PopoverContent className="w-auto p-0">
                       <CalendarComponent
                         mode="single"
-                        selected={formData.published_at ? new Date(formData.published_at) : undefined}
+                        selected={formData.written_at ? new Date(formData.written_at) : undefined}
                         onSelect={handleDateChange}
                         initialFocus
                       />

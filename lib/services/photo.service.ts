@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma'
-import { PhotoDTO } from '@/types/photo'
+import { PhotoDTO, CreatePhoto } from '@/types/photo/index'
 import { z } from 'zod' // For input validation
 import { tryCatch } from '../utils'
 
@@ -133,3 +133,150 @@ export const getPhotosByTag = async (tagSlug: string): Promise<PhotoDTO[]> => {
     handleServiceError(validationError, `validating tag slug '${tagSlug}'`)
   }
 }
+
+/**
+ * Get a single photo by its image URL
+ * @param imageUrl - The photo's image URL
+ * @returns The photo or null if not found
+ */
+export async function getPhotoByImageUrl(imageUrl: string): Promise<PhotoDTO | null> {
+  const photo = await prisma.photo.findUnique({
+    where: {
+      image_url: imageUrl,
+    },
+    include: {
+      tags: {
+        include: {
+          tag: true
+        }
+      }
+    }
+  });
+  return photo as unknown as PhotoDTO | null;
+}
+
+/**
+ * Create a new photo
+ * @param data - The photo data
+ * @returns The created photo
+ */
+export async function createPhoto(data: CreatePhoto): Promise<PhotoDTO> {
+  // Check if a photo with the same image URL already exists
+  const existingPhoto = await prisma.photo.findUnique({
+    where: {
+      image_url: data.image_url,
+    },
+  });
+
+  if (existingPhoto) {
+    throw new Error(`A photo with this image URL already exists.`);
+  }
+
+  // Extract tags from the data
+  const { tags, ...photoData } = data;
+
+  const photo = await prisma.photo.create({
+    data: {
+      ...photoData,
+      taken_at: data.taken_at ? new Date(data.taken_at) : null,
+      uploaded_at: new Date(),
+      // Handle tags relationship properly
+      tags: {
+        create: tags.map(tagName => ({
+          tag: {
+            connectOrCreate: {
+              where: { name: tagName },
+              create: { 
+                name: tagName,
+                slug: tagName.toLowerCase().replace(/\s+/g, '-')
+              }
+            }
+          }
+        }))
+      }
+    },
+    include: {
+      tags: {
+        include: {
+          tag: true
+        }
+      }
+    }
+  });
+
+  return photo as unknown as PhotoDTO;
+}
+
+/**
+ * Update an existing photo
+ * @param imageUrl - The image URL of the photo to update
+ * @param data - The updated photo data
+ * @returns The updated photo
+ */
+export async function updatePhoto(
+  imageUrl: string,
+  data: CreatePhoto
+): Promise<PhotoDTO> {
+  // Check if the photo exists
+  const existingPhoto = await prisma.photo.findUnique({
+    where: {
+      image_url: imageUrl,
+    },
+  });
+
+  if (!existingPhoto) {
+    throw new Error(`Photo with this image URL not found.`);
+  }
+
+  // If the image URL is changing, check if the new image URL is already in use
+  if (data.image_url !== imageUrl) {
+    const urlInUse = await prisma.photo.findUnique({
+      where: {
+        image_url: data.image_url,
+      },
+    });
+
+    if (urlInUse) {
+      throw new Error(`A photo with this image URL already exists.`);
+    }
+  }
+
+  // Extract tags from the data
+  const { tags, ...photoData } = data;
+
+  const updatedPhoto = await prisma.photo.update({
+    where: {
+      image_url: imageUrl,
+    },
+    data: {
+      ...photoData,
+      taken_at: data.taken_at ? new Date(data.taken_at) : null,
+      // Handle tags relationship properly
+      tags: {
+        // Delete existing tag connections
+        deleteMany: {},
+        // Create new tag connections
+        create: tags.map(tagName => ({
+          tag: {
+            connectOrCreate: {
+              where: { name: tagName },
+              create: { 
+                name: tagName,
+                slug: tagName.toLowerCase().replace(/\s+/g, '-')
+              }
+            }
+          }
+        }))
+      }
+    },
+    include: {
+      tags: {
+        include: {
+          tag: true
+        }
+      }
+    }
+  });
+
+  return updatedPhoto as unknown as PhotoDTO;
+} 
