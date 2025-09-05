@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+import {useRef, useState} from "react";
+import {useRouter} from "next/navigation";
+import {toast} from "sonner";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
+import {Label} from "@/components/ui/label";
+import {Switch} from "@/components/ui/switch";
 import {
   Card,
   CardContent,
@@ -15,7 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {
   ImagePlus,
   Tag,
@@ -27,18 +27,21 @@ import {
   MapPin,
   Camera,
 } from "lucide-react";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { createPhotoSchema } from "@/types/photo";
-import { z } from "zod";
+import {Calendar as CalendarComponent} from "@/components/ui/calendar";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {format} from "date-fns";
+import {cn} from "@/lib/utils";
+import {createPhotoSchema} from "@/types/photo";
+import {z} from "zod";
+import {UploadButton} from "@/utils/uploadthing";
+
 
 export default function CreatePhotoPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState("content");
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const imageUrlRef = useRef<HTMLInputElement>(null);
 
   // Initial form state
   const [formData, setFormData] = useState({
@@ -51,7 +54,7 @@ export default function CreatePhotoPage() {
     meta_description: "",
     meta_keywords: "",
     meta_title: "",
-    author: "Rohit Pandit", // Default author
+    author: "Rohit Pandit",
     category: "",
     is_published: false,
     priority: 0,
@@ -66,13 +69,13 @@ export default function CreatePhotoPage() {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    
+    const {name, value} = e.target;
+    setFormData((prev) => ({...prev, [name]: value}));
+
     // Clear error for this field when user types
     if (errors[name]) {
       setErrors((prev) => {
-        const newErrors = { ...prev };
+        const newErrors = {...prev};
         delete newErrors[name];
         return newErrors;
       });
@@ -80,18 +83,18 @@ export default function CreatePhotoPage() {
   };
 
   const handleSwitchChange = (checked: boolean) => {
-    setFormData((prev) => ({ ...prev, is_published: checked }));
+    setFormData((prev) => ({...prev, is_published: checked}));
   };
 
   const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const tagsArray = e.target.value.split(",").map((tag) => tag.trim());
-    setFormData((prev) => ({ ...prev, tags: tagsArray }));
+    setFormData((prev) => ({...prev, tags: tagsArray}));
   };
 
   const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
-    setFormData((prev) => ({ ...prev, image_url: url }));
-    
+    setFormData((prev) => ({...prev, image_url: url}));
+
     // Update preview if URL isn't empty
     if (url) {
       setPhotoPreview(url);
@@ -103,7 +106,7 @@ export default function CreatePhotoPage() {
   const handleDateChange = (date: Date | undefined, fieldName: 'taken_at' | 'published_at') => {
     if (date) {
       const dateString = date.toISOString().split("T")[0];
-      setFormData((prev) => ({ ...prev, [fieldName]: dateString }));
+      setFormData((prev) => ({...prev, [fieldName]: dateString}));
     }
   };
 
@@ -139,9 +142,9 @@ export default function CreatePhotoPage() {
         ...formData,
         priority: Number(formData.priority), // Ensure priority is a number
       };
-      
+
       createPhotoSchema.parse(validationData);
-      return { valid: true, errors: {} };
+      return {valid: true, errors: {}};
     } catch (error) {
       if (error instanceof z.ZodError) {
         const newErrors: Record<string, string> = {};
@@ -151,54 +154,54 @@ export default function CreatePhotoPage() {
           newErrors[field] = err.message;
         });
         setErrors(newErrors);
-        return { valid: false, errors: newErrors };
+        return {valid: false, errors: newErrors};
       }
-      return { valid: false, errors: {} };
+      return {valid: false, errors: {}};
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate the form before submission
     const validation = validateForm();
     if (!validation.valid) {
       // Determine which tab has errors and switch to it
       const errorFields = Object.keys(validation.errors);
-      
+
       if (errorFields.includes('title') || errorFields.includes('description') || errorFields.includes('content')) {
         setActiveTab('content');
-      } else if (errorFields.includes('image_url') || errorFields.includes('location') || 
-                errorFields.includes('camera_details') || errorFields.includes('taken_at') || 
-                errorFields.includes('tags')) {
+      } else if (errorFields.includes('image_url') || errorFields.includes('location') ||
+        errorFields.includes('camera_details') || errorFields.includes('taken_at') ||
+        errorFields.includes('tags')) {
         setActiveTab('media');
-      } else if (errorFields.includes('meta_title') || errorFields.includes('meta_description') || 
-                errorFields.includes('meta_keywords')) {
+      } else if (errorFields.includes('meta_title') || errorFields.includes('meta_description') ||
+        errorFields.includes('meta_keywords')) {
         setActiveTab('seo');
       }
-      
+
       // Create a more specific error message
       const firstError = errorFields[0];
-      const errorMessage = firstError 
+      const errorMessage = firstError
         ? `Please fix the error in the ${firstError.replace('_', ' ')} field`
         : "Please fix the errors in the form";
-      
+
       toast.error(errorMessage, {
         description: "Fields with errors are highlighted in red"
       });
-      
+
       // Scroll to the first error if possible
       const errorElement = document.getElementById(firstError);
       if (errorElement) {
         setTimeout(() => {
-          errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          errorElement.scrollIntoView({behavior: 'smooth', block: 'center'});
           errorElement.focus();
         }, 100);
       }
-      
+
       return;
     }
-    
+
     setIsSubmitting(true);
 
     try {
@@ -242,7 +245,7 @@ export default function CreatePhotoPage() {
             onClick={() => router.back()}
             className="h-8 w-8"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4"/>
           </Button>
           <h1 className="text-2xl font-bold">Create New Photo</h1>
         </div>
@@ -272,7 +275,7 @@ export default function CreatePhotoPage() {
               <>Saving...</>
             ) : (
               <>
-                <Save className="mr-2 h-4 w-4" />
+                <Save className="mr-2 h-4 w-4"/>
                 {formData.is_published ? "Create & Publish" : "Save as Draft"}
               </>
             )}
@@ -288,15 +291,15 @@ export default function CreatePhotoPage() {
       >
         <TabsList className="grid grid-cols-3 mb-6">
           <TabsTrigger value="content" className="flex items-center">
-            <FileText className="mr-2 h-4 w-4" />
+            <FileText className="mr-2 h-4 w-4"/>
             Content
           </TabsTrigger>
           <TabsTrigger value="media" className="flex items-center">
-            <ImagePlus className="mr-2 h-4 w-4" />
+            <ImagePlus className="mr-2 h-4 w-4"/>
             Photo & Details
           </TabsTrigger>
           <TabsTrigger value="seo" className="flex items-center">
-            <Search className="mr-2 h-4 w-4" />
+            <Search className="mr-2 h-4 w-4"/>
             SEO
           </TabsTrigger>
         </TabsList>
@@ -363,7 +366,29 @@ export default function CreatePhotoPage() {
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="image_url">Photo URL</Label>
+                      <UploadButton
+                        // appearance={{
+                        //   button: cn("bg-glow-purple hover:bg-glow-purple/90"),
+                        // }}
+                        className={cn("ut-button:bg-glow-purple ut-button:ut-readying:bg-glow-purple/90 " +
+                          "ut-button:ut-uploading:bg-glow-purple/90 ut-button:hover:bg-glow-purple/90 ")}
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res) => {
+                          // Do something with the response
+                          // get urfUrl from the response and put in image_url field in the formData object
+                          console.log("Files: ", res);
+                          // make a dto for response structure and validate it
+                          imageUrlRef.current.value = res[0].url;
+                        }}
+                        onUploadError={(error: Error) => {
+                          // Do something with the error.
+                          alert(`ERROR! ${error.message}`);
+                        }}
+                      />
+                      {/*Need to place a upload thing button here to upload a photo and when that image upload is successful need to get the
+                      image url and update the image_url field in the formData object*/}
                       <Input
+                        ref={imageUrlRef}
                         id="image_url"
                         name="image_url"
                         placeholder="https://example.com/photo.jpg"
@@ -378,7 +403,7 @@ export default function CreatePhotoPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="location" className="flex items-center space-x-2">
-                        <MapPin className="h-4 w-4" />
+                        <MapPin className="h-4 w-4"/>
                         <span>Location</span>
                       </Label>
                       <Input
@@ -392,7 +417,7 @@ export default function CreatePhotoPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="camera_details" className="flex items-center space-x-2">
-                        <Camera className="h-4 w-4" />
+                        <Camera className="h-4 w-4"/>
                         <span>Camera Details</span>
                       </Label>
                       <Input
@@ -406,7 +431,7 @@ export default function CreatePhotoPage() {
 
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <Calendar className="h-4 w-4" />
+                        <Calendar className="h-4 w-4"/>
                         <Label htmlFor="taken_at">Date Taken</Label>
                       </div>
                       <Popover>
@@ -418,7 +443,7 @@ export default function CreatePhotoPage() {
                               !formData.taken_at && "text-muted-foreground"
                             )}
                           >
-                            <Calendar className="mr-2 h-4 w-4" />
+                            <Calendar className="mr-2 h-4 w-4"/>
                             {formData.taken_at ? (
                               format(new Date(formData.taken_at), "PPP")
                             ) : (
@@ -455,7 +480,7 @@ export default function CreatePhotoPage() {
 
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <Tag className="h-4 w-4" />
+                        <Tag className="h-4 w-4"/>
                         <Label htmlFor="tags">Tags (comma separated)</Label>
                       </div>
                       <Input
@@ -472,7 +497,7 @@ export default function CreatePhotoPage() {
 
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <FileText className="h-4 w-4" />
+                        <FileText className="h-4 w-4"/>
                         <Label htmlFor="category">Category</Label>
                       </div>
                       <Input
@@ -486,7 +511,7 @@ export default function CreatePhotoPage() {
 
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
-                        <Calendar className="h-4 w-4" />
+                        <Calendar className="h-4 w-4"/>
                         <Label htmlFor="published_at">Publish Date</Label>
                       </div>
                       <Popover>
@@ -499,7 +524,7 @@ export default function CreatePhotoPage() {
                             )}
                             disabled={!formData.is_published}
                           >
-                            <Calendar className="mr-2 h-4 w-4" />
+                            <Calendar className="mr-2 h-4 w-4"/>
                             {formData.published_at ? (
                               format(new Date(formData.published_at), "PPP")
                             ) : (
