@@ -1,22 +1,19 @@
 import { FeaturedPhotos } from "@/components/featured-photos"
 import { FeaturedPost } from "@/components/featured-post"
 import { HeroSection } from "@/components/hero-section"
-import { FeaturedPoems } from "@/components/featured-poems"
 import { SectionHeading } from "@/components/section-heading"
 import { VideoCard } from "@/components/video-card"
 import { getHighlightedBlogs } from "@/lib/services/blog.service"
 import { getHighlightedPhotos } from "@/lib/services/photo.service"
-import { getHighlightedPoems } from "@/lib/services/poem.service"
 import { getHighlightedVlogs } from "@/lib/services/vlog.service"
 import { formatDate } from "@/lib/utils"
 
 export default async function Home() {
   // Make all API calls in parallel and wait for all to complete
-  const [blogs, photos, vlogs, poems] = await Promise.all([
+  const [blogs, photos, vlogs] = await Promise.all([
     getHighlightedBlogs().catch(() => []),
     getHighlightedPhotos().catch(() => []),
-    getHighlightedVlogs().catch(() => []),
-    getHighlightedPoems().catch(() => [])
+    getHighlightedVlogs().catch(() => [])
   ]);
 
   return (
@@ -95,28 +92,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Featured Poems */}
-      <section className="w-full py-1 md:py-2 lg:py-3">
-        <div className="container px-4 md:px-6">
-          <SectionHeading
-            title="Poetry Corner"
-            description="Featuring poems by my sister, Shrishti Pandit."
-            link="/poems"
-            linkText="Read More Poems"
-          />
-          <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3">
-            {poems.map((poem) => (
-              <FeaturedPoems
-                key={poem.id}
-                title={poem.title}
-                content={poem.content.slice(0, 120) + "..."}
-                date={formatDate(poem.written_at || poem.created_at)}
-                slug={`/poems/${poem.slug}`}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Journey Section Teaser */}
       <section className="w-full py-1 md:py-2 lg:py-3 bg-dark-200/50">

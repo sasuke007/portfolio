@@ -6,7 +6,6 @@ export default function AdminDashboard() {
   //TODO: Mock data - would be fetched from API in production
   const stats = [
     { title: "Blog Posts", count: 12, icon: FileText, path: "create-blog" },
-    { title: "Poems", count: 8, icon: BookOpen, path: "create-poem" },
     { title: "Photos", count: 24, icon: ImageIcon, path: "create-photo" },
     { title: "Vlogs", count: 5, icon: Video, path: "create-vlog" }
   ]
@@ -20,7 +19,7 @@ export default function AdminDashboard() {
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat) => {
           const Icon = stat.icon
           return (
@@ -66,12 +65,6 @@ export default function AdminDashboard() {
                   <strong>3 photos</strong> uploaded 5 days ago
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
-                <div className="text-sm">
-                  <strong>Poem collection</strong> updated 1 week ago
-                </div>
-              </div>
             </div>
           </CardContent>
         </Card>
@@ -87,9 +80,6 @@ export default function AdminDashboard() {
             <div className="space-y-2">
               <Link href="/admin/create-blog" className="text-sm text-blue-500 hover:underline flex items-center gap-1">
                 <FileText className="h-3 w-3" /> New blog post
-              </Link>
-              <Link href="/admin/create-poem" className="text-sm text-blue-500 hover:underline flex items-center gap-1">
-                <BookOpen className="h-3 w-3" /> New poem
               </Link>
               <Link href="/admin/create-photo" className="text-sm text-blue-500 hover:underline flex items-center gap-1">
                 <ImageIcon className="h-3 w-3" /> Upload photos
@@ -147,7 +137,7 @@ export default function AdminDashboard() {
         <CardContent>
           <div className="flex flex-col gap-4">
             <p className="text-sm">
-              Need to make changes to your existing content? Use the content management dashboard to edit your blogs, poems, photos, and vlogs.
+              Need to make changes to your existing content? Use the content management dashboard to edit your blogs, photos, and vlogs.
             </p>
             <Link 
               href="/admin/manage-content" 

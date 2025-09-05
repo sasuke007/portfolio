@@ -8,7 +8,9 @@
     "build": "npm run update-git-env && next build",
     "start": "next start",
     "lint": "next lint",
-    "scan": "npm run update-git-env && next dev & npx react-scan@latest localhost:3000"
+    "scan": "npm run update-git-env && next dev & npx react-scan@latest localhost:3000",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "npx prisma studio"
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.0",
@@ -102,6 +104,10 @@
     "prettier": "^3.5.3",
     "prisma": "^6.6.0",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.7.1",
     "typescript": "^5"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }

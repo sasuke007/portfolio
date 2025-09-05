@@ -11,7 +11,7 @@ import Script from "next/script"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Anesthetic Coder | Writer • Photographer • Traveller",
+  title: "Anaesthetic Coder | Writer • Photographer • Traveller",
   description: "Personal portfolio showcasing blogs, vlogs, photography, and poetry.",
     generator: 'v0.dev'
 }

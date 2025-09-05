@@ -30,7 +30,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Pencil, Search, ArrowLeft, Video, Image } from "lucide-react";
 import { BlogDTO } from "@/types/blog";
-import { PoemDTO } from "@/types/poem";
 import { VlogDTO } from "@/types/vlog";
 import { PhotoDTO } from "@/types/photo";
 import { format } from "date-fns";
@@ -39,7 +38,6 @@ export default function ManageContentPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("blogs");
   const [blogs, setBlogs] = useState<BlogDTO[]>([]);
-  const [poems, setPoems] = useState<PoemDTO[]>([]);
   const [vlogs, setVlogs] = useState<VlogDTO[]>([]);
   const [photos, setPhotos] = useState<PhotoDTO[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -54,11 +52,6 @@ export default function ManageContentPage() {
         const blogsResponse = await fetch("/api/admin/blog");
         const blogsData = await blogsResponse.json();
         setBlogs(blogsData.blogs || []);
-
-        // Fetch poems
-        const poemsResponse = await fetch("/api/admin/poem");
-        const poemsData = await poemsResponse.json();
-        setPoems(poemsData.poems || []);
 
         // Fetch vlogs
         const vlogsResponse = await fetch("/api/admin/vlog");
@@ -91,8 +84,6 @@ export default function ManageContentPage() {
   const handleEditItem = (type: string, slug: string) => {
     if (type === "blog") {
       router.push(`/admin/edit-blog/${slug}`);
-    } else if (type === "poem") {
-      router.push(`/admin/edit-poem/${slug}`);
     } else if (type === "vlog") {
       // For vlogs, we use video_url as the identifier, but need to encode it for the URL
       router.push(`/admin/edit-vlog/${encodeURIComponent(slug)}`);
@@ -117,19 +108,7 @@ export default function ManageContentPage() {
     return matchesSearch && matchesType;
   });
 
-  const filteredPoems = poems.filter((poem) => {
-    const matchesSearch = searchTerm
-      ? poem.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        poem.slug.toLowerCase().includes(searchTerm.toLowerCase())
-      : true;
-    
-    const matchesType =
-      contentType === "all" ||
-      (contentType === "published" && poem.is_published) ||
-      (contentType === "draft" && !poem.is_published);
-    
-    return matchesSearch && matchesType;
-  });
+
 
   const filteredVlogs = vlogs.filter((vlog) => {
     const matchesSearch = searchTerm
@@ -198,9 +177,8 @@ export default function ManageContentPage() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="blogs">Blogs</TabsTrigger>
-          <TabsTrigger value="poems">Poems</TabsTrigger>
           <TabsTrigger value="vlogs">Vlogs</TabsTrigger>
           <TabsTrigger value="photos">Photos</TabsTrigger>
         </TabsList>
@@ -261,66 +239,6 @@ export default function ManageContentPage() {
               ) : (
                 <div className="text-center py-4">
                   No blogs found. {searchTerm && "Try a different search term."}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="poems">
-          <Card>
-            <CardHeader>
-              <CardTitle>Poems</CardTitle>
-              <CardDescription>
-                Manage your existing poems. Click on a poem to edit it.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <div className="text-center py-4">Loading poems...</div>
-              ) : filteredPoems.length > 0 ? (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Title</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Created Date</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredPoems.map((poem) => (
-                      <TableRow key={poem.slug}>
-                        <TableCell className="font-medium">{poem.title}</TableCell>
-                        <TableCell>
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            poem.is_published 
-                              ? "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100" 
-                              : "bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100"
-                          }`}>
-                            {poem.is_published ? "Published" : "Draft"}
-                          </span>
-                        </TableCell>
-                        <TableCell>
-                          {format(new Date(poem.created_at), "MMM d, yyyy")}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleEditItem("poem", poem.slug)}
-                          >
-                            <Pencil className="h-4 w-4 mr-2" />
-                            Edit
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              ) : (
-                <div className="text-center py-4">
-                  No poems found. {searchTerm && "Try a different search term."}
                 </div>
               )}
             </CardContent>

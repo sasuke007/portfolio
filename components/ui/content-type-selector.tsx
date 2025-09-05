@@ -26,13 +26,6 @@ export const contentTypes = [
     description: "Write an article or blog post"
   },
   {
-    id: "poem",
-    name: "Poem",
-    path: "create-poem",
-    icon: BookOpen,
-    description: "Create a new poem"
-  },
-  {
     id: "photo",
     name: "Photo",
     path: "create-photo",

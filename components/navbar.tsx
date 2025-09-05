@@ -19,7 +19,6 @@ export function Navbar() {
     { name: "Blog", path: "/blog" },
     { name: "Photography", path: "/photography" },
     { name: "Vlogs", path: "/vlogs" },
-    { name: "Poems", path: "/poems" },
     { name: "About", path: "/about" },
   ]
 
@@ -43,7 +42,7 @@ export function Navbar() {
                 Admin Panel
               </>
             ) : (
-              "Anesthetic Coder"
+              "Anaesthetic Coder"
             )}
           </span>
         </Link>
@@ -104,8 +103,7 @@ export function Navbar() {
                 {route.name}
               </Link>
             ))}
-            
-            {/* Admin link for mobile */}
+
             {!isAdminPage ? (
               <Link
                 href="/admin"

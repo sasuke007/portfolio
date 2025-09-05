@@ -1,12 +1,6 @@
-create the endpoint for /blogs where actual content of the blog is written. Align it with the theme of the page. (partly done)
-Bento grid logic fix 
-featured video section
-make featured posts section much better with lot more text than image.
-Remove contact page.
 Write my information on about me page.
 Make poems page, and decide layout for poems main page.
 Have to build a journey page.
-Make an admin page to submit articles.
 Put authentication on admin page so that only I can post articles.
 Introduce a cacheing layer intermediate between ssr and ssg, isr
 
@@ -19,4 +13,3 @@ Learn tanstack and diffrent use cases it solves.
 Learn framer motion.
 
 when in preview mode, make the editor big take the whole space and make the editor uneditable.
-

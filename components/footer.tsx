@@ -18,9 +18,6 @@ export function Footer() {
           <Link href="/vlogs" className="text-sm text-gray-500 hover:text-primary">
             Vlogs
           </Link>
-          <Link href="/poems" className="text-sm text-gray-500 hover:text-primary">
-            Poems
-          </Link>
         </nav>
       </div>
     </footer>

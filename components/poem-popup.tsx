@@ -1,6 +1,6 @@
 "use client"
 
-import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogOverlay, DialogTitle } from "@/components/ui/dialog"
 import { X } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { PoemDTO } from "@/types/poem"
@@ -37,7 +37,7 @@ export function PoemPopup({ poem, isOpen, onClose }: PoemPopupProps) {
             <div className="p-6 md:p-8">
               <div className="mb-6 space-y-2">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-2xl md:text-3xl font-bold gradient-text-simple">{poem.title}</h2>
+                  <DialogTitle className="text-2xl md:text-3xl font-bold gradient-text-simple">{poem.title}</DialogTitle>
                   <time className="text-sm text-gray-400">
                     {formatDate(poem.written_at || poem.created_at)}
                   </time>

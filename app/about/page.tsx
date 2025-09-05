@@ -26,7 +26,7 @@ export default function AboutPage() {
           <div className="rounded-lg overflow-hidden border border-border/50 glow-border">
             <Image
               src="/profile_photo.jpeg"
-              alt="Anesthetic Coder"
+              alt="Anaesthetic Coder"
               width={600}
               height={800}
               className="rounded-lg object-cover w-full h-auto"
