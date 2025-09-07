@@ -5,7 +5,7 @@
   "scripts": {
     "update-git-env": "node scripts/update-git-env.js",
     "dev": "npm run update-git-env && next dev",
-    "build": "npm run update-git-env && npx prisma migrate deploy && npx prisma generate && next build",
+    "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "scan": "npm run update-git-env && next dev & npx react-scan@latest localhost:3000",
