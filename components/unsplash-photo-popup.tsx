@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Download, Heart, Plus, Share, Info, MapPin, Calendar, Camera, Shield } from "lucide-react"
 
 export type UnsplashPhoto = {
-  id: number
+  id: string | undefined
   title: string
   description: string
   category: string

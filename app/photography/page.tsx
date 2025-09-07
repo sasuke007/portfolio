@@ -9,13 +9,12 @@ export default async function PhotographyPage() {
 
   // Map PhotoDTO to the Photo type expected by ParallaxGridGallery
   const galleryPhotos: ParallaxPhotos[] = photos.map(photo => ({
-    id: photo.id,
+    id: photo.reference_id,
     title: photo.title || "Untitled",
     description: photo.description || "",
     //TODO: Clean this category or rethink what can u show there.
     category: "Uncategorized",
-    src: photo.image_url,
-    className: ""
+    src: photo.image_url
   }))
 
   return (

@@ -6,7 +6,7 @@ import Image from "next/image"
 import { UnsplashPhotoPopup, UnsplashPhoto } from "./unsplash-photo-popup"
 
 export type ParallaxPhotos = {
-  id: number
+  id: string | undefined
   title: string
   description: string
   category: string
@@ -91,7 +91,7 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority={photo.id < 3}
+                    priority={(Math.random()*10) < 3}
                   />
                   <div key={`overlay-${photo.id}`} className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div key={`content-${photo.id}`} className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -120,7 +120,7 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority={photo.id < 6 && photo.id >= 3}
+                    priority={(Math.random()*10) < 6 && (Math.random()*10) >= 3}
                   />
                   <div key={`overlay-${photo.id}`} className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div key={`content-${photo.id}`} className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -149,7 +149,7 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority={photo.id < 9 && photo.id >= 6}
+                    priority={(Math.random()*10) < 9 && (Math.random()*10) >= 6}
                   />
                   <div key={`overlay-${photo.id}`} className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div key={`content-${photo.id}`} className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
