@@ -1,8 +1,8 @@
-import { PageHeader } from "@/components/page-header"
-import { ParallaxPhotos } from "@/components/parallax-grid-gallery"
+import {PageHeader} from "@/components/page-header"
+import {ParallaxPhotos} from "@/components/parallax-grid-gallery"
 
-import { PhotographyGallery } from "@/components/photography-gallery"
-import { getAllPhotos, getHighlightedPhotos } from "@/lib/services/photo.service"
+import {PhotographyGallery} from "@/components/photography-gallery"
+import {getAllPhotos} from "@/lib/services/photo.service"
 
 export default async function PhotographyPage() {
   const photos = await getAllPhotos();
