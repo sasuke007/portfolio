@@ -76,7 +76,7 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {/* First column - Apply motion to the entire column */}
           <motion.div key="first-column" className="space-y-2" style={{ y: translateFirst }}>
-            {firstColumn.map((photo) => (
+            {firstColumn.map((photo, index) => (
               <motion.div
                 key={photo.id}
                 className="relative overflow-hidden rounded-lg border border-border/50 shimmer hover-scale cursor-pointer group"
@@ -91,12 +91,11 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority={(Math.random()*10) < 3}
+                    priority={index < 2}
                   />
                   <div key={`overlay-${photo.id}`} className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div key={`content-${photo.id}`} className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <h3 className="text-lg font-semibold gradient-text mb-1 drop-shadow-lg">{photo.title}</h3>
-                    <p className="text-sm text-white/90 drop-shadow-md">{photo.category}</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -105,7 +104,7 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
 
           {/* Second column - Apply motion to the entire column */}
           <motion.div key="second-column" className="space-y-2 mt-[-80px]" style={{ y: translateSecond }}>
-            {secondColumn.map((photo) => (
+            {secondColumn.map((photo, index) => (
               <motion.div
                 key={photo.id}
                 className="relative overflow-hidden rounded-lg border border-border/50 shimmer hover-scale cursor-pointer group"
@@ -120,12 +119,11 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority={(Math.random()*10) < 6 && (Math.random()*10) >= 3}
+                    priority={index < 2}
                   />
                   <div key={`overlay-${photo.id}`} className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div key={`content-${photo.id}`} className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <h3 className="text-lg font-semibold gradient-text mb-1 drop-shadow-lg">{photo.title}</h3>
-                    <p className="text-sm text-white/90 drop-shadow-md">{photo.category}</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -134,7 +132,7 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
 
           {/* Third column - Apply motion to the entire column */}
           <motion.div key="third-column" className="space-y-2 mt-[40px]" style={{ y: translateThird }}>
-            {thirdColumn.map((photo) => (
+            {thirdColumn.map((photo, index) => (
               <motion.div
                 key={photo.id}
                 className="relative overflow-hidden rounded-lg border border-border/50 shimmer hover-scale cursor-pointer group"
@@ -149,12 +147,11 @@ export const ParallaxGridGallery = ({ photos }: { photos: ParallaxPhotos[] }) =>
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority={(Math.random()*10) < 9 && (Math.random()*10) >= 6}
+                    priority={index < 2}
                   />
                   <div key={`overlay-${photo.id}`} className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div key={`content-${photo.id}`} className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <h3 className="text-lg font-semibold gradient-text mb-1 drop-shadow-lg">{photo.title}</h3>
-                    <p className="text-sm text-white/90 drop-shadow-md">{photo.category}</p>
                   </div>
                 </motion.div>
               </motion.div>
