@@ -1,13 +1,4 @@
-// Update imports to use the correct path
-import { Tag } from '@/prisma/generated/client'
 import { z } from 'zod'
-
-// Remove duplicate import
-// import { BlogTag } from '@/prisma/generated/client'
-
-export interface BlogTag {
-  tag: Tag
-}
 
 export interface BlogDTO {
   title: string
@@ -20,7 +11,6 @@ export interface BlogDTO {
   is_published: boolean
   priority: number
   category: string
-  tags: BlogTag[]
 }
 
 
@@ -40,7 +30,6 @@ export const createBlogSchema = z.object({
   }),
   is_published: z.boolean().default(false),
   featured_image_url: z.string().url().optional(),
-  tags: z.array(z.number()).default([])
 })
 
 

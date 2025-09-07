@@ -18,7 +18,6 @@ import {
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {
   ImagePlus,
-  Tag,
   FileText,
   Search,
   Calendar,
@@ -39,6 +38,7 @@ import {UploadButton} from "@/utils/uploadthing";
 export default function CreatePhotoPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(true);
   const [activeTab, setActiveTab] = useState("content");
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const imageUrlRef = useRef<HTMLInputElement>(null);
@@ -58,7 +58,6 @@ export default function CreatePhotoPage() {
     category: "",
     is_published: false,
     priority: 0,
-    tags: [] as string[],
     taken_at: new Date().toISOString().split("T")[0],
     published_at: new Date().toISOString().split("T")[0],
   });
@@ -86,10 +85,6 @@ export default function CreatePhotoPage() {
     setFormData((prev) => ({...prev, is_published: checked}));
   };
 
-  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const tagsArray = e.target.value.split(",").map((tag) => tag.trim());
-    setFormData((prev) => ({...prev, tags: tagsArray}));
-  };
 
   const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
@@ -173,7 +168,7 @@ export default function CreatePhotoPage() {
         setActiveTab('content');
       } else if (errorFields.includes('image_url') || errorFields.includes('location') ||
         errorFields.includes('camera_details') || errorFields.includes('taken_at') ||
-        errorFields.includes('tags')) {
+        false) {
         setActiveTab('media');
       } else if (errorFields.includes('meta_title') || errorFields.includes('meta_description') ||
         errorFields.includes('meta_keywords')) {
@@ -366,27 +361,39 @@ export default function CreatePhotoPage() {
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="image_url">Photo URL</Label>
-                      <UploadButton
-                        // appearance={{
-                        //   button: cn("bg-glow-purple hover:bg-glow-purple/90"),
-                        // }}
-                        className={cn("ut-button:bg-glow-purple ut-button:ut-readying:bg-glow-purple/90 " +
-                          "ut-button:ut-uploading:bg-glow-purple/90 ut-button:hover:bg-glow-purple/90 ")}
-                        endpoint="imageUploader"
-                        onClientUploadComplete={(res) => {
-                          // Do something with the response
-                          // get urfUrl from the response and put in image_url field in the formData object
-                          console.log("Files: ", res);
-                          // make a dto for response structure and validate it
-                          imageUrlRef.current.value = res[0].url;
-                        }}
-                        onUploadError={(error: Error) => {
-                          // Do something with the error.
-                          alert(`ERROR! ${error.message}`);
-                        }}
-                      />
-                      {/*Need to place a upload thing button here to upload a photo and when that image upload is successful need to get the
+                      <div className="flex flex-col justify-center items-center space-y-1">
+                        <UploadButton
+                          // appearance={{
+                          //   button: cn("bg-glow-purple hover:bg-glow-purple/90"),
+                          // }}
+                          className={cn("ut-button:bg-glow-purple ut-button:ut-readying:bg-glow-purple/90 " +
+                            "ut-button:ut-uploading:bg-glow-purple/90 ut-button:hover:bg-glow-purple/90 ")}
+                          endpoint="imageUploader"
+                          onClientUploadComplete={(res) => {
+                            // Do something with the response
+                            // get urfUrl from the response and put in image_url field in the formData object
+                            //TODO: get lastModifiedDate from response and update the formData object field taken_at
+                            console.log("Files: ", res);
+                            // make a dto for response structure and validate it
+                            if (imageUrlRef.current) {
+                              imageUrlRef.current.value = res[0].url;
+                            }
+                            setFormData((prev) => ({...prev, image_url: res[0].url}));
+                            setPhotoPreview(res[0].url);
+                            setIsUploaded(true);
+                          }}
+                          onUploadError={(error: Error) => {
+                            // Do something with the error.
+                            setIsUploaded(false);
+                          }}
+                        />
+                        {
+                          !isUploaded && <div className={cn("text-red-500 text-sm text-center")}>Upload Failed. Please try again!!</div>
+                        }
+                        {/*Need to place a upload thing button here to upload a photo and when that image upload is successful need to get the
                       image url and update the image_url field in the formData object*/}
+                      </div>
+
                       <Input
                         ref={imageUrlRef}
                         id="image_url"
@@ -478,22 +485,6 @@ export default function CreatePhotoPage() {
                       </div>
                     )}
 
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Tag className="h-4 w-4"/>
-                        <Label htmlFor="tags">Tags (comma separated)</Label>
-                      </div>
-                      <Input
-                        id="tags"
-                        name="tags"
-                        placeholder="landscape, nature, portrait"
-                        value={formData.tags.join(", ")}
-                        onChange={handleTagsChange}
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Add relevant tags to help viewers find your content
-                      </p>
-                    </div>
 
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">

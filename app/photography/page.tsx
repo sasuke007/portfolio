@@ -12,7 +12,8 @@ export default async function PhotographyPage() {
     id: photo.id,
     title: photo.title || "Untitled",
     description: photo.description || "",
-    category: photo.tags?.[0]?.tag?.name || "Uncategorized",
+    //TODO: Clean this category or rethink what can u show there.
+    category: "Uncategorized",
     src: photo.image_url,
     className: ""
   }))

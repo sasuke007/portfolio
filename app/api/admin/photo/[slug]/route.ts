@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPhotoByImageUrl, updatePhoto } from "@/lib/services/photo.service";
-import { CreatePhoto, PhotoDTO } from "@/types/photo/index";
+import { CreatePhoto, PhotoEntity } from "@/types/photo/index";
 
 /**
  * GET request handler to fetch a photo by image URL

@@ -1,9 +1,4 @@
-import { Tag } from '@/prisma/generated/client'
 import { z } from "zod";
-
-export interface VlogTag {
-  tag: Tag
-}
 
 export const createVlogSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -19,7 +14,6 @@ export const createVlogSchema = z.object({
   category: z.string().optional(),
   is_published: z.boolean().default(false),
   priority: z.number().default(0),
-  tags: z.array(z.string()).default([]),
   published_at: z.string().optional(),
 });
 
@@ -43,5 +37,4 @@ export interface VlogDTO {
   published_at: Date;
   created_at?: Date;
   updated_at?: Date;
-  tags: VlogTag[];
 } 

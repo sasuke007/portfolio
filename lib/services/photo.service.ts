@@ -1,8 +1,11 @@
 import { prisma } from '@/prisma'
-import { PhotoDTO, CreatePhoto } from '@/types/photo/index'
+import {PhotoEntity, CreatePhoto, getPhotoEntityFromCreatePhoto} from '@/types/photo'
 import { z } from 'zod' // For input validation
 import { tryCatch } from '../utils'
 
+//TODO: Id of photos are getting returned meaning all the fields of database are getting returned. Need to fix this. Hide fields like id.
+// TODO: Do the above exercise for all the other entities.
+// TODO: Set a standard practise for how dto's are made and how conversion are done.
 // Custom error for service-specific errors
 export class PhotoServiceError extends Error {
   constructor(message: string, public readonly code: string, public readonly originalError?: unknown) {
@@ -14,38 +17,29 @@ export class PhotoServiceError extends Error {
 // Centralized error handling function
 function handleServiceError(error: unknown, operation: string): never {
   console.error(`Error ${operation}:`, error)
-  
+
   // Handle specific known errors
   if (error instanceof z.ZodError) {
     throw new PhotoServiceError(`Invalid input for ${operation}: ${error.message}`, 'VALIDATION_ERROR', error)
   }
-  
+
   // Handle Prisma-specific errors
   if (error instanceof Error && error.message.includes('Unique constraint failed')) {
     throw new PhotoServiceError(`Duplicate entry detected during ${operation}`, 'DUPLICATE_ERROR', error)
   }
-  
+
   // Generic fallback
   throw new PhotoServiceError(`Failed to ${operation}`, 'UNKNOWN_ERROR', error)
 }
 
-// Validation schema
-const tagSlugSchema = z.string().min(2).max(100).regex(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers, and hyphens')
 
 /**
  * Retrieves highlighted photos for display on the homepage
  * @returns Promise resolving to an array of highlighted photos
  */
-export const getHighlightedPhotos = async (): Promise<PhotoDTO[]> => {
+export const getHighlightedPhotos = async (): Promise<PhotoEntity[]> => {
   const { data: photos, error } = await tryCatch(prisma.photo.findMany({
-    take: 8,
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
-    }
+    take: 8
   }))
 
   if (error) {
@@ -56,24 +50,17 @@ export const getHighlightedPhotos = async (): Promise<PhotoDTO[]> => {
     return []
   }
 
-  return photos
+  return photos as PhotoEntity[]
 }
 
 /**
  * Retrieves all photos from the database
  * @returns Promise resolving to an array of all photos
  */
-export const getAllPhotos = async (): Promise<PhotoDTO[]> => {
+export const getAllPhotos = async (): Promise<PhotoEntity[]> => {
   const { data: photos, error } = await tryCatch(prisma.photo.findMany({
     orderBy: {
       uploaded_at: 'desc'
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
     }
   }))
 
@@ -85,74 +72,22 @@ export const getAllPhotos = async (): Promise<PhotoDTO[]> => {
     return []
   }
 
-  return photos
+  return photos as PhotoEntity[]
 }
 
-/**
- * Retrieves photos with a specific tag
- * @param tagSlug - The slug of the tag to filter by
- * @returns Promise resolving to an array of photos with the specified tag
- */
-export const getPhotosByTag = async (tagSlug: string): Promise<PhotoDTO[]> => {
-  try {
-    // Validate input
-    tagSlugSchema.parse(tagSlug)
-    
-    const { data: photos, error } = await tryCatch(prisma.photo.findMany({
-      where: {
-        tags: {
-          some: {
-            tag: {
-              slug: tagSlug
-            }
-          }
-        }
-      },
-      orderBy: {
-        uploaded_at: 'desc'
-      },
-      include: {
-        tags: {
-          include: {
-            tag: true
-          }
-        }
-      }
-    }))
-    
-    if (error) {
-      handleServiceError(error, `fetching photos by tag ${tagSlug}`)
-    }
-    
-    if (!photos) {
-      return []
-    }
-    
-    return photos
-  } catch (validationError) {
-    handleServiceError(validationError, `validating tag slug '${tagSlug}'`)
-  }
-}
 
 /**
  * Get a single photo by its image URL
  * @param imageUrl - The photo's image URL
  * @returns The photo or null if not found
  */
-export async function getPhotoByImageUrl(imageUrl: string): Promise<PhotoDTO | null> {
+export async function getPhotoByImageUrl(imageUrl: string): Promise<PhotoEntity | null> {
   const photo = await prisma.photo.findUnique({
     where: {
       image_url: imageUrl,
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
     }
   });
-  return photo as unknown as PhotoDTO | null;
+  return photo as unknown as PhotoEntity | null;
 }
 
 /**
@@ -160,7 +95,7 @@ export async function getPhotoByImageUrl(imageUrl: string): Promise<PhotoDTO | n
  * @param data - The photo data
  * @returns The created photo
  */
-export async function createPhoto(data: CreatePhoto): Promise<PhotoDTO> {
+export async function createPhoto(data: CreatePhoto): Promise<PhotoEntity> {
   // Check if a photo with the same image URL already exists
   const existingPhoto = await prisma.photo.findUnique({
     where: {
@@ -172,39 +107,11 @@ export async function createPhoto(data: CreatePhoto): Promise<PhotoDTO> {
     throw new Error(`A photo with this image URL already exists.`);
   }
 
-  // Extract tags from the data
-  const { tags, ...photoData } = data;
-
   const photo = await prisma.photo.create({
-    data: {
-      ...photoData,
-      taken_at: data.taken_at ? new Date(data.taken_at) : null,
-      uploaded_at: new Date(),
-      // Handle tags relationship properly
-      tags: {
-        create: tags.map(tagName => ({
-          tag: {
-            connectOrCreate: {
-              where: { name: tagName },
-              create: { 
-                name: tagName,
-                slug: tagName.toLowerCase().replace(/\s+/g, '-')
-              }
-            }
-          }
-        }))
-      }
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
-    }
+    data: {...getPhotoEntityFromCreatePhoto(data)}
   });
 
-  return photo as unknown as PhotoDTO;
+  return photo as unknown as PhotoEntity;
 }
 
 /**
@@ -216,7 +123,7 @@ export async function createPhoto(data: CreatePhoto): Promise<PhotoDTO> {
 export async function updatePhoto(
   imageUrl: string,
   data: CreatePhoto
-): Promise<PhotoDTO> {
+): Promise<PhotoEntity> {
   // Check if the photo exists
   const existingPhoto = await prisma.photo.findUnique({
     where: {
@@ -241,42 +148,18 @@ export async function updatePhoto(
     }
   }
 
-  // Extract tags from the data
-  const { tags, ...photoData } = data;
-
   const updatedPhoto = await prisma.photo.update({
     where: {
       image_url: imageUrl,
     },
     data: {
-      ...photoData,
+      title: data.title,
+      description: data.description,
+      image_url: data.image_url,
       taken_at: data.taken_at ? new Date(data.taken_at) : null,
-      // Handle tags relationship properly
-      tags: {
-        // Delete existing tag connections
-        deleteMany: {},
-        // Create new tag connections
-        create: tags.map(tagName => ({
-          tag: {
-            connectOrCreate: {
-              where: { name: tagName },
-              create: { 
-                name: tagName,
-                slug: tagName.toLowerCase().replace(/\s+/g, '-')
-              }
-            }
-          }
-        }))
-      }
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
+      location: data.location
     }
   });
 
-  return updatedPhoto as unknown as PhotoDTO;
+  return updatedPhoto as unknown as PhotoEntity;
 } 

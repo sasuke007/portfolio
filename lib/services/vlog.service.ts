@@ -41,14 +41,7 @@ export const getHighlightedVlogs = async (): Promise<VlogDTO[]> => {
     orderBy: {
       published_at: 'desc'
     },
-    take: 2,
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
-    }
+    take: 2
   }))
 
   if (error) {
@@ -70,13 +63,6 @@ export const getAllVlogs = async (): Promise<VlogDTO[]> => {
   const { data: vlogs, error } = await tryCatch(prisma.vlog.findMany({
     orderBy: {
       published_at: 'desc'
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
     }
   }))
 
@@ -100,13 +86,6 @@ export async function getVlogByVideoUrl(videoUrl: string): Promise<VlogDTO | nul
   const vlog = await prisma.vlog.findUnique({
     where: {
       video_url: videoUrl,
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
     }
   });
   return vlog as unknown as VlogDTO | null;
@@ -129,34 +108,13 @@ export async function createVlog(data: CreateVlog): Promise<VlogDTO> {
     throw new Error(`A vlog with this video URL already exists.`);
   }
 
-  // Extract tags from the data
-  const { tags, ...vlogData } = data;
-
   const vlog = await prisma.vlog.create({
     data: {
-      ...vlogData,
+      title: data.title,
+      description: data.description,
+      video_url: data.video_url,
       published_at: data.is_published ? new Date(data.published_at || new Date()) : new Date(),
-      // Handle tags relationship properly
-      tags: {
-        create: tags.map(tagName => ({
-          tag: {
-            connectOrCreate: {
-              where: { name: tagName },
-              create: { 
-                name: tagName,
-                slug: tagName.toLowerCase().replace(/\s+/g, '-')
-              }
-            }
-          }
-        }))
-      }
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
+      is_published: data.is_published
     }
   });
 
@@ -197,40 +155,16 @@ export async function updateVlog(
     }
   }
 
-  // Extract tags from the data
-  const { tags, ...vlogData } = data;
-
   const updatedVlog = await prisma.vlog.update({
     where: {
       video_url: videoUrl,
     },
     data: {
-      ...vlogData,
+      title: data.title,
+      description: data.description,
+      video_url: data.video_url,
       published_at: data.is_published ? new Date(data.published_at || new Date()) : new Date(),
-      // Handle tags relationship properly
-      tags: {
-        // Delete existing tag connections
-        deleteMany: {},
-        // Create new tag connections
-        create: tags.map(tagName => ({
-          tag: {
-            connectOrCreate: {
-              where: { name: tagName },
-              create: { 
-                name: tagName,
-                slug: tagName.toLowerCase().replace(/\s+/g, '-')
-              }
-            }
-          }
-        }))
-      }
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
+      is_published: data.is_published
     }
   });
 

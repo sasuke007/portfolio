@@ -11,7 +11,7 @@ import {Switch} from "@/components/ui/switch";
 import {BlogEditor} from "@/components/blog-editor";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {ArrowLeft, Calendar, FileText, ImagePlus, Save, Search, Tag,} from "lucide-react";
+import {ArrowLeft, Calendar, FileText, ImagePlus, Save, Search} from "lucide-react";
 import {Calendar as CalendarComponent} from "@/components/ui/calendar";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {format} from "date-fns";
@@ -38,7 +38,6 @@ export default function CreateBlogPage() {
     featured_image_url: "",
     is_published: false,
     priority: 0,
-    tags: [] as string[],
     published_at: new Date().toISOString().split("T")[0],
   });
   const [content, setContent] = useState("");
@@ -54,10 +53,6 @@ export default function CreateBlogPage() {
     setFormData((prev) => ({ ...prev, is_published: checked }));
   };
 
-  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const tagsArray = e.target.value.split(",").map((tag) => tag.trim());
-    setFormData((prev) => ({ ...prev, tags: tagsArray }));
-  };
 
   const handleSlugGenerate = () => {
     if (!formData.title) {
@@ -232,7 +227,7 @@ export default function CreateBlogPage() {
           </TabsTrigger>
           <TabsTrigger value="media" className="flex items-center">
             <ImagePlus className="mr-2 h-4 w-4" />
-            Media & Tags
+            Media
           </TabsTrigger>
           <TabsTrigger value="seo" className="flex items-center">
             <Search className="mr-2 h-4 w-4" />
@@ -346,21 +341,6 @@ export default function CreateBlogPage() {
                   </div>
 
                   <div className="space-y-6">
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Tag className="h-4 w-4" />
-                        <Label htmlFor="tags">Tags (comma separated)</Label>
-                      </div>
-                      <Input
-                        id="tags"
-                        name="tags"
-                        placeholder="nextjs, react, javascript"
-                        onChange={handleTagsChange}
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Add relevant tags to help readers find your content
-                      </p>
-                    </div>
 
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">

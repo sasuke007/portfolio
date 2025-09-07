@@ -51,12 +51,7 @@ export const getHighlightedBlogs = async (): Promise<BlogDTO[]> => {
       description: true,
       is_published: true,
       priority: true,
-      category: true,
-      tags: {
-        include: {
-          tag: true
-        }
-      }
+      category: true
     },
     orderBy: {
       priority: 'desc'
@@ -86,13 +81,6 @@ export async function getAllPublishedBlogs(): Promise<BlogDTO[]> {
     },
     orderBy: {
       published_at: 'desc'
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
     }
   }))
 
@@ -119,14 +107,7 @@ export async function getBlogBySlug(slug: string): Promise<BlogDTO | null> {
     
     // Use tryCatch for the database query
     const { data: blog, error } = await tryCatch(prisma.blog.findUnique({
-      where: { slug },
-      include: {
-        tags: {
-          include: {
-            tag: true
-          }
-        }
-      }
+      where: { slug }
     }))
 
     if (error) {
@@ -141,7 +122,7 @@ export async function getBlogBySlug(slug: string): Promise<BlogDTO | null> {
 
 
 /**
- * Creates a new blog post with associated tags
+ * Creates a new blog post
  * @param blogData Input data for the new blog post
  * @returns Promise resolving to the created blog
  */
@@ -149,28 +130,11 @@ export async function getBlogBySlug(slug: string): Promise<BlogDTO | null> {
 export async function createBlog(blogData: CreateBlog): Promise<BlogDTO> {
   try {
 
-    // Extract tags from the validated data
-    const { tags, ...blogFields } = blogData
-
     // Use tryCatch for the database operation
     const { data: blog, error } = await tryCatch(prisma.blog.create({
       data: {
-        ...blogFields,
-        published_at: new Date(blogFields.published_at), // Convert string to Date
-        tags: {
-          create: tags.map(tagId => ({
-            tag: {
-              connect: { id: tagId }
-            }
-          }))
-        }
-      },
-      include: {
-        tags: {
-          include: {
-            tag: true
-          }
-        }
+        ...blogData,
+        published_at: new Date(blogData.published_at), // Convert string to Date
       }
     }))
 
@@ -206,32 +170,12 @@ export async function updateBlog(slug: string, blogData: CreateBlog): Promise<Bl
       throw new BlogServiceError(`Blog with slug '${slug}' not found`, 'NOT_FOUND');
     }
     
-    // Extract tags from the validated data
-    const { tags, ...blogFields } = validatedData;
-
     // Use tryCatch for the database operation
     const { data: updatedBlog, error } = await tryCatch(prisma.blog.update({
       where: { slug },
       data: {
-        ...blogFields,
-        published_at: new Date(blogFields.published_at), // Convert string to Date
-        tags: {
-          // First delete existing tag relations
-          deleteMany: {},
-          // Then create new ones
-          create: tags.map(tagId => ({
-            tag: {
-              connect: { id: tagId }
-            }
-          }))
-        }
-      },
-      include: {
-        tags: {
-          include: {
-            tag: true
-          }
-        }
+        ...validatedData,
+        published_at: new Date(validatedData.published_at), // Convert string to Date
       }
     }));
 
@@ -254,13 +198,6 @@ export async function getAllBlogs(): Promise<BlogDTO[]> {
   const { data: blogs, error } = await tryCatch(prisma.blog.findMany({
     orderBy: {
       created_at: 'desc'
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true
-        }
-      }
     }
   }));
 

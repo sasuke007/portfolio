@@ -119,6 +119,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.BlogScalarFieldEnum = {
   id: 'id',
+  reference_id: 'reference_id',
   title: 'title',
   description: 'description',
   slug: 'slug',
@@ -135,6 +136,8 @@ exports.Prisma.BlogScalarFieldEnum = {
 
 exports.Prisma.PhotoScalarFieldEnum = {
   id: 'id',
+  reference_id: 'reference_id',
+  is_published: 'is_published',
   title: 'title',
   description: 'description',
   image_url: 'image_url',
@@ -147,6 +150,7 @@ exports.Prisma.PhotoScalarFieldEnum = {
 
 exports.Prisma.PoemScalarFieldEnum = {
   id: 'id',
+  reference_id: 'reference_id',
   title: 'title',
   author: 'author',
   content: 'content',
@@ -157,24 +161,9 @@ exports.Prisma.PoemScalarFieldEnum = {
   is_published: 'is_published'
 };
 
-exports.Prisma.TagScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  slug: 'slug'
-};
-
-exports.Prisma.BlogTagScalarFieldEnum = {
-  blog_id: 'blog_id',
-  tag_id: 'tag_id'
-};
-
-exports.Prisma.PhotoTagScalarFieldEnum = {
-  photo_id: 'photo_id',
-  tag_id: 'tag_id'
-};
-
 exports.Prisma.VlogScalarFieldEnum = {
   id: 'id',
+  reference_id: 'reference_id',
   title: 'title',
   description: 'description',
   video_url: 'video_url',
@@ -182,11 +171,6 @@ exports.Prisma.VlogScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   is_published: 'is_published'
-};
-
-exports.Prisma.VlogTagScalarFieldEnum = {
-  vlog_id: 'vlog_id',
-  tag_id: 'tag_id'
 };
 
 exports.Prisma.SortOrder = {
@@ -209,11 +193,7 @@ exports.Prisma.ModelName = {
   Blog: 'Blog',
   Photo: 'Photo',
   Poem: 'Poem',
-  Tag: 'Tag',
-  BlogTag: 'BlogTag',
-  PhotoTag: 'PhotoTag',
-  Vlog: 'Vlog',
-  VlogTag: 'VlogTag'
+  Vlog: 'Vlog'
 };
 
 /**

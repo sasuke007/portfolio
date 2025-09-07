@@ -31,7 +31,7 @@ import { Input } from "@/components/ui/input";
 import { Pencil, Search, ArrowLeft, Video, Image } from "lucide-react";
 import { BlogDTO } from "@/types/blog";
 import { VlogDTO } from "@/types/vlog";
-import { PhotoDTO } from "@/types/photo";
+import { PhotoEntity } from "@/types/photo";
 import { format } from "date-fns";
 
 export default function ManageContentPage() {
@@ -39,7 +39,7 @@ export default function ManageContentPage() {
   const [activeTab, setActiveTab] = useState("blogs");
   const [blogs, setBlogs] = useState<BlogDTO[]>([]);
   const [vlogs, setVlogs] = useState<VlogDTO[]>([]);
-  const [photos, setPhotos] = useState<PhotoDTO[]>([]);
+  const [photos, setPhotos] = useState<PhotoEntity[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [contentType, setContentType] = useState("all");
@@ -342,8 +342,8 @@ export default function ManageContentPage() {
                           </span>
                         </TableCell>
                         <TableCell>
-                          {photo.created_at
-                            ? format(new Date(photo.created_at), "MMM d, yyyy")
+                          {photo.uploaded_at
+                            ? format(new Date(photo.uploaded_at), "MMM d, yyyy")
                             : "N/A"}
                         </TableCell>
                         <TableCell className="text-right">

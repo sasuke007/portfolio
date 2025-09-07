@@ -29,30 +29,10 @@ export type Photo = $Result.DefaultSelection<Prisma.$PhotoPayload>
  */
 export type Poem = $Result.DefaultSelection<Prisma.$PoemPayload>
 /**
- * Model Tag
- * 
- */
-export type Tag = $Result.DefaultSelection<Prisma.$TagPayload>
-/**
- * Model BlogTag
- * 
- */
-export type BlogTag = $Result.DefaultSelection<Prisma.$BlogTagPayload>
-/**
- * Model PhotoTag
- * 
- */
-export type PhotoTag = $Result.DefaultSelection<Prisma.$PhotoTagPayload>
-/**
  * Model Vlog
  * 
  */
 export type Vlog = $Result.DefaultSelection<Prisma.$VlogPayload>
-/**
- * Model VlogTag
- * 
- */
-export type VlogTag = $Result.DefaultSelection<Prisma.$VlogTagPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -210,36 +190,6 @@ export class PrismaClient<
   get poem(): Prisma.PoemDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.tag`: Exposes CRUD operations for the **Tag** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Tags
-    * const tags = await prisma.tag.findMany()
-    * ```
-    */
-  get tag(): Prisma.TagDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.blogTag`: Exposes CRUD operations for the **BlogTag** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more BlogTags
-    * const blogTags = await prisma.blogTag.findMany()
-    * ```
-    */
-  get blogTag(): Prisma.BlogTagDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.photoTag`: Exposes CRUD operations for the **PhotoTag** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more PhotoTags
-    * const photoTags = await prisma.photoTag.findMany()
-    * ```
-    */
-  get photoTag(): Prisma.PhotoTagDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.vlog`: Exposes CRUD operations for the **Vlog** model.
     * Example usage:
     * ```ts
@@ -248,16 +198,6 @@ export class PrismaClient<
     * ```
     */
   get vlog(): Prisma.VlogDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.vlogTag`: Exposes CRUD operations for the **VlogTag** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more VlogTags
-    * const vlogTags = await prisma.vlogTag.findMany()
-    * ```
-    */
-  get vlogTag(): Prisma.VlogTagDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -701,11 +641,7 @@ export namespace Prisma {
     Blog: 'Blog',
     Photo: 'Photo',
     Poem: 'Poem',
-    Tag: 'Tag',
-    BlogTag: 'BlogTag',
-    PhotoTag: 'PhotoTag',
-    Vlog: 'Vlog',
-    VlogTag: 'VlogTag'
+    Vlog: 'Vlog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -724,7 +660,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "blog" | "photo" | "poem" | "tag" | "blogTag" | "photoTag" | "vlog" | "vlogTag"
+      modelProps: "blog" | "photo" | "poem" | "vlog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -950,228 +886,6 @@ export namespace Prisma {
           }
         }
       }
-      Tag: {
-        payload: Prisma.$TagPayload<ExtArgs>
-        fields: Prisma.TagFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.TagFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.TagFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          findFirst: {
-            args: Prisma.TagFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.TagFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          findMany: {
-            args: Prisma.TagFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
-          }
-          create: {
-            args: Prisma.TagCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          createMany: {
-            args: Prisma.TagCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.TagCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
-          }
-          delete: {
-            args: Prisma.TagDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          update: {
-            args: Prisma.TagUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          deleteMany: {
-            args: Prisma.TagDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.TagUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.TagUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
-          }
-          upsert: {
-            args: Prisma.TagUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TagPayload>
-          }
-          aggregate: {
-            args: Prisma.TagAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTag>
-          }
-          groupBy: {
-            args: Prisma.TagGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TagGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.TagCountArgs<ExtArgs>
-            result: $Utils.Optional<TagCountAggregateOutputType> | number
-          }
-        }
-      }
-      BlogTag: {
-        payload: Prisma.$BlogTagPayload<ExtArgs>
-        fields: Prisma.BlogTagFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.BlogTagFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.BlogTagFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload>
-          }
-          findFirst: {
-            args: Prisma.BlogTagFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.BlogTagFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload>
-          }
-          findMany: {
-            args: Prisma.BlogTagFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload>[]
-          }
-          create: {
-            args: Prisma.BlogTagCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload>
-          }
-          createMany: {
-            args: Prisma.BlogTagCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.BlogTagCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload>[]
-          }
-          delete: {
-            args: Prisma.BlogTagDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload>
-          }
-          update: {
-            args: Prisma.BlogTagUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload>
-          }
-          deleteMany: {
-            args: Prisma.BlogTagDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.BlogTagUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.BlogTagUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload>[]
-          }
-          upsert: {
-            args: Prisma.BlogTagUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$BlogTagPayload>
-          }
-          aggregate: {
-            args: Prisma.BlogTagAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateBlogTag>
-          }
-          groupBy: {
-            args: Prisma.BlogTagGroupByArgs<ExtArgs>
-            result: $Utils.Optional<BlogTagGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.BlogTagCountArgs<ExtArgs>
-            result: $Utils.Optional<BlogTagCountAggregateOutputType> | number
-          }
-        }
-      }
-      PhotoTag: {
-        payload: Prisma.$PhotoTagPayload<ExtArgs>
-        fields: Prisma.PhotoTagFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.PhotoTagFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.PhotoTagFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload>
-          }
-          findFirst: {
-            args: Prisma.PhotoTagFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.PhotoTagFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload>
-          }
-          findMany: {
-            args: Prisma.PhotoTagFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload>[]
-          }
-          create: {
-            args: Prisma.PhotoTagCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload>
-          }
-          createMany: {
-            args: Prisma.PhotoTagCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.PhotoTagCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload>[]
-          }
-          delete: {
-            args: Prisma.PhotoTagDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload>
-          }
-          update: {
-            args: Prisma.PhotoTagUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload>
-          }
-          deleteMany: {
-            args: Prisma.PhotoTagDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.PhotoTagUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.PhotoTagUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload>[]
-          }
-          upsert: {
-            args: Prisma.PhotoTagUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhotoTagPayload>
-          }
-          aggregate: {
-            args: Prisma.PhotoTagAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePhotoTag>
-          }
-          groupBy: {
-            args: Prisma.PhotoTagGroupByArgs<ExtArgs>
-            result: $Utils.Optional<PhotoTagGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.PhotoTagCountArgs<ExtArgs>
-            result: $Utils.Optional<PhotoTagCountAggregateOutputType> | number
-          }
-        }
-      }
       Vlog: {
         payload: Prisma.$VlogPayload<ExtArgs>
         fields: Prisma.VlogFieldRefs
@@ -1243,80 +957,6 @@ export namespace Prisma {
           count: {
             args: Prisma.VlogCountArgs<ExtArgs>
             result: $Utils.Optional<VlogCountAggregateOutputType> | number
-          }
-        }
-      }
-      VlogTag: {
-        payload: Prisma.$VlogTagPayload<ExtArgs>
-        fields: Prisma.VlogTagFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.VlogTagFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.VlogTagFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload>
-          }
-          findFirst: {
-            args: Prisma.VlogTagFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.VlogTagFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload>
-          }
-          findMany: {
-            args: Prisma.VlogTagFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload>[]
-          }
-          create: {
-            args: Prisma.VlogTagCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload>
-          }
-          createMany: {
-            args: Prisma.VlogTagCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.VlogTagCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload>[]
-          }
-          delete: {
-            args: Prisma.VlogTagDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload>
-          }
-          update: {
-            args: Prisma.VlogTagUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload>
-          }
-          deleteMany: {
-            args: Prisma.VlogTagDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.VlogTagUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.VlogTagUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload>[]
-          }
-          upsert: {
-            args: Prisma.VlogTagUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VlogTagPayload>
-          }
-          aggregate: {
-            args: Prisma.VlogTagAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateVlogTag>
-          }
-          groupBy: {
-            args: Prisma.VlogTagGroupByArgs<ExtArgs>
-            result: $Utils.Optional<VlogTagGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.VlogTagCountArgs<ExtArgs>
-            result: $Utils.Optional<VlogTagCountAggregateOutputType> | number
           }
         }
       }
@@ -1407,11 +1047,7 @@ export namespace Prisma {
     blog?: BlogOmit
     photo?: PhotoOmit
     poem?: PoemOmit
-    tag?: TagOmit
-    blogTag?: BlogTagOmit
-    photoTag?: PhotoTagOmit
     vlog?: VlogOmit
-    vlogTag?: VlogTagOmit
   }
 
   /* Types for Logging */
@@ -1501,147 +1137,6 @@ export namespace Prisma {
    */
 
 
-  /**
-   * Count Type BlogCountOutputType
-   */
-
-  export type BlogCountOutputType = {
-    tags: number
-  }
-
-  export type BlogCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tags?: boolean | BlogCountOutputTypeCountTagsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * BlogCountOutputType without action
-   */
-  export type BlogCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogCountOutputType
-     */
-    select?: BlogCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * BlogCountOutputType without action
-   */
-  export type BlogCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BlogTagWhereInput
-  }
-
-
-  /**
-   * Count Type PhotoCountOutputType
-   */
-
-  export type PhotoCountOutputType = {
-    tags: number
-  }
-
-  export type PhotoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tags?: boolean | PhotoCountOutputTypeCountTagsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * PhotoCountOutputType without action
-   */
-  export type PhotoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoCountOutputType
-     */
-    select?: PhotoCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * PhotoCountOutputType without action
-   */
-  export type PhotoCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PhotoTagWhereInput
-  }
-
-
-  /**
-   * Count Type TagCountOutputType
-   */
-
-  export type TagCountOutputType = {
-    blogs: number
-    photos: number
-    vlogs: number
-  }
-
-  export type TagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    blogs?: boolean | TagCountOutputTypeCountBlogsArgs
-    photos?: boolean | TagCountOutputTypeCountPhotosArgs
-    vlogs?: boolean | TagCountOutputTypeCountVlogsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * TagCountOutputType without action
-   */
-  export type TagCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TagCountOutputType
-     */
-    select?: TagCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * TagCountOutputType without action
-   */
-  export type TagCountOutputTypeCountBlogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BlogTagWhereInput
-  }
-
-  /**
-   * TagCountOutputType without action
-   */
-  export type TagCountOutputTypeCountPhotosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PhotoTagWhereInput
-  }
-
-  /**
-   * TagCountOutputType without action
-   */
-  export type TagCountOutputTypeCountVlogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: VlogTagWhereInput
-  }
-
-
-  /**
-   * Count Type VlogCountOutputType
-   */
-
-  export type VlogCountOutputType = {
-    tags: number
-  }
-
-  export type VlogCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tags?: boolean | VlogCountOutputTypeCountTagsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * VlogCountOutputType without action
-   */
-  export type VlogCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogCountOutputType
-     */
-    select?: VlogCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * VlogCountOutputType without action
-   */
-  export type VlogCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: VlogTagWhereInput
-  }
-
 
   /**
    * Models
@@ -1671,6 +1166,7 @@ export namespace Prisma {
 
   export type BlogMinAggregateOutputType = {
     id: number | null
+    reference_id: string | null
     title: string | null
     description: string | null
     slug: string | null
@@ -1687,6 +1183,7 @@ export namespace Prisma {
 
   export type BlogMaxAggregateOutputType = {
     id: number | null
+    reference_id: string | null
     title: string | null
     description: string | null
     slug: string | null
@@ -1703,6 +1200,7 @@ export namespace Prisma {
 
   export type BlogCountAggregateOutputType = {
     id: number
+    reference_id: number
     title: number
     description: number
     slug: number
@@ -1731,6 +1229,7 @@ export namespace Prisma {
 
   export type BlogMinAggregateInputType = {
     id?: true
+    reference_id?: true
     title?: true
     description?: true
     slug?: true
@@ -1747,6 +1246,7 @@ export namespace Prisma {
 
   export type BlogMaxAggregateInputType = {
     id?: true
+    reference_id?: true
     title?: true
     description?: true
     slug?: true
@@ -1763,6 +1263,7 @@ export namespace Prisma {
 
   export type BlogCountAggregateInputType = {
     id?: true
+    reference_id?: true
     title?: true
     description?: true
     slug?: true
@@ -1866,6 +1367,7 @@ export namespace Prisma {
 
   export type BlogGroupByOutputType = {
     id: number
+    reference_id: string
     title: string
     description: string
     slug: string
@@ -1901,6 +1403,7 @@ export namespace Prisma {
 
   export type BlogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     description?: boolean
     slug?: boolean
@@ -1913,12 +1416,11 @@ export namespace Prisma {
     updated_at?: boolean
     is_published?: boolean
     featured_image_url?: boolean
-    tags?: boolean | Blog$tagsArgs<ExtArgs>
-    _count?: boolean | BlogCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["blog"]>
 
   export type BlogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     description?: boolean
     slug?: boolean
@@ -1935,6 +1437,7 @@ export namespace Prisma {
 
   export type BlogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     description?: boolean
     slug?: boolean
@@ -1951,6 +1454,7 @@ export namespace Prisma {
 
   export type BlogSelectScalar = {
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     description?: boolean
     slug?: boolean
@@ -1965,21 +1469,14 @@ export namespace Prisma {
     featured_image_url?: boolean
   }
 
-  export type BlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "slug" | "content" | "author" | "priority" | "category" | "published_at" | "created_at" | "updated_at" | "is_published" | "featured_image_url", ExtArgs["result"]["blog"]>
-  export type BlogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tags?: boolean | Blog$tagsArgs<ExtArgs>
-    _count?: boolean | BlogCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type BlogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type BlogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type BlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reference_id" | "title" | "description" | "slug" | "content" | "author" | "priority" | "category" | "published_at" | "created_at" | "updated_at" | "is_published" | "featured_image_url", ExtArgs["result"]["blog"]>
 
   export type $BlogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Blog"
-    objects: {
-      tags: Prisma.$BlogTagPayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      reference_id: string
       title: string
       description: string
       slug: string
@@ -2386,7 +1883,6 @@ export namespace Prisma {
    */
   export interface Prisma__BlogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    tags<T extends Blog$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Blog$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2417,6 +1913,7 @@ export namespace Prisma {
    */
   interface BlogFieldRefs {
     readonly id: FieldRef<"Blog", 'Int'>
+    readonly reference_id: FieldRef<"Blog", 'String'>
     readonly title: FieldRef<"Blog", 'String'>
     readonly description: FieldRef<"Blog", 'String'>
     readonly slug: FieldRef<"Blog", 'String'>
@@ -2446,10 +1943,6 @@ export namespace Prisma {
      */
     omit?: BlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
-    /**
      * Filter, which Blog to fetch.
      */
     where: BlogWhereUniqueInput
@@ -2468,10 +1961,6 @@ export namespace Prisma {
      */
     omit?: BlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
-    /**
      * Filter, which Blog to fetch.
      */
     where: BlogWhereUniqueInput
@@ -2489,10 +1978,6 @@ export namespace Prisma {
      * Omit specific fields from the Blog
      */
     omit?: BlogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
     /**
      * Filter, which Blog to fetch.
      */
@@ -2542,10 +2027,6 @@ export namespace Prisma {
      */
     omit?: BlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
-    /**
      * Filter, which Blog to fetch.
      */
     where?: BlogWhereInput
@@ -2594,10 +2075,6 @@ export namespace Prisma {
      */
     omit?: BlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
-    /**
      * Filter, which Blogs to fetch.
      */
     where?: BlogWhereInput
@@ -2640,10 +2117,6 @@ export namespace Prisma {
      * Omit specific fields from the Blog
      */
     omit?: BlogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
     /**
      * The data needed to create a Blog.
      */
@@ -2692,10 +2165,6 @@ export namespace Prisma {
      * Omit specific fields from the Blog
      */
     omit?: BlogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
     /**
      * The data needed to update a Blog.
      */
@@ -2763,10 +2232,6 @@ export namespace Prisma {
      */
     omit?: BlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
-    /**
      * The filter to search for the Blog to update in case it exists.
      */
     where: BlogWhereUniqueInput
@@ -2793,10 +2258,6 @@ export namespace Prisma {
      */
     omit?: BlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
-    /**
      * Filter which Blog to delete.
      */
     where: BlogWhereUniqueInput
@@ -2817,30 +2278,6 @@ export namespace Prisma {
   }
 
   /**
-   * Blog.tags
-   */
-  export type Blog$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    where?: BlogTagWhereInput
-    orderBy?: BlogTagOrderByWithRelationInput | BlogTagOrderByWithRelationInput[]
-    cursor?: BlogTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: BlogTagScalarFieldEnum | BlogTagScalarFieldEnum[]
-  }
-
-  /**
    * Blog without action
    */
   export type BlogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2852,10 +2289,6 @@ export namespace Prisma {
      * Omit specific fields from the Blog
      */
     omit?: BlogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogInclude<ExtArgs> | null
   }
 
 
@@ -2881,6 +2314,8 @@ export namespace Prisma {
 
   export type PhotoMinAggregateOutputType = {
     id: number | null
+    reference_id: string | null
+    is_published: boolean | null
     title: string | null
     description: string | null
     image_url: string | null
@@ -2893,6 +2328,8 @@ export namespace Prisma {
 
   export type PhotoMaxAggregateOutputType = {
     id: number | null
+    reference_id: string | null
+    is_published: boolean | null
     title: string | null
     description: string | null
     image_url: string | null
@@ -2905,6 +2342,8 @@ export namespace Prisma {
 
   export type PhotoCountAggregateOutputType = {
     id: number
+    reference_id: number
+    is_published: number
     title: number
     description: number
     image_url: number
@@ -2927,6 +2366,8 @@ export namespace Prisma {
 
   export type PhotoMinAggregateInputType = {
     id?: true
+    reference_id?: true
+    is_published?: true
     title?: true
     description?: true
     image_url?: true
@@ -2939,6 +2380,8 @@ export namespace Prisma {
 
   export type PhotoMaxAggregateInputType = {
     id?: true
+    reference_id?: true
+    is_published?: true
     title?: true
     description?: true
     image_url?: true
@@ -2951,6 +2394,8 @@ export namespace Prisma {
 
   export type PhotoCountAggregateInputType = {
     id?: true
+    reference_id?: true
+    is_published?: true
     title?: true
     description?: true
     image_url?: true
@@ -3050,6 +2495,8 @@ export namespace Prisma {
 
   export type PhotoGroupByOutputType = {
     id: number
+    reference_id: string
+    is_published: boolean
     title: string
     description: string | null
     image_url: string
@@ -3081,6 +2528,8 @@ export namespace Prisma {
 
   export type PhotoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
+    is_published?: boolean
     title?: boolean
     description?: boolean
     image_url?: boolean
@@ -3089,12 +2538,12 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     location?: boolean
-    tags?: boolean | Photo$tagsArgs<ExtArgs>
-    _count?: boolean | PhotoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["photo"]>
 
   export type PhotoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
+    is_published?: boolean
     title?: boolean
     description?: boolean
     image_url?: boolean
@@ -3107,6 +2556,8 @@ export namespace Prisma {
 
   export type PhotoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
+    is_published?: boolean
     title?: boolean
     description?: boolean
     image_url?: boolean
@@ -3119,6 +2570,8 @@ export namespace Prisma {
 
   export type PhotoSelectScalar = {
     id?: boolean
+    reference_id?: boolean
+    is_published?: boolean
     title?: boolean
     description?: boolean
     image_url?: boolean
@@ -3129,21 +2582,15 @@ export namespace Prisma {
     location?: boolean
   }
 
-  export type PhotoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "image_url" | "taken_at" | "uploaded_at" | "created_at" | "updated_at" | "location", ExtArgs["result"]["photo"]>
-  export type PhotoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tags?: boolean | Photo$tagsArgs<ExtArgs>
-    _count?: boolean | PhotoCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type PhotoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type PhotoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PhotoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reference_id" | "is_published" | "title" | "description" | "image_url" | "taken_at" | "uploaded_at" | "created_at" | "updated_at" | "location", ExtArgs["result"]["photo"]>
 
   export type $PhotoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Photo"
-    objects: {
-      tags: Prisma.$PhotoTagPayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      reference_id: string
+      is_published: boolean
       title: string
       description: string | null
       image_url: string
@@ -3546,7 +2993,6 @@ export namespace Prisma {
    */
   export interface Prisma__PhotoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    tags<T extends Photo$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Photo$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3577,6 +3023,8 @@ export namespace Prisma {
    */
   interface PhotoFieldRefs {
     readonly id: FieldRef<"Photo", 'Int'>
+    readonly reference_id: FieldRef<"Photo", 'String'>
+    readonly is_published: FieldRef<"Photo", 'Boolean'>
     readonly title: FieldRef<"Photo", 'String'>
     readonly description: FieldRef<"Photo", 'String'>
     readonly image_url: FieldRef<"Photo", 'String'>
@@ -3602,10 +3050,6 @@ export namespace Prisma {
      */
     omit?: PhotoOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
-    /**
      * Filter, which Photo to fetch.
      */
     where: PhotoWhereUniqueInput
@@ -3624,10 +3068,6 @@ export namespace Prisma {
      */
     omit?: PhotoOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
-    /**
      * Filter, which Photo to fetch.
      */
     where: PhotoWhereUniqueInput
@@ -3645,10 +3085,6 @@ export namespace Prisma {
      * Omit specific fields from the Photo
      */
     omit?: PhotoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
     /**
      * Filter, which Photo to fetch.
      */
@@ -3698,10 +3134,6 @@ export namespace Prisma {
      */
     omit?: PhotoOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
-    /**
      * Filter, which Photo to fetch.
      */
     where?: PhotoWhereInput
@@ -3750,10 +3182,6 @@ export namespace Prisma {
      */
     omit?: PhotoOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
-    /**
      * Filter, which Photos to fetch.
      */
     where?: PhotoWhereInput
@@ -3796,10 +3224,6 @@ export namespace Prisma {
      * Omit specific fields from the Photo
      */
     omit?: PhotoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
     /**
      * The data needed to create a Photo.
      */
@@ -3848,10 +3272,6 @@ export namespace Prisma {
      * Omit specific fields from the Photo
      */
     omit?: PhotoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
     /**
      * The data needed to update a Photo.
      */
@@ -3919,10 +3339,6 @@ export namespace Prisma {
      */
     omit?: PhotoOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
-    /**
      * The filter to search for the Photo to update in case it exists.
      */
     where: PhotoWhereUniqueInput
@@ -3949,10 +3365,6 @@ export namespace Prisma {
      */
     omit?: PhotoOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
-    /**
      * Filter which Photo to delete.
      */
     where: PhotoWhereUniqueInput
@@ -3973,30 +3385,6 @@ export namespace Prisma {
   }
 
   /**
-   * Photo.tags
-   */
-  export type Photo$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    where?: PhotoTagWhereInput
-    orderBy?: PhotoTagOrderByWithRelationInput | PhotoTagOrderByWithRelationInput[]
-    cursor?: PhotoTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PhotoTagScalarFieldEnum | PhotoTagScalarFieldEnum[]
-  }
-
-  /**
    * Photo without action
    */
   export type PhotoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4008,10 +3396,6 @@ export namespace Prisma {
      * Omit specific fields from the Photo
      */
     omit?: PhotoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoInclude<ExtArgs> | null
   }
 
 
@@ -4037,6 +3421,7 @@ export namespace Prisma {
 
   export type PoemMinAggregateOutputType = {
     id: number | null
+    reference_id: string | null
     title: string | null
     author: string | null
     content: string | null
@@ -4049,6 +3434,7 @@ export namespace Prisma {
 
   export type PoemMaxAggregateOutputType = {
     id: number | null
+    reference_id: string | null
     title: string | null
     author: string | null
     content: string | null
@@ -4061,6 +3447,7 @@ export namespace Prisma {
 
   export type PoemCountAggregateOutputType = {
     id: number
+    reference_id: number
     title: number
     author: number
     content: number
@@ -4083,6 +3470,7 @@ export namespace Prisma {
 
   export type PoemMinAggregateInputType = {
     id?: true
+    reference_id?: true
     title?: true
     author?: true
     content?: true
@@ -4095,6 +3483,7 @@ export namespace Prisma {
 
   export type PoemMaxAggregateInputType = {
     id?: true
+    reference_id?: true
     title?: true
     author?: true
     content?: true
@@ -4107,6 +3496,7 @@ export namespace Prisma {
 
   export type PoemCountAggregateInputType = {
     id?: true
+    reference_id?: true
     title?: true
     author?: true
     content?: true
@@ -4206,6 +3596,7 @@ export namespace Prisma {
 
   export type PoemGroupByOutputType = {
     id: number
+    reference_id: string
     title: string
     author: string
     content: string
@@ -4237,6 +3628,7 @@ export namespace Prisma {
 
   export type PoemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     author?: boolean
     content?: boolean
@@ -4249,6 +3641,7 @@ export namespace Prisma {
 
   export type PoemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     author?: boolean
     content?: boolean
@@ -4261,6 +3654,7 @@ export namespace Prisma {
 
   export type PoemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     author?: boolean
     content?: boolean
@@ -4273,6 +3667,7 @@ export namespace Prisma {
 
   export type PoemSelectScalar = {
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     author?: boolean
     content?: boolean
@@ -4283,13 +3678,14 @@ export namespace Prisma {
     is_published?: boolean
   }
 
-  export type PoemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "author" | "content" | "slug" | "written_at" | "created_at" | "updated_at" | "is_published", ExtArgs["result"]["poem"]>
+  export type PoemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reference_id" | "title" | "author" | "content" | "slug" | "written_at" | "created_at" | "updated_at" | "is_published", ExtArgs["result"]["poem"]>
 
   export type $PoemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Poem"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      reference_id: string
       title: string
       author: string
       content: string
@@ -4722,6 +4118,7 @@ export namespace Prisma {
    */
   interface PoemFieldRefs {
     readonly id: FieldRef<"Poem", 'Int'>
+    readonly reference_id: FieldRef<"Poem", 'String'>
     readonly title: FieldRef<"Poem", 'String'>
     readonly author: FieldRef<"Poem", 'String'>
     readonly content: FieldRef<"Poem", 'String'>
@@ -5097,3270 +4494,6 @@ export namespace Prisma {
 
 
   /**
-   * Model Tag
-   */
-
-  export type AggregateTag = {
-    _count: TagCountAggregateOutputType | null
-    _avg: TagAvgAggregateOutputType | null
-    _sum: TagSumAggregateOutputType | null
-    _min: TagMinAggregateOutputType | null
-    _max: TagMaxAggregateOutputType | null
-  }
-
-  export type TagAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type TagSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type TagMinAggregateOutputType = {
-    id: number | null
-    name: string | null
-    slug: string | null
-  }
-
-  export type TagMaxAggregateOutputType = {
-    id: number | null
-    name: string | null
-    slug: string | null
-  }
-
-  export type TagCountAggregateOutputType = {
-    id: number
-    name: number
-    slug: number
-    _all: number
-  }
-
-
-  export type TagAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type TagSumAggregateInputType = {
-    id?: true
-  }
-
-  export type TagMinAggregateInputType = {
-    id?: true
-    name?: true
-    slug?: true
-  }
-
-  export type TagMaxAggregateInputType = {
-    id?: true
-    name?: true
-    slug?: true
-  }
-
-  export type TagCountAggregateInputType = {
-    id?: true
-    name?: true
-    slug?: true
-    _all?: true
-  }
-
-  export type TagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Tag to aggregate.
-     */
-    where?: TagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tags to fetch.
-     */
-    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Tags
-    **/
-    _count?: true | TagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TagAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TagSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TagMaxAggregateInputType
-  }
-
-  export type GetTagAggregateType<T extends TagAggregateArgs> = {
-        [P in keyof T & keyof AggregateTag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTag[P]>
-      : GetScalarType<T[P], AggregateTag[P]>
-  }
-
-
-
-
-  export type TagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TagWhereInput
-    orderBy?: TagOrderByWithAggregationInput | TagOrderByWithAggregationInput[]
-    by: TagScalarFieldEnum[] | TagScalarFieldEnum
-    having?: TagScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TagCountAggregateInputType | true
-    _avg?: TagAvgAggregateInputType
-    _sum?: TagSumAggregateInputType
-    _min?: TagMinAggregateInputType
-    _max?: TagMaxAggregateInputType
-  }
-
-  export type TagGroupByOutputType = {
-    id: number
-    name: string
-    slug: string
-    _count: TagCountAggregateOutputType | null
-    _avg: TagAvgAggregateOutputType | null
-    _sum: TagSumAggregateOutputType | null
-    _min: TagMinAggregateOutputType | null
-    _max: TagMaxAggregateOutputType | null
-  }
-
-  type GetTagGroupByPayload<T extends TagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<TagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TagGroupByOutputType[P]>
-            : GetScalarType<T[P], TagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    slug?: boolean
-    blogs?: boolean | Tag$blogsArgs<ExtArgs>
-    photos?: boolean | Tag$photosArgs<ExtArgs>
-    vlogs?: boolean | Tag$vlogsArgs<ExtArgs>
-    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["tag"]>
-
-  export type TagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    slug?: boolean
-  }, ExtArgs["result"]["tag"]>
-
-  export type TagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    slug?: boolean
-  }, ExtArgs["result"]["tag"]>
-
-  export type TagSelectScalar = {
-    id?: boolean
-    name?: boolean
-    slug?: boolean
-  }
-
-  export type TagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug", ExtArgs["result"]["tag"]>
-  export type TagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    blogs?: boolean | Tag$blogsArgs<ExtArgs>
-    photos?: boolean | Tag$photosArgs<ExtArgs>
-    vlogs?: boolean | Tag$vlogsArgs<ExtArgs>
-    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type TagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type TagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $TagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Tag"
-    objects: {
-      blogs: Prisma.$BlogTagPayload<ExtArgs>[]
-      photos: Prisma.$PhotoTagPayload<ExtArgs>[]
-      vlogs: Prisma.$VlogTagPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      name: string
-      slug: string
-    }, ExtArgs["result"]["tag"]>
-    composites: {}
-  }
-
-  type TagGetPayload<S extends boolean | null | undefined | TagDefaultArgs> = $Result.GetResult<Prisma.$TagPayload, S>
-
-  type TagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TagCountAggregateInputType | true
-    }
-
-  export interface TagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Tag'], meta: { name: 'Tag' } }
-    /**
-     * Find zero or one Tag that matches the filter.
-     * @param {TagFindUniqueArgs} args - Arguments to find a Tag
-     * @example
-     * // Get one Tag
-     * const tag = await prisma.tag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends TagFindUniqueArgs>(args: SelectSubset<T, TagFindUniqueArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Tag that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {TagFindUniqueOrThrowArgs} args - Arguments to find a Tag
-     * @example
-     * // Get one Tag
-     * const tag = await prisma.tag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends TagFindUniqueOrThrowArgs>(args: SelectSubset<T, TagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Tag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagFindFirstArgs} args - Arguments to find a Tag
-     * @example
-     * // Get one Tag
-     * const tag = await prisma.tag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends TagFindFirstArgs>(args?: SelectSubset<T, TagFindFirstArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Tag that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagFindFirstOrThrowArgs} args - Arguments to find a Tag
-     * @example
-     * // Get one Tag
-     * const tag = await prisma.tag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends TagFindFirstOrThrowArgs>(args?: SelectSubset<T, TagFindFirstOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Tags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Tags
-     * const tags = await prisma.tag.findMany()
-     * 
-     * // Get first 10 Tags
-     * const tags = await prisma.tag.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const tagWithIdOnly = await prisma.tag.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends TagFindManyArgs>(args?: SelectSubset<T, TagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Tag.
-     * @param {TagCreateArgs} args - Arguments to create a Tag.
-     * @example
-     * // Create one Tag
-     * const Tag = await prisma.tag.create({
-     *   data: {
-     *     // ... data to create a Tag
-     *   }
-     * })
-     * 
-     */
-    create<T extends TagCreateArgs>(args: SelectSubset<T, TagCreateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Tags.
-     * @param {TagCreateManyArgs} args - Arguments to create many Tags.
-     * @example
-     * // Create many Tags
-     * const tag = await prisma.tag.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends TagCreateManyArgs>(args?: SelectSubset<T, TagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Tags and returns the data saved in the database.
-     * @param {TagCreateManyAndReturnArgs} args - Arguments to create many Tags.
-     * @example
-     * // Create many Tags
-     * const tag = await prisma.tag.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Tags and only return the `id`
-     * const tagWithIdOnly = await prisma.tag.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends TagCreateManyAndReturnArgs>(args?: SelectSubset<T, TagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Tag.
-     * @param {TagDeleteArgs} args - Arguments to delete one Tag.
-     * @example
-     * // Delete one Tag
-     * const Tag = await prisma.tag.delete({
-     *   where: {
-     *     // ... filter to delete one Tag
-     *   }
-     * })
-     * 
-     */
-    delete<T extends TagDeleteArgs>(args: SelectSubset<T, TagDeleteArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Tag.
-     * @param {TagUpdateArgs} args - Arguments to update one Tag.
-     * @example
-     * // Update one Tag
-     * const tag = await prisma.tag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends TagUpdateArgs>(args: SelectSubset<T, TagUpdateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Tags.
-     * @param {TagDeleteManyArgs} args - Arguments to filter Tags to delete.
-     * @example
-     * // Delete a few Tags
-     * const { count } = await prisma.tag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends TagDeleteManyArgs>(args?: SelectSubset<T, TagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Tags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Tags
-     * const tag = await prisma.tag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends TagUpdateManyArgs>(args: SelectSubset<T, TagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Tags and returns the data updated in the database.
-     * @param {TagUpdateManyAndReturnArgs} args - Arguments to update many Tags.
-     * @example
-     * // Update many Tags
-     * const tag = await prisma.tag.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Tags and only return the `id`
-     * const tagWithIdOnly = await prisma.tag.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends TagUpdateManyAndReturnArgs>(args: SelectSubset<T, TagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Tag.
-     * @param {TagUpsertArgs} args - Arguments to update or create a Tag.
-     * @example
-     * // Update or create a Tag
-     * const tag = await prisma.tag.upsert({
-     *   create: {
-     *     // ... data to create a Tag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Tag we want to update
-     *   }
-     * })
-     */
-    upsert<T extends TagUpsertArgs>(args: SelectSubset<T, TagUpsertArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Tags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagCountArgs} args - Arguments to filter Tags to count.
-     * @example
-     * // Count the number of Tags
-     * const count = await prisma.tag.count({
-     *   where: {
-     *     // ... the filter for the Tags we want to count
-     *   }
-     * })
-    **/
-    count<T extends TagCountArgs>(
-      args?: Subset<T, TagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Tag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TagAggregateArgs>(args: Subset<T, TagAggregateArgs>): Prisma.PrismaPromise<GetTagAggregateType<T>>
-
-    /**
-     * Group by Tag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TagGroupByArgs['orderBy'] }
-        : { orderBy?: TagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Tag model
-   */
-  readonly fields: TagFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Tag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__TagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    blogs<T extends Tag$blogsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$blogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    photos<T extends Tag$photosArgs<ExtArgs> = {}>(args?: Subset<T, Tag$photosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    vlogs<T extends Tag$vlogsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$vlogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Tag model
-   */
-  interface TagFieldRefs {
-    readonly id: FieldRef<"Tag", 'Int'>
-    readonly name: FieldRef<"Tag", 'String'>
-    readonly slug: FieldRef<"Tag", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Tag findUnique
-   */
-  export type TagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tag to fetch.
-     */
-    where: TagWhereUniqueInput
-  }
-
-  /**
-   * Tag findUniqueOrThrow
-   */
-  export type TagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tag to fetch.
-     */
-    where: TagWhereUniqueInput
-  }
-
-  /**
-   * Tag findFirst
-   */
-  export type TagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tag to fetch.
-     */
-    where?: TagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tags to fetch.
-     */
-    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Tags.
-     */
-    cursor?: TagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Tags.
-     */
-    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag findFirstOrThrow
-   */
-  export type TagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tag to fetch.
-     */
-    where?: TagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tags to fetch.
-     */
-    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Tags.
-     */
-    cursor?: TagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Tags.
-     */
-    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag findMany
-   */
-  export type TagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter, which Tags to fetch.
-     */
-    where?: TagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tags to fetch.
-     */
-    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Tags.
-     */
-    cursor?: TagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tags.
-     */
-    skip?: number
-    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag create
-   */
-  export type TagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Tag.
-     */
-    data: XOR<TagCreateInput, TagUncheckedCreateInput>
-  }
-
-  /**
-   * Tag createMany
-   */
-  export type TagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Tags.
-     */
-    data: TagCreateManyInput | TagCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Tag createManyAndReturn
-   */
-  export type TagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * The data used to create many Tags.
-     */
-    data: TagCreateManyInput | TagCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Tag update
-   */
-  export type TagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Tag.
-     */
-    data: XOR<TagUpdateInput, TagUncheckedUpdateInput>
-    /**
-     * Choose, which Tag to update.
-     */
-    where: TagWhereUniqueInput
-  }
-
-  /**
-   * Tag updateMany
-   */
-  export type TagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Tags.
-     */
-    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyInput>
-    /**
-     * Filter which Tags to update
-     */
-    where?: TagWhereInput
-    /**
-     * Limit how many Tags to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Tag updateManyAndReturn
-   */
-  export type TagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * The data used to update Tags.
-     */
-    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyInput>
-    /**
-     * Filter which Tags to update
-     */
-    where?: TagWhereInput
-    /**
-     * Limit how many Tags to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Tag upsert
-   */
-  export type TagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Tag to update in case it exists.
-     */
-    where: TagWhereUniqueInput
-    /**
-     * In case the Tag found by the `where` argument doesn't exist, create a new Tag with this data.
-     */
-    create: XOR<TagCreateInput, TagUncheckedCreateInput>
-    /**
-     * In case the Tag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TagUpdateInput, TagUncheckedUpdateInput>
-  }
-
-  /**
-   * Tag delete
-   */
-  export type TagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    /**
-     * Filter which Tag to delete.
-     */
-    where: TagWhereUniqueInput
-  }
-
-  /**
-   * Tag deleteMany
-   */
-  export type TagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Tags to delete
-     */
-    where?: TagWhereInput
-    /**
-     * Limit how many Tags to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Tag.blogs
-   */
-  export type Tag$blogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    where?: BlogTagWhereInput
-    orderBy?: BlogTagOrderByWithRelationInput | BlogTagOrderByWithRelationInput[]
-    cursor?: BlogTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: BlogTagScalarFieldEnum | BlogTagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag.photos
-   */
-  export type Tag$photosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    where?: PhotoTagWhereInput
-    orderBy?: PhotoTagOrderByWithRelationInput | PhotoTagOrderByWithRelationInput[]
-    cursor?: PhotoTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PhotoTagScalarFieldEnum | PhotoTagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag.vlogs
-   */
-  export type Tag$vlogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    where?: VlogTagWhereInput
-    orderBy?: VlogTagOrderByWithRelationInput | VlogTagOrderByWithRelationInput[]
-    cursor?: VlogTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: VlogTagScalarFieldEnum | VlogTagScalarFieldEnum[]
-  }
-
-  /**
-   * Tag without action
-   */
-  export type TagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model BlogTag
-   */
-
-  export type AggregateBlogTag = {
-    _count: BlogTagCountAggregateOutputType | null
-    _avg: BlogTagAvgAggregateOutputType | null
-    _sum: BlogTagSumAggregateOutputType | null
-    _min: BlogTagMinAggregateOutputType | null
-    _max: BlogTagMaxAggregateOutputType | null
-  }
-
-  export type BlogTagAvgAggregateOutputType = {
-    blog_id: number | null
-    tag_id: number | null
-  }
-
-  export type BlogTagSumAggregateOutputType = {
-    blog_id: number | null
-    tag_id: number | null
-  }
-
-  export type BlogTagMinAggregateOutputType = {
-    blog_id: number | null
-    tag_id: number | null
-  }
-
-  export type BlogTagMaxAggregateOutputType = {
-    blog_id: number | null
-    tag_id: number | null
-  }
-
-  export type BlogTagCountAggregateOutputType = {
-    blog_id: number
-    tag_id: number
-    _all: number
-  }
-
-
-  export type BlogTagAvgAggregateInputType = {
-    blog_id?: true
-    tag_id?: true
-  }
-
-  export type BlogTagSumAggregateInputType = {
-    blog_id?: true
-    tag_id?: true
-  }
-
-  export type BlogTagMinAggregateInputType = {
-    blog_id?: true
-    tag_id?: true
-  }
-
-  export type BlogTagMaxAggregateInputType = {
-    blog_id?: true
-    tag_id?: true
-  }
-
-  export type BlogTagCountAggregateInputType = {
-    blog_id?: true
-    tag_id?: true
-    _all?: true
-  }
-
-  export type BlogTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which BlogTag to aggregate.
-     */
-    where?: BlogTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BlogTags to fetch.
-     */
-    orderBy?: BlogTagOrderByWithRelationInput | BlogTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: BlogTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BlogTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BlogTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned BlogTags
-    **/
-    _count?: true | BlogTagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: BlogTagAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: BlogTagSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: BlogTagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: BlogTagMaxAggregateInputType
-  }
-
-  export type GetBlogTagAggregateType<T extends BlogTagAggregateArgs> = {
-        [P in keyof T & keyof AggregateBlogTag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateBlogTag[P]>
-      : GetScalarType<T[P], AggregateBlogTag[P]>
-  }
-
-
-
-
-  export type BlogTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BlogTagWhereInput
-    orderBy?: BlogTagOrderByWithAggregationInput | BlogTagOrderByWithAggregationInput[]
-    by: BlogTagScalarFieldEnum[] | BlogTagScalarFieldEnum
-    having?: BlogTagScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: BlogTagCountAggregateInputType | true
-    _avg?: BlogTagAvgAggregateInputType
-    _sum?: BlogTagSumAggregateInputType
-    _min?: BlogTagMinAggregateInputType
-    _max?: BlogTagMaxAggregateInputType
-  }
-
-  export type BlogTagGroupByOutputType = {
-    blog_id: number
-    tag_id: number
-    _count: BlogTagCountAggregateOutputType | null
-    _avg: BlogTagAvgAggregateOutputType | null
-    _sum: BlogTagSumAggregateOutputType | null
-    _min: BlogTagMinAggregateOutputType | null
-    _max: BlogTagMaxAggregateOutputType | null
-  }
-
-  type GetBlogTagGroupByPayload<T extends BlogTagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<BlogTagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof BlogTagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], BlogTagGroupByOutputType[P]>
-            : GetScalarType<T[P], BlogTagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type BlogTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    blog_id?: boolean
-    tag_id?: boolean
-    blog?: boolean | BlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["blogTag"]>
-
-  export type BlogTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    blog_id?: boolean
-    tag_id?: boolean
-    blog?: boolean | BlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["blogTag"]>
-
-  export type BlogTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    blog_id?: boolean
-    tag_id?: boolean
-    blog?: boolean | BlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["blogTag"]>
-
-  export type BlogTagSelectScalar = {
-    blog_id?: boolean
-    tag_id?: boolean
-  }
-
-  export type BlogTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"blog_id" | "tag_id", ExtArgs["result"]["blogTag"]>
-  export type BlogTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    blog?: boolean | BlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-  export type BlogTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    blog?: boolean | BlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-  export type BlogTagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    blog?: boolean | BlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-
-  export type $BlogTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "BlogTag"
-    objects: {
-      blog: Prisma.$BlogPayload<ExtArgs>
-      tag: Prisma.$TagPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      blog_id: number
-      tag_id: number
-    }, ExtArgs["result"]["blogTag"]>
-    composites: {}
-  }
-
-  type BlogTagGetPayload<S extends boolean | null | undefined | BlogTagDefaultArgs> = $Result.GetResult<Prisma.$BlogTagPayload, S>
-
-  type BlogTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<BlogTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: BlogTagCountAggregateInputType | true
-    }
-
-  export interface BlogTagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BlogTag'], meta: { name: 'BlogTag' } }
-    /**
-     * Find zero or one BlogTag that matches the filter.
-     * @param {BlogTagFindUniqueArgs} args - Arguments to find a BlogTag
-     * @example
-     * // Get one BlogTag
-     * const blogTag = await prisma.blogTag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends BlogTagFindUniqueArgs>(args: SelectSubset<T, BlogTagFindUniqueArgs<ExtArgs>>): Prisma__BlogTagClient<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one BlogTag that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {BlogTagFindUniqueOrThrowArgs} args - Arguments to find a BlogTag
-     * @example
-     * // Get one BlogTag
-     * const blogTag = await prisma.blogTag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends BlogTagFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogTagClient<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first BlogTag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BlogTagFindFirstArgs} args - Arguments to find a BlogTag
-     * @example
-     * // Get one BlogTag
-     * const blogTag = await prisma.blogTag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends BlogTagFindFirstArgs>(args?: SelectSubset<T, BlogTagFindFirstArgs<ExtArgs>>): Prisma__BlogTagClient<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first BlogTag that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BlogTagFindFirstOrThrowArgs} args - Arguments to find a BlogTag
-     * @example
-     * // Get one BlogTag
-     * const blogTag = await prisma.blogTag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends BlogTagFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogTagClient<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more BlogTags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BlogTagFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all BlogTags
-     * const blogTags = await prisma.blogTag.findMany()
-     * 
-     * // Get first 10 BlogTags
-     * const blogTags = await prisma.blogTag.findMany({ take: 10 })
-     * 
-     * // Only select the `blog_id`
-     * const blogTagWithBlog_idOnly = await prisma.blogTag.findMany({ select: { blog_id: true } })
-     * 
-     */
-    findMany<T extends BlogTagFindManyArgs>(args?: SelectSubset<T, BlogTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a BlogTag.
-     * @param {BlogTagCreateArgs} args - Arguments to create a BlogTag.
-     * @example
-     * // Create one BlogTag
-     * const BlogTag = await prisma.blogTag.create({
-     *   data: {
-     *     // ... data to create a BlogTag
-     *   }
-     * })
-     * 
-     */
-    create<T extends BlogTagCreateArgs>(args: SelectSubset<T, BlogTagCreateArgs<ExtArgs>>): Prisma__BlogTagClient<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many BlogTags.
-     * @param {BlogTagCreateManyArgs} args - Arguments to create many BlogTags.
-     * @example
-     * // Create many BlogTags
-     * const blogTag = await prisma.blogTag.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends BlogTagCreateManyArgs>(args?: SelectSubset<T, BlogTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many BlogTags and returns the data saved in the database.
-     * @param {BlogTagCreateManyAndReturnArgs} args - Arguments to create many BlogTags.
-     * @example
-     * // Create many BlogTags
-     * const blogTag = await prisma.blogTag.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many BlogTags and only return the `blog_id`
-     * const blogTagWithBlog_idOnly = await prisma.blogTag.createManyAndReturn({
-     *   select: { blog_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends BlogTagCreateManyAndReturnArgs>(args?: SelectSubset<T, BlogTagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a BlogTag.
-     * @param {BlogTagDeleteArgs} args - Arguments to delete one BlogTag.
-     * @example
-     * // Delete one BlogTag
-     * const BlogTag = await prisma.blogTag.delete({
-     *   where: {
-     *     // ... filter to delete one BlogTag
-     *   }
-     * })
-     * 
-     */
-    delete<T extends BlogTagDeleteArgs>(args: SelectSubset<T, BlogTagDeleteArgs<ExtArgs>>): Prisma__BlogTagClient<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one BlogTag.
-     * @param {BlogTagUpdateArgs} args - Arguments to update one BlogTag.
-     * @example
-     * // Update one BlogTag
-     * const blogTag = await prisma.blogTag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends BlogTagUpdateArgs>(args: SelectSubset<T, BlogTagUpdateArgs<ExtArgs>>): Prisma__BlogTagClient<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more BlogTags.
-     * @param {BlogTagDeleteManyArgs} args - Arguments to filter BlogTags to delete.
-     * @example
-     * // Delete a few BlogTags
-     * const { count } = await prisma.blogTag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends BlogTagDeleteManyArgs>(args?: SelectSubset<T, BlogTagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more BlogTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BlogTagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many BlogTags
-     * const blogTag = await prisma.blogTag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends BlogTagUpdateManyArgs>(args: SelectSubset<T, BlogTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more BlogTags and returns the data updated in the database.
-     * @param {BlogTagUpdateManyAndReturnArgs} args - Arguments to update many BlogTags.
-     * @example
-     * // Update many BlogTags
-     * const blogTag = await prisma.blogTag.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more BlogTags and only return the `blog_id`
-     * const blogTagWithBlog_idOnly = await prisma.blogTag.updateManyAndReturn({
-     *   select: { blog_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends BlogTagUpdateManyAndReturnArgs>(args: SelectSubset<T, BlogTagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one BlogTag.
-     * @param {BlogTagUpsertArgs} args - Arguments to update or create a BlogTag.
-     * @example
-     * // Update or create a BlogTag
-     * const blogTag = await prisma.blogTag.upsert({
-     *   create: {
-     *     // ... data to create a BlogTag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the BlogTag we want to update
-     *   }
-     * })
-     */
-    upsert<T extends BlogTagUpsertArgs>(args: SelectSubset<T, BlogTagUpsertArgs<ExtArgs>>): Prisma__BlogTagClient<$Result.GetResult<Prisma.$BlogTagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of BlogTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BlogTagCountArgs} args - Arguments to filter BlogTags to count.
-     * @example
-     * // Count the number of BlogTags
-     * const count = await prisma.blogTag.count({
-     *   where: {
-     *     // ... the filter for the BlogTags we want to count
-     *   }
-     * })
-    **/
-    count<T extends BlogTagCountArgs>(
-      args?: Subset<T, BlogTagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], BlogTagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a BlogTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BlogTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends BlogTagAggregateArgs>(args: Subset<T, BlogTagAggregateArgs>): Prisma.PrismaPromise<GetBlogTagAggregateType<T>>
-
-    /**
-     * Group by BlogTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BlogTagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends BlogTagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: BlogTagGroupByArgs['orderBy'] }
-        : { orderBy?: BlogTagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, BlogTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBlogTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the BlogTag model
-   */
-  readonly fields: BlogTagFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for BlogTag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__BlogTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    blog<T extends BlogDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BlogDefaultArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the BlogTag model
-   */
-  interface BlogTagFieldRefs {
-    readonly blog_id: FieldRef<"BlogTag", 'Int'>
-    readonly tag_id: FieldRef<"BlogTag", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * BlogTag findUnique
-   */
-  export type BlogTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which BlogTag to fetch.
-     */
-    where: BlogTagWhereUniqueInput
-  }
-
-  /**
-   * BlogTag findUniqueOrThrow
-   */
-  export type BlogTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which BlogTag to fetch.
-     */
-    where: BlogTagWhereUniqueInput
-  }
-
-  /**
-   * BlogTag findFirst
-   */
-  export type BlogTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which BlogTag to fetch.
-     */
-    where?: BlogTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BlogTags to fetch.
-     */
-    orderBy?: BlogTagOrderByWithRelationInput | BlogTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BlogTags.
-     */
-    cursor?: BlogTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BlogTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BlogTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BlogTags.
-     */
-    distinct?: BlogTagScalarFieldEnum | BlogTagScalarFieldEnum[]
-  }
-
-  /**
-   * BlogTag findFirstOrThrow
-   */
-  export type BlogTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which BlogTag to fetch.
-     */
-    where?: BlogTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BlogTags to fetch.
-     */
-    orderBy?: BlogTagOrderByWithRelationInput | BlogTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BlogTags.
-     */
-    cursor?: BlogTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BlogTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BlogTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BlogTags.
-     */
-    distinct?: BlogTagScalarFieldEnum | BlogTagScalarFieldEnum[]
-  }
-
-  /**
-   * BlogTag findMany
-   */
-  export type BlogTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which BlogTags to fetch.
-     */
-    where?: BlogTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BlogTags to fetch.
-     */
-    orderBy?: BlogTagOrderByWithRelationInput | BlogTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing BlogTags.
-     */
-    cursor?: BlogTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BlogTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BlogTags.
-     */
-    skip?: number
-    distinct?: BlogTagScalarFieldEnum | BlogTagScalarFieldEnum[]
-  }
-
-  /**
-   * BlogTag create
-   */
-  export type BlogTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    /**
-     * The data needed to create a BlogTag.
-     */
-    data: XOR<BlogTagCreateInput, BlogTagUncheckedCreateInput>
-  }
-
-  /**
-   * BlogTag createMany
-   */
-  export type BlogTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many BlogTags.
-     */
-    data: BlogTagCreateManyInput | BlogTagCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * BlogTag createManyAndReturn
-   */
-  export type BlogTagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * The data used to create many BlogTags.
-     */
-    data: BlogTagCreateManyInput | BlogTagCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * BlogTag update
-   */
-  export type BlogTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    /**
-     * The data needed to update a BlogTag.
-     */
-    data: XOR<BlogTagUpdateInput, BlogTagUncheckedUpdateInput>
-    /**
-     * Choose, which BlogTag to update.
-     */
-    where: BlogTagWhereUniqueInput
-  }
-
-  /**
-   * BlogTag updateMany
-   */
-  export type BlogTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update BlogTags.
-     */
-    data: XOR<BlogTagUpdateManyMutationInput, BlogTagUncheckedUpdateManyInput>
-    /**
-     * Filter which BlogTags to update
-     */
-    where?: BlogTagWhereInput
-    /**
-     * Limit how many BlogTags to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * BlogTag updateManyAndReturn
-   */
-  export type BlogTagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * The data used to update BlogTags.
-     */
-    data: XOR<BlogTagUpdateManyMutationInput, BlogTagUncheckedUpdateManyInput>
-    /**
-     * Filter which BlogTags to update
-     */
-    where?: BlogTagWhereInput
-    /**
-     * Limit how many BlogTags to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * BlogTag upsert
-   */
-  export type BlogTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    /**
-     * The filter to search for the BlogTag to update in case it exists.
-     */
-    where: BlogTagWhereUniqueInput
-    /**
-     * In case the BlogTag found by the `where` argument doesn't exist, create a new BlogTag with this data.
-     */
-    create: XOR<BlogTagCreateInput, BlogTagUncheckedCreateInput>
-    /**
-     * In case the BlogTag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<BlogTagUpdateInput, BlogTagUncheckedUpdateInput>
-  }
-
-  /**
-   * BlogTag delete
-   */
-  export type BlogTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-    /**
-     * Filter which BlogTag to delete.
-     */
-    where: BlogTagWhereUniqueInput
-  }
-
-  /**
-   * BlogTag deleteMany
-   */
-  export type BlogTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which BlogTags to delete
-     */
-    where?: BlogTagWhereInput
-    /**
-     * Limit how many BlogTags to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * BlogTag without action
-   */
-  export type BlogTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BlogTag
-     */
-    select?: BlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BlogTag
-     */
-    omit?: BlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BlogTagInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model PhotoTag
-   */
-
-  export type AggregatePhotoTag = {
-    _count: PhotoTagCountAggregateOutputType | null
-    _avg: PhotoTagAvgAggregateOutputType | null
-    _sum: PhotoTagSumAggregateOutputType | null
-    _min: PhotoTagMinAggregateOutputType | null
-    _max: PhotoTagMaxAggregateOutputType | null
-  }
-
-  export type PhotoTagAvgAggregateOutputType = {
-    photo_id: number | null
-    tag_id: number | null
-  }
-
-  export type PhotoTagSumAggregateOutputType = {
-    photo_id: number | null
-    tag_id: number | null
-  }
-
-  export type PhotoTagMinAggregateOutputType = {
-    photo_id: number | null
-    tag_id: number | null
-  }
-
-  export type PhotoTagMaxAggregateOutputType = {
-    photo_id: number | null
-    tag_id: number | null
-  }
-
-  export type PhotoTagCountAggregateOutputType = {
-    photo_id: number
-    tag_id: number
-    _all: number
-  }
-
-
-  export type PhotoTagAvgAggregateInputType = {
-    photo_id?: true
-    tag_id?: true
-  }
-
-  export type PhotoTagSumAggregateInputType = {
-    photo_id?: true
-    tag_id?: true
-  }
-
-  export type PhotoTagMinAggregateInputType = {
-    photo_id?: true
-    tag_id?: true
-  }
-
-  export type PhotoTagMaxAggregateInputType = {
-    photo_id?: true
-    tag_id?: true
-  }
-
-  export type PhotoTagCountAggregateInputType = {
-    photo_id?: true
-    tag_id?: true
-    _all?: true
-  }
-
-  export type PhotoTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which PhotoTag to aggregate.
-     */
-    where?: PhotoTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PhotoTags to fetch.
-     */
-    orderBy?: PhotoTagOrderByWithRelationInput | PhotoTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PhotoTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PhotoTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PhotoTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned PhotoTags
-    **/
-    _count?: true | PhotoTagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: PhotoTagAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PhotoTagSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PhotoTagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PhotoTagMaxAggregateInputType
-  }
-
-  export type GetPhotoTagAggregateType<T extends PhotoTagAggregateArgs> = {
-        [P in keyof T & keyof AggregatePhotoTag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePhotoTag[P]>
-      : GetScalarType<T[P], AggregatePhotoTag[P]>
-  }
-
-
-
-
-  export type PhotoTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PhotoTagWhereInput
-    orderBy?: PhotoTagOrderByWithAggregationInput | PhotoTagOrderByWithAggregationInput[]
-    by: PhotoTagScalarFieldEnum[] | PhotoTagScalarFieldEnum
-    having?: PhotoTagScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PhotoTagCountAggregateInputType | true
-    _avg?: PhotoTagAvgAggregateInputType
-    _sum?: PhotoTagSumAggregateInputType
-    _min?: PhotoTagMinAggregateInputType
-    _max?: PhotoTagMaxAggregateInputType
-  }
-
-  export type PhotoTagGroupByOutputType = {
-    photo_id: number
-    tag_id: number
-    _count: PhotoTagCountAggregateOutputType | null
-    _avg: PhotoTagAvgAggregateOutputType | null
-    _sum: PhotoTagSumAggregateOutputType | null
-    _min: PhotoTagMinAggregateOutputType | null
-    _max: PhotoTagMaxAggregateOutputType | null
-  }
-
-  type GetPhotoTagGroupByPayload<T extends PhotoTagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<PhotoTagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PhotoTagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PhotoTagGroupByOutputType[P]>
-            : GetScalarType<T[P], PhotoTagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PhotoTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    photo_id?: boolean
-    tag_id?: boolean
-    photo?: boolean | PhotoDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["photoTag"]>
-
-  export type PhotoTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    photo_id?: boolean
-    tag_id?: boolean
-    photo?: boolean | PhotoDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["photoTag"]>
-
-  export type PhotoTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    photo_id?: boolean
-    tag_id?: boolean
-    photo?: boolean | PhotoDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["photoTag"]>
-
-  export type PhotoTagSelectScalar = {
-    photo_id?: boolean
-    tag_id?: boolean
-  }
-
-  export type PhotoTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"photo_id" | "tag_id", ExtArgs["result"]["photoTag"]>
-  export type PhotoTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    photo?: boolean | PhotoDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-  export type PhotoTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    photo?: boolean | PhotoDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-  export type PhotoTagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    photo?: boolean | PhotoDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-
-  export type $PhotoTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "PhotoTag"
-    objects: {
-      photo: Prisma.$PhotoPayload<ExtArgs>
-      tag: Prisma.$TagPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      photo_id: number
-      tag_id: number
-    }, ExtArgs["result"]["photoTag"]>
-    composites: {}
-  }
-
-  type PhotoTagGetPayload<S extends boolean | null | undefined | PhotoTagDefaultArgs> = $Result.GetResult<Prisma.$PhotoTagPayload, S>
-
-  type PhotoTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<PhotoTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: PhotoTagCountAggregateInputType | true
-    }
-
-  export interface PhotoTagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PhotoTag'], meta: { name: 'PhotoTag' } }
-    /**
-     * Find zero or one PhotoTag that matches the filter.
-     * @param {PhotoTagFindUniqueArgs} args - Arguments to find a PhotoTag
-     * @example
-     * // Get one PhotoTag
-     * const photoTag = await prisma.photoTag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends PhotoTagFindUniqueArgs>(args: SelectSubset<T, PhotoTagFindUniqueArgs<ExtArgs>>): Prisma__PhotoTagClient<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one PhotoTag that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {PhotoTagFindUniqueOrThrowArgs} args - Arguments to find a PhotoTag
-     * @example
-     * // Get one PhotoTag
-     * const photoTag = await prisma.photoTag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends PhotoTagFindUniqueOrThrowArgs>(args: SelectSubset<T, PhotoTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PhotoTagClient<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first PhotoTag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhotoTagFindFirstArgs} args - Arguments to find a PhotoTag
-     * @example
-     * // Get one PhotoTag
-     * const photoTag = await prisma.photoTag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends PhotoTagFindFirstArgs>(args?: SelectSubset<T, PhotoTagFindFirstArgs<ExtArgs>>): Prisma__PhotoTagClient<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first PhotoTag that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhotoTagFindFirstOrThrowArgs} args - Arguments to find a PhotoTag
-     * @example
-     * // Get one PhotoTag
-     * const photoTag = await prisma.photoTag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends PhotoTagFindFirstOrThrowArgs>(args?: SelectSubset<T, PhotoTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__PhotoTagClient<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more PhotoTags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhotoTagFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all PhotoTags
-     * const photoTags = await prisma.photoTag.findMany()
-     * 
-     * // Get first 10 PhotoTags
-     * const photoTags = await prisma.photoTag.findMany({ take: 10 })
-     * 
-     * // Only select the `photo_id`
-     * const photoTagWithPhoto_idOnly = await prisma.photoTag.findMany({ select: { photo_id: true } })
-     * 
-     */
-    findMany<T extends PhotoTagFindManyArgs>(args?: SelectSubset<T, PhotoTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a PhotoTag.
-     * @param {PhotoTagCreateArgs} args - Arguments to create a PhotoTag.
-     * @example
-     * // Create one PhotoTag
-     * const PhotoTag = await prisma.photoTag.create({
-     *   data: {
-     *     // ... data to create a PhotoTag
-     *   }
-     * })
-     * 
-     */
-    create<T extends PhotoTagCreateArgs>(args: SelectSubset<T, PhotoTagCreateArgs<ExtArgs>>): Prisma__PhotoTagClient<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many PhotoTags.
-     * @param {PhotoTagCreateManyArgs} args - Arguments to create many PhotoTags.
-     * @example
-     * // Create many PhotoTags
-     * const photoTag = await prisma.photoTag.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends PhotoTagCreateManyArgs>(args?: SelectSubset<T, PhotoTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many PhotoTags and returns the data saved in the database.
-     * @param {PhotoTagCreateManyAndReturnArgs} args - Arguments to create many PhotoTags.
-     * @example
-     * // Create many PhotoTags
-     * const photoTag = await prisma.photoTag.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many PhotoTags and only return the `photo_id`
-     * const photoTagWithPhoto_idOnly = await prisma.photoTag.createManyAndReturn({
-     *   select: { photo_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends PhotoTagCreateManyAndReturnArgs>(args?: SelectSubset<T, PhotoTagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a PhotoTag.
-     * @param {PhotoTagDeleteArgs} args - Arguments to delete one PhotoTag.
-     * @example
-     * // Delete one PhotoTag
-     * const PhotoTag = await prisma.photoTag.delete({
-     *   where: {
-     *     // ... filter to delete one PhotoTag
-     *   }
-     * })
-     * 
-     */
-    delete<T extends PhotoTagDeleteArgs>(args: SelectSubset<T, PhotoTagDeleteArgs<ExtArgs>>): Prisma__PhotoTagClient<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one PhotoTag.
-     * @param {PhotoTagUpdateArgs} args - Arguments to update one PhotoTag.
-     * @example
-     * // Update one PhotoTag
-     * const photoTag = await prisma.photoTag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends PhotoTagUpdateArgs>(args: SelectSubset<T, PhotoTagUpdateArgs<ExtArgs>>): Prisma__PhotoTagClient<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more PhotoTags.
-     * @param {PhotoTagDeleteManyArgs} args - Arguments to filter PhotoTags to delete.
-     * @example
-     * // Delete a few PhotoTags
-     * const { count } = await prisma.photoTag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends PhotoTagDeleteManyArgs>(args?: SelectSubset<T, PhotoTagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more PhotoTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhotoTagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many PhotoTags
-     * const photoTag = await prisma.photoTag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends PhotoTagUpdateManyArgs>(args: SelectSubset<T, PhotoTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more PhotoTags and returns the data updated in the database.
-     * @param {PhotoTagUpdateManyAndReturnArgs} args - Arguments to update many PhotoTags.
-     * @example
-     * // Update many PhotoTags
-     * const photoTag = await prisma.photoTag.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more PhotoTags and only return the `photo_id`
-     * const photoTagWithPhoto_idOnly = await prisma.photoTag.updateManyAndReturn({
-     *   select: { photo_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends PhotoTagUpdateManyAndReturnArgs>(args: SelectSubset<T, PhotoTagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one PhotoTag.
-     * @param {PhotoTagUpsertArgs} args - Arguments to update or create a PhotoTag.
-     * @example
-     * // Update or create a PhotoTag
-     * const photoTag = await prisma.photoTag.upsert({
-     *   create: {
-     *     // ... data to create a PhotoTag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the PhotoTag we want to update
-     *   }
-     * })
-     */
-    upsert<T extends PhotoTagUpsertArgs>(args: SelectSubset<T, PhotoTagUpsertArgs<ExtArgs>>): Prisma__PhotoTagClient<$Result.GetResult<Prisma.$PhotoTagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of PhotoTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhotoTagCountArgs} args - Arguments to filter PhotoTags to count.
-     * @example
-     * // Count the number of PhotoTags
-     * const count = await prisma.photoTag.count({
-     *   where: {
-     *     // ... the filter for the PhotoTags we want to count
-     *   }
-     * })
-    **/
-    count<T extends PhotoTagCountArgs>(
-      args?: Subset<T, PhotoTagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PhotoTagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a PhotoTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhotoTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PhotoTagAggregateArgs>(args: Subset<T, PhotoTagAggregateArgs>): Prisma.PrismaPromise<GetPhotoTagAggregateType<T>>
-
-    /**
-     * Group by PhotoTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhotoTagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PhotoTagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PhotoTagGroupByArgs['orderBy'] }
-        : { orderBy?: PhotoTagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PhotoTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPhotoTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the PhotoTag model
-   */
-  readonly fields: PhotoTagFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for PhotoTag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__PhotoTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    photo<T extends PhotoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PhotoDefaultArgs<ExtArgs>>): Prisma__PhotoClient<$Result.GetResult<Prisma.$PhotoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the PhotoTag model
-   */
-  interface PhotoTagFieldRefs {
-    readonly photo_id: FieldRef<"PhotoTag", 'Int'>
-    readonly tag_id: FieldRef<"PhotoTag", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * PhotoTag findUnique
-   */
-  export type PhotoTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    /**
-     * Filter, which PhotoTag to fetch.
-     */
-    where: PhotoTagWhereUniqueInput
-  }
-
-  /**
-   * PhotoTag findUniqueOrThrow
-   */
-  export type PhotoTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    /**
-     * Filter, which PhotoTag to fetch.
-     */
-    where: PhotoTagWhereUniqueInput
-  }
-
-  /**
-   * PhotoTag findFirst
-   */
-  export type PhotoTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    /**
-     * Filter, which PhotoTag to fetch.
-     */
-    where?: PhotoTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PhotoTags to fetch.
-     */
-    orderBy?: PhotoTagOrderByWithRelationInput | PhotoTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PhotoTags.
-     */
-    cursor?: PhotoTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PhotoTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PhotoTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PhotoTags.
-     */
-    distinct?: PhotoTagScalarFieldEnum | PhotoTagScalarFieldEnum[]
-  }
-
-  /**
-   * PhotoTag findFirstOrThrow
-   */
-  export type PhotoTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    /**
-     * Filter, which PhotoTag to fetch.
-     */
-    where?: PhotoTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PhotoTags to fetch.
-     */
-    orderBy?: PhotoTagOrderByWithRelationInput | PhotoTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PhotoTags.
-     */
-    cursor?: PhotoTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PhotoTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PhotoTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PhotoTags.
-     */
-    distinct?: PhotoTagScalarFieldEnum | PhotoTagScalarFieldEnum[]
-  }
-
-  /**
-   * PhotoTag findMany
-   */
-  export type PhotoTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    /**
-     * Filter, which PhotoTags to fetch.
-     */
-    where?: PhotoTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PhotoTags to fetch.
-     */
-    orderBy?: PhotoTagOrderByWithRelationInput | PhotoTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing PhotoTags.
-     */
-    cursor?: PhotoTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PhotoTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PhotoTags.
-     */
-    skip?: number
-    distinct?: PhotoTagScalarFieldEnum | PhotoTagScalarFieldEnum[]
-  }
-
-  /**
-   * PhotoTag create
-   */
-  export type PhotoTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    /**
-     * The data needed to create a PhotoTag.
-     */
-    data: XOR<PhotoTagCreateInput, PhotoTagUncheckedCreateInput>
-  }
-
-  /**
-   * PhotoTag createMany
-   */
-  export type PhotoTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many PhotoTags.
-     */
-    data: PhotoTagCreateManyInput | PhotoTagCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * PhotoTag createManyAndReturn
-   */
-  export type PhotoTagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * The data used to create many PhotoTags.
-     */
-    data: PhotoTagCreateManyInput | PhotoTagCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * PhotoTag update
-   */
-  export type PhotoTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    /**
-     * The data needed to update a PhotoTag.
-     */
-    data: XOR<PhotoTagUpdateInput, PhotoTagUncheckedUpdateInput>
-    /**
-     * Choose, which PhotoTag to update.
-     */
-    where: PhotoTagWhereUniqueInput
-  }
-
-  /**
-   * PhotoTag updateMany
-   */
-  export type PhotoTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update PhotoTags.
-     */
-    data: XOR<PhotoTagUpdateManyMutationInput, PhotoTagUncheckedUpdateManyInput>
-    /**
-     * Filter which PhotoTags to update
-     */
-    where?: PhotoTagWhereInput
-    /**
-     * Limit how many PhotoTags to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * PhotoTag updateManyAndReturn
-   */
-  export type PhotoTagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * The data used to update PhotoTags.
-     */
-    data: XOR<PhotoTagUpdateManyMutationInput, PhotoTagUncheckedUpdateManyInput>
-    /**
-     * Filter which PhotoTags to update
-     */
-    where?: PhotoTagWhereInput
-    /**
-     * Limit how many PhotoTags to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * PhotoTag upsert
-   */
-  export type PhotoTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    /**
-     * The filter to search for the PhotoTag to update in case it exists.
-     */
-    where: PhotoTagWhereUniqueInput
-    /**
-     * In case the PhotoTag found by the `where` argument doesn't exist, create a new PhotoTag with this data.
-     */
-    create: XOR<PhotoTagCreateInput, PhotoTagUncheckedCreateInput>
-    /**
-     * In case the PhotoTag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<PhotoTagUpdateInput, PhotoTagUncheckedUpdateInput>
-  }
-
-  /**
-   * PhotoTag delete
-   */
-  export type PhotoTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-    /**
-     * Filter which PhotoTag to delete.
-     */
-    where: PhotoTagWhereUniqueInput
-  }
-
-  /**
-   * PhotoTag deleteMany
-   */
-  export type PhotoTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which PhotoTags to delete
-     */
-    where?: PhotoTagWhereInput
-    /**
-     * Limit how many PhotoTags to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * PhotoTag without action
-   */
-  export type PhotoTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhotoTag
-     */
-    select?: PhotoTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhotoTag
-     */
-    omit?: PhotoTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhotoTagInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Vlog
    */
 
@@ -8382,6 +4515,7 @@ export namespace Prisma {
 
   export type VlogMinAggregateOutputType = {
     id: number | null
+    reference_id: string | null
     title: string | null
     description: string | null
     video_url: string | null
@@ -8393,6 +4527,7 @@ export namespace Prisma {
 
   export type VlogMaxAggregateOutputType = {
     id: number | null
+    reference_id: string | null
     title: string | null
     description: string | null
     video_url: string | null
@@ -8404,6 +4539,7 @@ export namespace Prisma {
 
   export type VlogCountAggregateOutputType = {
     id: number
+    reference_id: number
     title: number
     description: number
     video_url: number
@@ -8425,6 +4561,7 @@ export namespace Prisma {
 
   export type VlogMinAggregateInputType = {
     id?: true
+    reference_id?: true
     title?: true
     description?: true
     video_url?: true
@@ -8436,6 +4573,7 @@ export namespace Prisma {
 
   export type VlogMaxAggregateInputType = {
     id?: true
+    reference_id?: true
     title?: true
     description?: true
     video_url?: true
@@ -8447,6 +4585,7 @@ export namespace Prisma {
 
   export type VlogCountAggregateInputType = {
     id?: true
+    reference_id?: true
     title?: true
     description?: true
     video_url?: true
@@ -8545,6 +4684,7 @@ export namespace Prisma {
 
   export type VlogGroupByOutputType = {
     id: number
+    reference_id: string
     title: string
     description: string | null
     video_url: string
@@ -8575,6 +4715,7 @@ export namespace Prisma {
 
   export type VlogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     description?: boolean
     video_url?: boolean
@@ -8582,12 +4723,11 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     is_published?: boolean
-    tags?: boolean | Vlog$tagsArgs<ExtArgs>
-    _count?: boolean | VlogCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vlog"]>
 
   export type VlogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     description?: boolean
     video_url?: boolean
@@ -8599,6 +4739,7 @@ export namespace Prisma {
 
   export type VlogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     description?: boolean
     video_url?: boolean
@@ -8610,6 +4751,7 @@ export namespace Prisma {
 
   export type VlogSelectScalar = {
     id?: boolean
+    reference_id?: boolean
     title?: boolean
     description?: boolean
     video_url?: boolean
@@ -8619,21 +4761,14 @@ export namespace Prisma {
     is_published?: boolean
   }
 
-  export type VlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "video_url" | "published_at" | "created_at" | "updated_at" | "is_published", ExtArgs["result"]["vlog"]>
-  export type VlogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tags?: boolean | Vlog$tagsArgs<ExtArgs>
-    _count?: boolean | VlogCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type VlogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type VlogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type VlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reference_id" | "title" | "description" | "video_url" | "published_at" | "created_at" | "updated_at" | "is_published", ExtArgs["result"]["vlog"]>
 
   export type $VlogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Vlog"
-    objects: {
-      tags: Prisma.$VlogTagPayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      reference_id: string
       title: string
       description: string | null
       video_url: string
@@ -9035,7 +5170,6 @@ export namespace Prisma {
    */
   export interface Prisma__VlogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    tags<T extends Vlog$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Vlog$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9066,6 +5200,7 @@ export namespace Prisma {
    */
   interface VlogFieldRefs {
     readonly id: FieldRef<"Vlog", 'Int'>
+    readonly reference_id: FieldRef<"Vlog", 'String'>
     readonly title: FieldRef<"Vlog", 'String'>
     readonly description: FieldRef<"Vlog", 'String'>
     readonly video_url: FieldRef<"Vlog", 'String'>
@@ -9090,10 +5225,6 @@ export namespace Prisma {
      */
     omit?: VlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
-    /**
      * Filter, which Vlog to fetch.
      */
     where: VlogWhereUniqueInput
@@ -9112,10 +5243,6 @@ export namespace Prisma {
      */
     omit?: VlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
-    /**
      * Filter, which Vlog to fetch.
      */
     where: VlogWhereUniqueInput
@@ -9133,10 +5260,6 @@ export namespace Prisma {
      * Omit specific fields from the Vlog
      */
     omit?: VlogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
     /**
      * Filter, which Vlog to fetch.
      */
@@ -9186,10 +5309,6 @@ export namespace Prisma {
      */
     omit?: VlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
-    /**
      * Filter, which Vlog to fetch.
      */
     where?: VlogWhereInput
@@ -9238,10 +5357,6 @@ export namespace Prisma {
      */
     omit?: VlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
-    /**
      * Filter, which Vlogs to fetch.
      */
     where?: VlogWhereInput
@@ -9284,10 +5399,6 @@ export namespace Prisma {
      * Omit specific fields from the Vlog
      */
     omit?: VlogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
     /**
      * The data needed to create a Vlog.
      */
@@ -9336,10 +5447,6 @@ export namespace Prisma {
      * Omit specific fields from the Vlog
      */
     omit?: VlogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
     /**
      * The data needed to update a Vlog.
      */
@@ -9407,10 +5514,6 @@ export namespace Prisma {
      */
     omit?: VlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
-    /**
      * The filter to search for the Vlog to update in case it exists.
      */
     where: VlogWhereUniqueInput
@@ -9437,10 +5540,6 @@ export namespace Prisma {
      */
     omit?: VlogOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
-    /**
      * Filter which Vlog to delete.
      */
     where: VlogWhereUniqueInput
@@ -9461,30 +5560,6 @@ export namespace Prisma {
   }
 
   /**
-   * Vlog.tags
-   */
-  export type Vlog$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    where?: VlogTagWhereInput
-    orderBy?: VlogTagOrderByWithRelationInput | VlogTagOrderByWithRelationInput[]
-    cursor?: VlogTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: VlogTagScalarFieldEnum | VlogTagScalarFieldEnum[]
-  }
-
-  /**
    * Vlog without action
    */
   export type VlogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9496,1075 +5571,6 @@ export namespace Prisma {
      * Omit specific fields from the Vlog
      */
     omit?: VlogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model VlogTag
-   */
-
-  export type AggregateVlogTag = {
-    _count: VlogTagCountAggregateOutputType | null
-    _avg: VlogTagAvgAggregateOutputType | null
-    _sum: VlogTagSumAggregateOutputType | null
-    _min: VlogTagMinAggregateOutputType | null
-    _max: VlogTagMaxAggregateOutputType | null
-  }
-
-  export type VlogTagAvgAggregateOutputType = {
-    vlog_id: number | null
-    tag_id: number | null
-  }
-
-  export type VlogTagSumAggregateOutputType = {
-    vlog_id: number | null
-    tag_id: number | null
-  }
-
-  export type VlogTagMinAggregateOutputType = {
-    vlog_id: number | null
-    tag_id: number | null
-  }
-
-  export type VlogTagMaxAggregateOutputType = {
-    vlog_id: number | null
-    tag_id: number | null
-  }
-
-  export type VlogTagCountAggregateOutputType = {
-    vlog_id: number
-    tag_id: number
-    _all: number
-  }
-
-
-  export type VlogTagAvgAggregateInputType = {
-    vlog_id?: true
-    tag_id?: true
-  }
-
-  export type VlogTagSumAggregateInputType = {
-    vlog_id?: true
-    tag_id?: true
-  }
-
-  export type VlogTagMinAggregateInputType = {
-    vlog_id?: true
-    tag_id?: true
-  }
-
-  export type VlogTagMaxAggregateInputType = {
-    vlog_id?: true
-    tag_id?: true
-  }
-
-  export type VlogTagCountAggregateInputType = {
-    vlog_id?: true
-    tag_id?: true
-    _all?: true
-  }
-
-  export type VlogTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which VlogTag to aggregate.
-     */
-    where?: VlogTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of VlogTags to fetch.
-     */
-    orderBy?: VlogTagOrderByWithRelationInput | VlogTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: VlogTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` VlogTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` VlogTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned VlogTags
-    **/
-    _count?: true | VlogTagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: VlogTagAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: VlogTagSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: VlogTagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: VlogTagMaxAggregateInputType
-  }
-
-  export type GetVlogTagAggregateType<T extends VlogTagAggregateArgs> = {
-        [P in keyof T & keyof AggregateVlogTag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateVlogTag[P]>
-      : GetScalarType<T[P], AggregateVlogTag[P]>
-  }
-
-
-
-
-  export type VlogTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: VlogTagWhereInput
-    orderBy?: VlogTagOrderByWithAggregationInput | VlogTagOrderByWithAggregationInput[]
-    by: VlogTagScalarFieldEnum[] | VlogTagScalarFieldEnum
-    having?: VlogTagScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: VlogTagCountAggregateInputType | true
-    _avg?: VlogTagAvgAggregateInputType
-    _sum?: VlogTagSumAggregateInputType
-    _min?: VlogTagMinAggregateInputType
-    _max?: VlogTagMaxAggregateInputType
-  }
-
-  export type VlogTagGroupByOutputType = {
-    vlog_id: number
-    tag_id: number
-    _count: VlogTagCountAggregateOutputType | null
-    _avg: VlogTagAvgAggregateOutputType | null
-    _sum: VlogTagSumAggregateOutputType | null
-    _min: VlogTagMinAggregateOutputType | null
-    _max: VlogTagMaxAggregateOutputType | null
-  }
-
-  type GetVlogTagGroupByPayload<T extends VlogTagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<VlogTagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof VlogTagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], VlogTagGroupByOutputType[P]>
-            : GetScalarType<T[P], VlogTagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type VlogTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    vlog_id?: boolean
-    tag_id?: boolean
-    vlog?: boolean | VlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["vlogTag"]>
-
-  export type VlogTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    vlog_id?: boolean
-    tag_id?: boolean
-    vlog?: boolean | VlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["vlogTag"]>
-
-  export type VlogTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    vlog_id?: boolean
-    tag_id?: boolean
-    vlog?: boolean | VlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["vlogTag"]>
-
-  export type VlogTagSelectScalar = {
-    vlog_id?: boolean
-    tag_id?: boolean
-  }
-
-  export type VlogTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"vlog_id" | "tag_id", ExtArgs["result"]["vlogTag"]>
-  export type VlogTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    vlog?: boolean | VlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-  export type VlogTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    vlog?: boolean | VlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-  export type VlogTagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    vlog?: boolean | VlogDefaultArgs<ExtArgs>
-    tag?: boolean | TagDefaultArgs<ExtArgs>
-  }
-
-  export type $VlogTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "VlogTag"
-    objects: {
-      vlog: Prisma.$VlogPayload<ExtArgs>
-      tag: Prisma.$TagPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      vlog_id: number
-      tag_id: number
-    }, ExtArgs["result"]["vlogTag"]>
-    composites: {}
-  }
-
-  type VlogTagGetPayload<S extends boolean | null | undefined | VlogTagDefaultArgs> = $Result.GetResult<Prisma.$VlogTagPayload, S>
-
-  type VlogTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<VlogTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: VlogTagCountAggregateInputType | true
-    }
-
-  export interface VlogTagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VlogTag'], meta: { name: 'VlogTag' } }
-    /**
-     * Find zero or one VlogTag that matches the filter.
-     * @param {VlogTagFindUniqueArgs} args - Arguments to find a VlogTag
-     * @example
-     * // Get one VlogTag
-     * const vlogTag = await prisma.vlogTag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends VlogTagFindUniqueArgs>(args: SelectSubset<T, VlogTagFindUniqueArgs<ExtArgs>>): Prisma__VlogTagClient<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one VlogTag that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {VlogTagFindUniqueOrThrowArgs} args - Arguments to find a VlogTag
-     * @example
-     * // Get one VlogTag
-     * const vlogTag = await prisma.vlogTag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends VlogTagFindUniqueOrThrowArgs>(args: SelectSubset<T, VlogTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VlogTagClient<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first VlogTag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {VlogTagFindFirstArgs} args - Arguments to find a VlogTag
-     * @example
-     * // Get one VlogTag
-     * const vlogTag = await prisma.vlogTag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends VlogTagFindFirstArgs>(args?: SelectSubset<T, VlogTagFindFirstArgs<ExtArgs>>): Prisma__VlogTagClient<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first VlogTag that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {VlogTagFindFirstOrThrowArgs} args - Arguments to find a VlogTag
-     * @example
-     * // Get one VlogTag
-     * const vlogTag = await prisma.vlogTag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends VlogTagFindFirstOrThrowArgs>(args?: SelectSubset<T, VlogTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__VlogTagClient<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more VlogTags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {VlogTagFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all VlogTags
-     * const vlogTags = await prisma.vlogTag.findMany()
-     * 
-     * // Get first 10 VlogTags
-     * const vlogTags = await prisma.vlogTag.findMany({ take: 10 })
-     * 
-     * // Only select the `vlog_id`
-     * const vlogTagWithVlog_idOnly = await prisma.vlogTag.findMany({ select: { vlog_id: true } })
-     * 
-     */
-    findMany<T extends VlogTagFindManyArgs>(args?: SelectSubset<T, VlogTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a VlogTag.
-     * @param {VlogTagCreateArgs} args - Arguments to create a VlogTag.
-     * @example
-     * // Create one VlogTag
-     * const VlogTag = await prisma.vlogTag.create({
-     *   data: {
-     *     // ... data to create a VlogTag
-     *   }
-     * })
-     * 
-     */
-    create<T extends VlogTagCreateArgs>(args: SelectSubset<T, VlogTagCreateArgs<ExtArgs>>): Prisma__VlogTagClient<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many VlogTags.
-     * @param {VlogTagCreateManyArgs} args - Arguments to create many VlogTags.
-     * @example
-     * // Create many VlogTags
-     * const vlogTag = await prisma.vlogTag.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends VlogTagCreateManyArgs>(args?: SelectSubset<T, VlogTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many VlogTags and returns the data saved in the database.
-     * @param {VlogTagCreateManyAndReturnArgs} args - Arguments to create many VlogTags.
-     * @example
-     * // Create many VlogTags
-     * const vlogTag = await prisma.vlogTag.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many VlogTags and only return the `vlog_id`
-     * const vlogTagWithVlog_idOnly = await prisma.vlogTag.createManyAndReturn({
-     *   select: { vlog_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends VlogTagCreateManyAndReturnArgs>(args?: SelectSubset<T, VlogTagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a VlogTag.
-     * @param {VlogTagDeleteArgs} args - Arguments to delete one VlogTag.
-     * @example
-     * // Delete one VlogTag
-     * const VlogTag = await prisma.vlogTag.delete({
-     *   where: {
-     *     // ... filter to delete one VlogTag
-     *   }
-     * })
-     * 
-     */
-    delete<T extends VlogTagDeleteArgs>(args: SelectSubset<T, VlogTagDeleteArgs<ExtArgs>>): Prisma__VlogTagClient<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one VlogTag.
-     * @param {VlogTagUpdateArgs} args - Arguments to update one VlogTag.
-     * @example
-     * // Update one VlogTag
-     * const vlogTag = await prisma.vlogTag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends VlogTagUpdateArgs>(args: SelectSubset<T, VlogTagUpdateArgs<ExtArgs>>): Prisma__VlogTagClient<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more VlogTags.
-     * @param {VlogTagDeleteManyArgs} args - Arguments to filter VlogTags to delete.
-     * @example
-     * // Delete a few VlogTags
-     * const { count } = await prisma.vlogTag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends VlogTagDeleteManyArgs>(args?: SelectSubset<T, VlogTagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more VlogTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {VlogTagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many VlogTags
-     * const vlogTag = await prisma.vlogTag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends VlogTagUpdateManyArgs>(args: SelectSubset<T, VlogTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more VlogTags and returns the data updated in the database.
-     * @param {VlogTagUpdateManyAndReturnArgs} args - Arguments to update many VlogTags.
-     * @example
-     * // Update many VlogTags
-     * const vlogTag = await prisma.vlogTag.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more VlogTags and only return the `vlog_id`
-     * const vlogTagWithVlog_idOnly = await prisma.vlogTag.updateManyAndReturn({
-     *   select: { vlog_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends VlogTagUpdateManyAndReturnArgs>(args: SelectSubset<T, VlogTagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one VlogTag.
-     * @param {VlogTagUpsertArgs} args - Arguments to update or create a VlogTag.
-     * @example
-     * // Update or create a VlogTag
-     * const vlogTag = await prisma.vlogTag.upsert({
-     *   create: {
-     *     // ... data to create a VlogTag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the VlogTag we want to update
-     *   }
-     * })
-     */
-    upsert<T extends VlogTagUpsertArgs>(args: SelectSubset<T, VlogTagUpsertArgs<ExtArgs>>): Prisma__VlogTagClient<$Result.GetResult<Prisma.$VlogTagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of VlogTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {VlogTagCountArgs} args - Arguments to filter VlogTags to count.
-     * @example
-     * // Count the number of VlogTags
-     * const count = await prisma.vlogTag.count({
-     *   where: {
-     *     // ... the filter for the VlogTags we want to count
-     *   }
-     * })
-    **/
-    count<T extends VlogTagCountArgs>(
-      args?: Subset<T, VlogTagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], VlogTagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a VlogTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {VlogTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends VlogTagAggregateArgs>(args: Subset<T, VlogTagAggregateArgs>): Prisma.PrismaPromise<GetVlogTagAggregateType<T>>
-
-    /**
-     * Group by VlogTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {VlogTagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends VlogTagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: VlogTagGroupByArgs['orderBy'] }
-        : { orderBy?: VlogTagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, VlogTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVlogTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the VlogTag model
-   */
-  readonly fields: VlogTagFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for VlogTag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__VlogTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    vlog<T extends VlogDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VlogDefaultArgs<ExtArgs>>): Prisma__VlogClient<$Result.GetResult<Prisma.$VlogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the VlogTag model
-   */
-  interface VlogTagFieldRefs {
-    readonly vlog_id: FieldRef<"VlogTag", 'Int'>
-    readonly tag_id: FieldRef<"VlogTag", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * VlogTag findUnique
-   */
-  export type VlogTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which VlogTag to fetch.
-     */
-    where: VlogTagWhereUniqueInput
-  }
-
-  /**
-   * VlogTag findUniqueOrThrow
-   */
-  export type VlogTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which VlogTag to fetch.
-     */
-    where: VlogTagWhereUniqueInput
-  }
-
-  /**
-   * VlogTag findFirst
-   */
-  export type VlogTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which VlogTag to fetch.
-     */
-    where?: VlogTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of VlogTags to fetch.
-     */
-    orderBy?: VlogTagOrderByWithRelationInput | VlogTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for VlogTags.
-     */
-    cursor?: VlogTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` VlogTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` VlogTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of VlogTags.
-     */
-    distinct?: VlogTagScalarFieldEnum | VlogTagScalarFieldEnum[]
-  }
-
-  /**
-   * VlogTag findFirstOrThrow
-   */
-  export type VlogTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which VlogTag to fetch.
-     */
-    where?: VlogTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of VlogTags to fetch.
-     */
-    orderBy?: VlogTagOrderByWithRelationInput | VlogTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for VlogTags.
-     */
-    cursor?: VlogTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` VlogTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` VlogTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of VlogTags.
-     */
-    distinct?: VlogTagScalarFieldEnum | VlogTagScalarFieldEnum[]
-  }
-
-  /**
-   * VlogTag findMany
-   */
-  export type VlogTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    /**
-     * Filter, which VlogTags to fetch.
-     */
-    where?: VlogTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of VlogTags to fetch.
-     */
-    orderBy?: VlogTagOrderByWithRelationInput | VlogTagOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing VlogTags.
-     */
-    cursor?: VlogTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` VlogTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` VlogTags.
-     */
-    skip?: number
-    distinct?: VlogTagScalarFieldEnum | VlogTagScalarFieldEnum[]
-  }
-
-  /**
-   * VlogTag create
-   */
-  export type VlogTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    /**
-     * The data needed to create a VlogTag.
-     */
-    data: XOR<VlogTagCreateInput, VlogTagUncheckedCreateInput>
-  }
-
-  /**
-   * VlogTag createMany
-   */
-  export type VlogTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many VlogTags.
-     */
-    data: VlogTagCreateManyInput | VlogTagCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * VlogTag createManyAndReturn
-   */
-  export type VlogTagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * The data used to create many VlogTags.
-     */
-    data: VlogTagCreateManyInput | VlogTagCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * VlogTag update
-   */
-  export type VlogTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    /**
-     * The data needed to update a VlogTag.
-     */
-    data: XOR<VlogTagUpdateInput, VlogTagUncheckedUpdateInput>
-    /**
-     * Choose, which VlogTag to update.
-     */
-    where: VlogTagWhereUniqueInput
-  }
-
-  /**
-   * VlogTag updateMany
-   */
-  export type VlogTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update VlogTags.
-     */
-    data: XOR<VlogTagUpdateManyMutationInput, VlogTagUncheckedUpdateManyInput>
-    /**
-     * Filter which VlogTags to update
-     */
-    where?: VlogTagWhereInput
-    /**
-     * Limit how many VlogTags to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * VlogTag updateManyAndReturn
-   */
-  export type VlogTagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * The data used to update VlogTags.
-     */
-    data: XOR<VlogTagUpdateManyMutationInput, VlogTagUncheckedUpdateManyInput>
-    /**
-     * Filter which VlogTags to update
-     */
-    where?: VlogTagWhereInput
-    /**
-     * Limit how many VlogTags to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * VlogTag upsert
-   */
-  export type VlogTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    /**
-     * The filter to search for the VlogTag to update in case it exists.
-     */
-    where: VlogTagWhereUniqueInput
-    /**
-     * In case the VlogTag found by the `where` argument doesn't exist, create a new VlogTag with this data.
-     */
-    create: XOR<VlogTagCreateInput, VlogTagUncheckedCreateInput>
-    /**
-     * In case the VlogTag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<VlogTagUpdateInput, VlogTagUncheckedUpdateInput>
-  }
-
-  /**
-   * VlogTag delete
-   */
-  export type VlogTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
-    /**
-     * Filter which VlogTag to delete.
-     */
-    where: VlogTagWhereUniqueInput
-  }
-
-  /**
-   * VlogTag deleteMany
-   */
-  export type VlogTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which VlogTags to delete
-     */
-    where?: VlogTagWhereInput
-    /**
-     * Limit how many VlogTags to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * VlogTag without action
-   */
-  export type VlogTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VlogTag
-     */
-    select?: VlogTagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the VlogTag
-     */
-    omit?: VlogTagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VlogTagInclude<ExtArgs> | null
   }
 
 
@@ -10584,6 +5590,7 @@ export namespace Prisma {
 
   export const BlogScalarFieldEnum: {
     id: 'id',
+    reference_id: 'reference_id',
     title: 'title',
     description: 'description',
     slug: 'slug',
@@ -10603,6 +5610,8 @@ export namespace Prisma {
 
   export const PhotoScalarFieldEnum: {
     id: 'id',
+    reference_id: 'reference_id',
+    is_published: 'is_published',
     title: 'title',
     description: 'description',
     image_url: 'image_url',
@@ -10618,6 +5627,7 @@ export namespace Prisma {
 
   export const PoemScalarFieldEnum: {
     id: 'id',
+    reference_id: 'reference_id',
     title: 'title',
     author: 'author',
     content: 'content',
@@ -10631,33 +5641,9 @@ export namespace Prisma {
   export type PoemScalarFieldEnum = (typeof PoemScalarFieldEnum)[keyof typeof PoemScalarFieldEnum]
 
 
-  export const TagScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    slug: 'slug'
-  };
-
-  export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
-
-
-  export const BlogTagScalarFieldEnum: {
-    blog_id: 'blog_id',
-    tag_id: 'tag_id'
-  };
-
-  export type BlogTagScalarFieldEnum = (typeof BlogTagScalarFieldEnum)[keyof typeof BlogTagScalarFieldEnum]
-
-
-  export const PhotoTagScalarFieldEnum: {
-    photo_id: 'photo_id',
-    tag_id: 'tag_id'
-  };
-
-  export type PhotoTagScalarFieldEnum = (typeof PhotoTagScalarFieldEnum)[keyof typeof PhotoTagScalarFieldEnum]
-
-
   export const VlogScalarFieldEnum: {
     id: 'id',
+    reference_id: 'reference_id',
     title: 'title',
     description: 'description',
     video_url: 'video_url',
@@ -10668,14 +5654,6 @@ export namespace Prisma {
   };
 
   export type VlogScalarFieldEnum = (typeof VlogScalarFieldEnum)[keyof typeof VlogScalarFieldEnum]
-
-
-  export const VlogTagScalarFieldEnum: {
-    vlog_id: 'vlog_id',
-    tag_id: 'tag_id'
-  };
-
-  export type VlogTagScalarFieldEnum = (typeof VlogTagScalarFieldEnum)[keyof typeof VlogTagScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -10778,6 +5756,7 @@ export namespace Prisma {
     OR?: BlogWhereInput[]
     NOT?: BlogWhereInput | BlogWhereInput[]
     id?: IntFilter<"Blog"> | number
+    reference_id?: StringFilter<"Blog"> | string
     title?: StringFilter<"Blog"> | string
     description?: StringFilter<"Blog"> | string
     slug?: StringFilter<"Blog"> | string
@@ -10790,11 +5769,11 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Blog"> | Date | string
     is_published?: BoolFilter<"Blog"> | boolean
     featured_image_url?: StringNullableFilter<"Blog"> | string | null
-    tags?: BlogTagListRelationFilter
   }
 
   export type BlogOrderByWithRelationInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrder
@@ -10807,11 +5786,11 @@ export namespace Prisma {
     updated_at?: SortOrder
     is_published?: SortOrder
     featured_image_url?: SortOrderInput | SortOrder
-    tags?: BlogTagOrderByRelationAggregateInput
   }
 
   export type BlogWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    reference_id?: string
     slug?: string
     AND?: BlogWhereInput | BlogWhereInput[]
     OR?: BlogWhereInput[]
@@ -10827,11 +5806,11 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Blog"> | Date | string
     is_published?: BoolFilter<"Blog"> | boolean
     featured_image_url?: StringNullableFilter<"Blog"> | string | null
-    tags?: BlogTagListRelationFilter
-  }, "id" | "slug">
+  }, "id" | "reference_id" | "slug">
 
   export type BlogOrderByWithAggregationInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrder
@@ -10856,6 +5835,7 @@ export namespace Prisma {
     OR?: BlogScalarWhereWithAggregatesInput[]
     NOT?: BlogScalarWhereWithAggregatesInput | BlogScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Blog"> | number
+    reference_id?: StringWithAggregatesFilter<"Blog"> | string
     title?: StringWithAggregatesFilter<"Blog"> | string
     description?: StringWithAggregatesFilter<"Blog"> | string
     slug?: StringWithAggregatesFilter<"Blog"> | string
@@ -10875,6 +5855,8 @@ export namespace Prisma {
     OR?: PhotoWhereInput[]
     NOT?: PhotoWhereInput | PhotoWhereInput[]
     id?: IntFilter<"Photo"> | number
+    reference_id?: StringFilter<"Photo"> | string
+    is_published?: BoolFilter<"Photo"> | boolean
     title?: StringFilter<"Photo"> | string
     description?: StringNullableFilter<"Photo"> | string | null
     image_url?: StringFilter<"Photo"> | string
@@ -10883,11 +5865,12 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Photo"> | Date | string
     updated_at?: DateTimeFilter<"Photo"> | Date | string
     location?: StringNullableFilter<"Photo"> | string | null
-    tags?: PhotoTagListRelationFilter
   }
 
   export type PhotoOrderByWithRelationInput = {
     id?: SortOrder
+    reference_id?: SortOrder
+    is_published?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     image_url?: SortOrder
@@ -10896,15 +5879,16 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     location?: SortOrderInput | SortOrder
-    tags?: PhotoTagOrderByRelationAggregateInput
   }
 
   export type PhotoWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    reference_id?: string
     image_url?: string
     AND?: PhotoWhereInput | PhotoWhereInput[]
     OR?: PhotoWhereInput[]
     NOT?: PhotoWhereInput | PhotoWhereInput[]
+    is_published?: BoolFilter<"Photo"> | boolean
     title?: StringFilter<"Photo"> | string
     description?: StringNullableFilter<"Photo"> | string | null
     taken_at?: DateTimeNullableFilter<"Photo"> | Date | string | null
@@ -10912,11 +5896,12 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Photo"> | Date | string
     updated_at?: DateTimeFilter<"Photo"> | Date | string
     location?: StringNullableFilter<"Photo"> | string | null
-    tags?: PhotoTagListRelationFilter
-  }, "id" | "image_url">
+  }, "id" | "reference_id" | "image_url">
 
   export type PhotoOrderByWithAggregationInput = {
     id?: SortOrder
+    reference_id?: SortOrder
+    is_published?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     image_url?: SortOrder
@@ -10937,6 +5922,8 @@ export namespace Prisma {
     OR?: PhotoScalarWhereWithAggregatesInput[]
     NOT?: PhotoScalarWhereWithAggregatesInput | PhotoScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Photo"> | number
+    reference_id?: StringWithAggregatesFilter<"Photo"> | string
+    is_published?: BoolWithAggregatesFilter<"Photo"> | boolean
     title?: StringWithAggregatesFilter<"Photo"> | string
     description?: StringNullableWithAggregatesFilter<"Photo"> | string | null
     image_url?: StringWithAggregatesFilter<"Photo"> | string
@@ -10952,6 +5939,7 @@ export namespace Prisma {
     OR?: PoemWhereInput[]
     NOT?: PoemWhereInput | PoemWhereInput[]
     id?: IntFilter<"Poem"> | number
+    reference_id?: StringFilter<"Poem"> | string
     title?: StringFilter<"Poem"> | string
     author?: StringFilter<"Poem"> | string
     content?: StringFilter<"Poem"> | string
@@ -10964,6 +5952,7 @@ export namespace Prisma {
 
   export type PoemOrderByWithRelationInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
@@ -10976,6 +5965,7 @@ export namespace Prisma {
 
   export type PoemWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    reference_id?: string
     title?: string
     slug?: string
     AND?: PoemWhereInput | PoemWhereInput[]
@@ -10987,10 +5977,11 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Poem"> | Date | string
     updated_at?: DateTimeFilter<"Poem"> | Date | string
     is_published?: BoolFilter<"Poem"> | boolean
-  }, "id" | "title" | "slug">
+  }, "id" | "reference_id" | "title" | "slug">
 
   export type PoemOrderByWithAggregationInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
@@ -11011,6 +6002,7 @@ export namespace Prisma {
     OR?: PoemScalarWhereWithAggregatesInput[]
     NOT?: PoemScalarWhereWithAggregatesInput | PoemScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Poem"> | number
+    reference_id?: StringWithAggregatesFilter<"Poem"> | string
     title?: StringWithAggregatesFilter<"Poem"> | string
     author?: StringWithAggregatesFilter<"Poem"> | string
     content?: StringWithAggregatesFilter<"Poem"> | string
@@ -11021,156 +6013,12 @@ export namespace Prisma {
     is_published?: BoolWithAggregatesFilter<"Poem"> | boolean
   }
 
-  export type TagWhereInput = {
-    AND?: TagWhereInput | TagWhereInput[]
-    OR?: TagWhereInput[]
-    NOT?: TagWhereInput | TagWhereInput[]
-    id?: IntFilter<"Tag"> | number
-    name?: StringFilter<"Tag"> | string
-    slug?: StringFilter<"Tag"> | string
-    blogs?: BlogTagListRelationFilter
-    photos?: PhotoTagListRelationFilter
-    vlogs?: VlogTagListRelationFilter
-  }
-
-  export type TagOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    slug?: SortOrder
-    blogs?: BlogTagOrderByRelationAggregateInput
-    photos?: PhotoTagOrderByRelationAggregateInput
-    vlogs?: VlogTagOrderByRelationAggregateInput
-  }
-
-  export type TagWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    name?: string
-    slug?: string
-    AND?: TagWhereInput | TagWhereInput[]
-    OR?: TagWhereInput[]
-    NOT?: TagWhereInput | TagWhereInput[]
-    blogs?: BlogTagListRelationFilter
-    photos?: PhotoTagListRelationFilter
-    vlogs?: VlogTagListRelationFilter
-  }, "id" | "name" | "slug">
-
-  export type TagOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    slug?: SortOrder
-    _count?: TagCountOrderByAggregateInput
-    _avg?: TagAvgOrderByAggregateInput
-    _max?: TagMaxOrderByAggregateInput
-    _min?: TagMinOrderByAggregateInput
-    _sum?: TagSumOrderByAggregateInput
-  }
-
-  export type TagScalarWhereWithAggregatesInput = {
-    AND?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
-    OR?: TagScalarWhereWithAggregatesInput[]
-    NOT?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Tag"> | number
-    name?: StringWithAggregatesFilter<"Tag"> | string
-    slug?: StringWithAggregatesFilter<"Tag"> | string
-  }
-
-  export type BlogTagWhereInput = {
-    AND?: BlogTagWhereInput | BlogTagWhereInput[]
-    OR?: BlogTagWhereInput[]
-    NOT?: BlogTagWhereInput | BlogTagWhereInput[]
-    blog_id?: IntFilter<"BlogTag"> | number
-    tag_id?: IntFilter<"BlogTag"> | number
-    blog?: XOR<BlogScalarRelationFilter, BlogWhereInput>
-    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
-  }
-
-  export type BlogTagOrderByWithRelationInput = {
-    blog_id?: SortOrder
-    tag_id?: SortOrder
-    blog?: BlogOrderByWithRelationInput
-    tag?: TagOrderByWithRelationInput
-  }
-
-  export type BlogTagWhereUniqueInput = Prisma.AtLeast<{
-    blog_id_tag_id?: BlogTagBlog_idTag_idCompoundUniqueInput
-    AND?: BlogTagWhereInput | BlogTagWhereInput[]
-    OR?: BlogTagWhereInput[]
-    NOT?: BlogTagWhereInput | BlogTagWhereInput[]
-    blog_id?: IntFilter<"BlogTag"> | number
-    tag_id?: IntFilter<"BlogTag"> | number
-    blog?: XOR<BlogScalarRelationFilter, BlogWhereInput>
-    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
-  }, "blog_id_tag_id">
-
-  export type BlogTagOrderByWithAggregationInput = {
-    blog_id?: SortOrder
-    tag_id?: SortOrder
-    _count?: BlogTagCountOrderByAggregateInput
-    _avg?: BlogTagAvgOrderByAggregateInput
-    _max?: BlogTagMaxOrderByAggregateInput
-    _min?: BlogTagMinOrderByAggregateInput
-    _sum?: BlogTagSumOrderByAggregateInput
-  }
-
-  export type BlogTagScalarWhereWithAggregatesInput = {
-    AND?: BlogTagScalarWhereWithAggregatesInput | BlogTagScalarWhereWithAggregatesInput[]
-    OR?: BlogTagScalarWhereWithAggregatesInput[]
-    NOT?: BlogTagScalarWhereWithAggregatesInput | BlogTagScalarWhereWithAggregatesInput[]
-    blog_id?: IntWithAggregatesFilter<"BlogTag"> | number
-    tag_id?: IntWithAggregatesFilter<"BlogTag"> | number
-  }
-
-  export type PhotoTagWhereInput = {
-    AND?: PhotoTagWhereInput | PhotoTagWhereInput[]
-    OR?: PhotoTagWhereInput[]
-    NOT?: PhotoTagWhereInput | PhotoTagWhereInput[]
-    photo_id?: IntFilter<"PhotoTag"> | number
-    tag_id?: IntFilter<"PhotoTag"> | number
-    photo?: XOR<PhotoScalarRelationFilter, PhotoWhereInput>
-    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
-  }
-
-  export type PhotoTagOrderByWithRelationInput = {
-    photo_id?: SortOrder
-    tag_id?: SortOrder
-    photo?: PhotoOrderByWithRelationInput
-    tag?: TagOrderByWithRelationInput
-  }
-
-  export type PhotoTagWhereUniqueInput = Prisma.AtLeast<{
-    photo_id_tag_id?: PhotoTagPhoto_idTag_idCompoundUniqueInput
-    AND?: PhotoTagWhereInput | PhotoTagWhereInput[]
-    OR?: PhotoTagWhereInput[]
-    NOT?: PhotoTagWhereInput | PhotoTagWhereInput[]
-    photo_id?: IntFilter<"PhotoTag"> | number
-    tag_id?: IntFilter<"PhotoTag"> | number
-    photo?: XOR<PhotoScalarRelationFilter, PhotoWhereInput>
-    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
-  }, "photo_id_tag_id">
-
-  export type PhotoTagOrderByWithAggregationInput = {
-    photo_id?: SortOrder
-    tag_id?: SortOrder
-    _count?: PhotoTagCountOrderByAggregateInput
-    _avg?: PhotoTagAvgOrderByAggregateInput
-    _max?: PhotoTagMaxOrderByAggregateInput
-    _min?: PhotoTagMinOrderByAggregateInput
-    _sum?: PhotoTagSumOrderByAggregateInput
-  }
-
-  export type PhotoTagScalarWhereWithAggregatesInput = {
-    AND?: PhotoTagScalarWhereWithAggregatesInput | PhotoTagScalarWhereWithAggregatesInput[]
-    OR?: PhotoTagScalarWhereWithAggregatesInput[]
-    NOT?: PhotoTagScalarWhereWithAggregatesInput | PhotoTagScalarWhereWithAggregatesInput[]
-    photo_id?: IntWithAggregatesFilter<"PhotoTag"> | number
-    tag_id?: IntWithAggregatesFilter<"PhotoTag"> | number
-  }
-
   export type VlogWhereInput = {
     AND?: VlogWhereInput | VlogWhereInput[]
     OR?: VlogWhereInput[]
     NOT?: VlogWhereInput | VlogWhereInput[]
     id?: IntFilter<"Vlog"> | number
+    reference_id?: StringFilter<"Vlog"> | string
     title?: StringFilter<"Vlog"> | string
     description?: StringNullableFilter<"Vlog"> | string | null
     video_url?: StringFilter<"Vlog"> | string
@@ -11178,11 +6026,11 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Vlog"> | Date | string
     updated_at?: DateTimeFilter<"Vlog"> | Date | string
     is_published?: BoolFilter<"Vlog"> | boolean
-    tags?: VlogTagListRelationFilter
   }
 
   export type VlogOrderByWithRelationInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     video_url?: SortOrder
@@ -11190,11 +6038,11 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     is_published?: SortOrder
-    tags?: VlogTagOrderByRelationAggregateInput
   }
 
   export type VlogWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    reference_id?: string
     video_url?: string
     AND?: VlogWhereInput | VlogWhereInput[]
     OR?: VlogWhereInput[]
@@ -11205,11 +6053,11 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Vlog"> | Date | string
     updated_at?: DateTimeFilter<"Vlog"> | Date | string
     is_published?: BoolFilter<"Vlog"> | boolean
-    tags?: VlogTagListRelationFilter
-  }, "id" | "video_url">
+  }, "id" | "reference_id" | "video_url">
 
   export type VlogOrderByWithAggregationInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     video_url?: SortOrder
@@ -11229,6 +6077,7 @@ export namespace Prisma {
     OR?: VlogScalarWhereWithAggregatesInput[]
     NOT?: VlogScalarWhereWithAggregatesInput | VlogScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Vlog"> | number
+    reference_id?: StringWithAggregatesFilter<"Vlog"> | string
     title?: StringWithAggregatesFilter<"Vlog"> | string
     description?: StringNullableWithAggregatesFilter<"Vlog"> | string | null
     video_url?: StringWithAggregatesFilter<"Vlog"> | string
@@ -11238,53 +6087,8 @@ export namespace Prisma {
     is_published?: BoolWithAggregatesFilter<"Vlog"> | boolean
   }
 
-  export type VlogTagWhereInput = {
-    AND?: VlogTagWhereInput | VlogTagWhereInput[]
-    OR?: VlogTagWhereInput[]
-    NOT?: VlogTagWhereInput | VlogTagWhereInput[]
-    vlog_id?: IntFilter<"VlogTag"> | number
-    tag_id?: IntFilter<"VlogTag"> | number
-    vlog?: XOR<VlogScalarRelationFilter, VlogWhereInput>
-    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
-  }
-
-  export type VlogTagOrderByWithRelationInput = {
-    vlog_id?: SortOrder
-    tag_id?: SortOrder
-    vlog?: VlogOrderByWithRelationInput
-    tag?: TagOrderByWithRelationInput
-  }
-
-  export type VlogTagWhereUniqueInput = Prisma.AtLeast<{
-    vlog_id_tag_id?: VlogTagVlog_idTag_idCompoundUniqueInput
-    AND?: VlogTagWhereInput | VlogTagWhereInput[]
-    OR?: VlogTagWhereInput[]
-    NOT?: VlogTagWhereInput | VlogTagWhereInput[]
-    vlog_id?: IntFilter<"VlogTag"> | number
-    tag_id?: IntFilter<"VlogTag"> | number
-    vlog?: XOR<VlogScalarRelationFilter, VlogWhereInput>
-    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
-  }, "vlog_id_tag_id">
-
-  export type VlogTagOrderByWithAggregationInput = {
-    vlog_id?: SortOrder
-    tag_id?: SortOrder
-    _count?: VlogTagCountOrderByAggregateInput
-    _avg?: VlogTagAvgOrderByAggregateInput
-    _max?: VlogTagMaxOrderByAggregateInput
-    _min?: VlogTagMinOrderByAggregateInput
-    _sum?: VlogTagSumOrderByAggregateInput
-  }
-
-  export type VlogTagScalarWhereWithAggregatesInput = {
-    AND?: VlogTagScalarWhereWithAggregatesInput | VlogTagScalarWhereWithAggregatesInput[]
-    OR?: VlogTagScalarWhereWithAggregatesInput[]
-    NOT?: VlogTagScalarWhereWithAggregatesInput | VlogTagScalarWhereWithAggregatesInput[]
-    vlog_id?: IntWithAggregatesFilter<"VlogTag"> | number
-    tag_id?: IntWithAggregatesFilter<"VlogTag"> | number
-  }
-
   export type BlogCreateInput = {
+    reference_id?: string
     title: string
     description: string
     slug: string
@@ -11297,11 +6101,11 @@ export namespace Prisma {
     updated_at?: Date | string
     is_published?: boolean
     featured_image_url?: string | null
-    tags?: BlogTagCreateNestedManyWithoutBlogInput
   }
 
   export type BlogUncheckedCreateInput = {
     id?: number
+    reference_id?: string
     title: string
     description: string
     slug: string
@@ -11314,10 +6118,10 @@ export namespace Prisma {
     updated_at?: Date | string
     is_published?: boolean
     featured_image_url?: string | null
-    tags?: BlogTagUncheckedCreateNestedManyWithoutBlogInput
   }
 
   export type BlogUpdateInput = {
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
@@ -11330,11 +6134,11 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
     featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: BlogTagUpdateManyWithoutBlogNestedInput
   }
 
   export type BlogUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
@@ -11347,11 +6151,11 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
     featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: BlogTagUncheckedUpdateManyWithoutBlogNestedInput
   }
 
   export type BlogCreateManyInput = {
     id?: number
+    reference_id?: string
     title: string
     description: string
     slug: string
@@ -11367,6 +6171,7 @@ export namespace Prisma {
   }
 
   export type BlogUpdateManyMutationInput = {
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
@@ -11383,6 +6188,7 @@ export namespace Prisma {
 
   export type BlogUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
@@ -11398,6 +6204,8 @@ export namespace Prisma {
   }
 
   export type PhotoCreateInput = {
+    reference_id?: string
+    is_published?: boolean
     title: string
     description?: string | null
     image_url: string
@@ -11406,11 +6214,12 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     location?: string | null
-    tags?: PhotoTagCreateNestedManyWithoutPhotoInput
   }
 
   export type PhotoUncheckedCreateInput = {
     id?: number
+    reference_id?: string
+    is_published?: boolean
     title: string
     description?: string | null
     image_url: string
@@ -11419,10 +6228,11 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     location?: string | null
-    tags?: PhotoTagUncheckedCreateNestedManyWithoutPhotoInput
   }
 
   export type PhotoUpdateInput = {
+    reference_id?: StringFieldUpdateOperationsInput | string
+    is_published?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: StringFieldUpdateOperationsInput | string
@@ -11431,11 +6241,12 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: PhotoTagUpdateManyWithoutPhotoNestedInput
   }
 
   export type PhotoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    is_published?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: StringFieldUpdateOperationsInput | string
@@ -11444,11 +6255,12 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: PhotoTagUncheckedUpdateManyWithoutPhotoNestedInput
   }
 
   export type PhotoCreateManyInput = {
     id?: number
+    reference_id?: string
+    is_published?: boolean
     title: string
     description?: string | null
     image_url: string
@@ -11460,6 +6272,8 @@ export namespace Prisma {
   }
 
   export type PhotoUpdateManyMutationInput = {
+    reference_id?: StringFieldUpdateOperationsInput | string
+    is_published?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: StringFieldUpdateOperationsInput | string
@@ -11472,6 +6286,8 @@ export namespace Prisma {
 
   export type PhotoUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    is_published?: BoolFieldUpdateOperationsInput | boolean
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: StringFieldUpdateOperationsInput | string
@@ -11483,6 +6299,7 @@ export namespace Prisma {
   }
 
   export type PoemCreateInput = {
+    reference_id?: string
     title: string
     author: string
     content: string
@@ -11495,6 +6312,7 @@ export namespace Prisma {
 
   export type PoemUncheckedCreateInput = {
     id?: number
+    reference_id?: string
     title: string
     author: string
     content: string
@@ -11506,6 +6324,7 @@ export namespace Prisma {
   }
 
   export type PoemUpdateInput = {
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     author?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
@@ -11518,6 +6337,7 @@ export namespace Prisma {
 
   export type PoemUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     author?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
@@ -11530,6 +6350,7 @@ export namespace Prisma {
 
   export type PoemCreateManyInput = {
     id?: number
+    reference_id?: string
     title: string
     author: string
     content: string
@@ -11541,6 +6362,7 @@ export namespace Prisma {
   }
 
   export type PoemUpdateManyMutationInput = {
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     author?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
@@ -11553,6 +6375,7 @@ export namespace Prisma {
 
   export type PoemUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     author?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
@@ -11563,126 +6386,8 @@ export namespace Prisma {
     is_published?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type TagCreateInput = {
-    name: string
-    slug: string
-    blogs?: BlogTagCreateNestedManyWithoutTagInput
-    photos?: PhotoTagCreateNestedManyWithoutTagInput
-    vlogs?: VlogTagCreateNestedManyWithoutTagInput
-  }
-
-  export type TagUncheckedCreateInput = {
-    id?: number
-    name: string
-    slug: string
-    blogs?: BlogTagUncheckedCreateNestedManyWithoutTagInput
-    photos?: PhotoTagUncheckedCreateNestedManyWithoutTagInput
-    vlogs?: VlogTagUncheckedCreateNestedManyWithoutTagInput
-  }
-
-  export type TagUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    blogs?: BlogTagUpdateManyWithoutTagNestedInput
-    photos?: PhotoTagUpdateManyWithoutTagNestedInput
-    vlogs?: VlogTagUpdateManyWithoutTagNestedInput
-  }
-
-  export type TagUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    blogs?: BlogTagUncheckedUpdateManyWithoutTagNestedInput
-    photos?: PhotoTagUncheckedUpdateManyWithoutTagNestedInput
-    vlogs?: VlogTagUncheckedUpdateManyWithoutTagNestedInput
-  }
-
-  export type TagCreateManyInput = {
-    id?: number
-    name: string
-    slug: string
-  }
-
-  export type TagUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type TagUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type BlogTagCreateInput = {
-    blog: BlogCreateNestedOneWithoutTagsInput
-    tag: TagCreateNestedOneWithoutBlogsInput
-  }
-
-  export type BlogTagUncheckedCreateInput = {
-    blog_id: number
-    tag_id: number
-  }
-
-  export type BlogTagUpdateInput = {
-    blog?: BlogUpdateOneRequiredWithoutTagsNestedInput
-    tag?: TagUpdateOneRequiredWithoutBlogsNestedInput
-  }
-
-  export type BlogTagUncheckedUpdateInput = {
-    blog_id?: IntFieldUpdateOperationsInput | number
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type BlogTagCreateManyInput = {
-    blog_id: number
-    tag_id: number
-  }
-
-  export type BlogTagUpdateManyMutationInput = {
-
-  }
-
-  export type BlogTagUncheckedUpdateManyInput = {
-    blog_id?: IntFieldUpdateOperationsInput | number
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PhotoTagCreateInput = {
-    photo: PhotoCreateNestedOneWithoutTagsInput
-    tag: TagCreateNestedOneWithoutPhotosInput
-  }
-
-  export type PhotoTagUncheckedCreateInput = {
-    photo_id: number
-    tag_id: number
-  }
-
-  export type PhotoTagUpdateInput = {
-    photo?: PhotoUpdateOneRequiredWithoutTagsNestedInput
-    tag?: TagUpdateOneRequiredWithoutPhotosNestedInput
-  }
-
-  export type PhotoTagUncheckedUpdateInput = {
-    photo_id?: IntFieldUpdateOperationsInput | number
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PhotoTagCreateManyInput = {
-    photo_id: number
-    tag_id: number
-  }
-
-  export type PhotoTagUpdateManyMutationInput = {
-
-  }
-
-  export type PhotoTagUncheckedUpdateManyInput = {
-    photo_id?: IntFieldUpdateOperationsInput | number
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
   export type VlogCreateInput = {
+    reference_id?: string
     title: string
     description?: string | null
     video_url: string
@@ -11690,11 +6395,11 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     is_published?: boolean
-    tags?: VlogTagCreateNestedManyWithoutVlogInput
   }
 
   export type VlogUncheckedCreateInput = {
     id?: number
+    reference_id?: string
     title: string
     description?: string | null
     video_url: string
@@ -11702,10 +6407,10 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     is_published?: boolean
-    tags?: VlogTagUncheckedCreateNestedManyWithoutVlogInput
   }
 
   export type VlogUpdateInput = {
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
@@ -11713,11 +6418,11 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
-    tags?: VlogTagUpdateManyWithoutVlogNestedInput
   }
 
   export type VlogUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
@@ -11725,11 +6430,11 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
-    tags?: VlogTagUncheckedUpdateManyWithoutVlogNestedInput
   }
 
   export type VlogCreateManyInput = {
     id?: number
+    reference_id?: string
     title: string
     description?: string | null
     video_url: string
@@ -11740,6 +6445,7 @@ export namespace Prisma {
   }
 
   export type VlogUpdateManyMutationInput = {
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
@@ -11751,6 +6457,7 @@ export namespace Prisma {
 
   export type VlogUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     video_url?: StringFieldUpdateOperationsInput | string
@@ -11758,40 +6465,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     is_published?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type VlogTagCreateInput = {
-    vlog: VlogCreateNestedOneWithoutTagsInput
-    tag: TagCreateNestedOneWithoutVlogsInput
-  }
-
-  export type VlogTagUncheckedCreateInput = {
-    vlog_id: number
-    tag_id: number
-  }
-
-  export type VlogTagUpdateInput = {
-    vlog?: VlogUpdateOneRequiredWithoutTagsNestedInput
-    tag?: TagUpdateOneRequiredWithoutVlogsNestedInput
-  }
-
-  export type VlogTagUncheckedUpdateInput = {
-    vlog_id?: IntFieldUpdateOperationsInput | number
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type VlogTagCreateManyInput = {
-    vlog_id: number
-    tag_id: number
-  }
-
-  export type VlogTagUpdateManyMutationInput = {
-
-  }
-
-  export type VlogTagUncheckedUpdateManyInput = {
-    vlog_id?: IntFieldUpdateOperationsInput | number
-    tag_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -11851,23 +6524,14 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type BlogTagListRelationFilter = {
-    every?: BlogTagWhereInput
-    some?: BlogTagWhereInput
-    none?: BlogTagWhereInput
-  }
-
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
-  export type BlogTagOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type BlogCountOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrder
@@ -11889,6 +6553,7 @@ export namespace Prisma {
 
   export type BlogMaxOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrder
@@ -11905,6 +6570,7 @@ export namespace Prisma {
 
   export type BlogMinOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrder
@@ -12009,18 +6675,10 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type PhotoTagListRelationFilter = {
-    every?: PhotoTagWhereInput
-    some?: PhotoTagWhereInput
-    none?: PhotoTagWhereInput
-  }
-
-  export type PhotoTagOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type PhotoCountOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
+    is_published?: SortOrder
     title?: SortOrder
     description?: SortOrder
     image_url?: SortOrder
@@ -12037,6 +6695,8 @@ export namespace Prisma {
 
   export type PhotoMaxOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
+    is_published?: SortOrder
     title?: SortOrder
     description?: SortOrder
     image_url?: SortOrder
@@ -12049,6 +6709,8 @@ export namespace Prisma {
 
   export type PhotoMinOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
+    is_published?: SortOrder
     title?: SortOrder
     description?: SortOrder
     image_url?: SortOrder
@@ -12079,6 +6741,7 @@ export namespace Prisma {
 
   export type PoemCountOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
@@ -12095,6 +6758,7 @@ export namespace Prisma {
 
   export type PoemMaxOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
@@ -12107,6 +6771,7 @@ export namespace Prisma {
 
   export type PoemMinOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     author?: SortOrder
     content?: SortOrder
@@ -12121,119 +6786,9 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type VlogTagListRelationFilter = {
-    every?: VlogTagWhereInput
-    some?: VlogTagWhereInput
-    none?: VlogTagWhereInput
-  }
-
-  export type VlogTagOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TagCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    slug?: SortOrder
-  }
-
-  export type TagAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type TagMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    slug?: SortOrder
-  }
-
-  export type TagMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    slug?: SortOrder
-  }
-
-  export type TagSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type BlogScalarRelationFilter = {
-    is?: BlogWhereInput
-    isNot?: BlogWhereInput
-  }
-
-  export type TagScalarRelationFilter = {
-    is?: TagWhereInput
-    isNot?: TagWhereInput
-  }
-
-  export type BlogTagBlog_idTag_idCompoundUniqueInput = {
-    blog_id: number
-    tag_id: number
-  }
-
-  export type BlogTagCountOrderByAggregateInput = {
-    blog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type BlogTagAvgOrderByAggregateInput = {
-    blog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type BlogTagMaxOrderByAggregateInput = {
-    blog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type BlogTagMinOrderByAggregateInput = {
-    blog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type BlogTagSumOrderByAggregateInput = {
-    blog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type PhotoScalarRelationFilter = {
-    is?: PhotoWhereInput
-    isNot?: PhotoWhereInput
-  }
-
-  export type PhotoTagPhoto_idTag_idCompoundUniqueInput = {
-    photo_id: number
-    tag_id: number
-  }
-
-  export type PhotoTagCountOrderByAggregateInput = {
-    photo_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type PhotoTagAvgOrderByAggregateInput = {
-    photo_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type PhotoTagMaxOrderByAggregateInput = {
-    photo_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type PhotoTagMinOrderByAggregateInput = {
-    photo_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type PhotoTagSumOrderByAggregateInput = {
-    photo_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
   export type VlogCountOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     video_url?: SortOrder
@@ -12249,6 +6804,7 @@ export namespace Prisma {
 
   export type VlogMaxOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     video_url?: SortOrder
@@ -12260,6 +6816,7 @@ export namespace Prisma {
 
   export type VlogMinOrderByAggregateInput = {
     id?: SortOrder
+    reference_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     video_url?: SortOrder
@@ -12271,55 +6828,6 @@ export namespace Prisma {
 
   export type VlogSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type VlogScalarRelationFilter = {
-    is?: VlogWhereInput
-    isNot?: VlogWhereInput
-  }
-
-  export type VlogTagVlog_idTag_idCompoundUniqueInput = {
-    vlog_id: number
-    tag_id: number
-  }
-
-  export type VlogTagCountOrderByAggregateInput = {
-    vlog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type VlogTagAvgOrderByAggregateInput = {
-    vlog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type VlogTagMaxOrderByAggregateInput = {
-    vlog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type VlogTagMinOrderByAggregateInput = {
-    vlog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type VlogTagSumOrderByAggregateInput = {
-    vlog_id?: SortOrder
-    tag_id?: SortOrder
-  }
-
-  export type BlogTagCreateNestedManyWithoutBlogInput = {
-    create?: XOR<BlogTagCreateWithoutBlogInput, BlogTagUncheckedCreateWithoutBlogInput> | BlogTagCreateWithoutBlogInput[] | BlogTagUncheckedCreateWithoutBlogInput[]
-    connectOrCreate?: BlogTagCreateOrConnectWithoutBlogInput | BlogTagCreateOrConnectWithoutBlogInput[]
-    createMany?: BlogTagCreateManyBlogInputEnvelope
-    connect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-  }
-
-  export type BlogTagUncheckedCreateNestedManyWithoutBlogInput = {
-    create?: XOR<BlogTagCreateWithoutBlogInput, BlogTagUncheckedCreateWithoutBlogInput> | BlogTagCreateWithoutBlogInput[] | BlogTagUncheckedCreateWithoutBlogInput[]
-    connectOrCreate?: BlogTagCreateOrConnectWithoutBlogInput | BlogTagCreateOrConnectWithoutBlogInput[]
-    createMany?: BlogTagCreateManyBlogInputEnvelope
-    connect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -12346,330 +6854,8 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type BlogTagUpdateManyWithoutBlogNestedInput = {
-    create?: XOR<BlogTagCreateWithoutBlogInput, BlogTagUncheckedCreateWithoutBlogInput> | BlogTagCreateWithoutBlogInput[] | BlogTagUncheckedCreateWithoutBlogInput[]
-    connectOrCreate?: BlogTagCreateOrConnectWithoutBlogInput | BlogTagCreateOrConnectWithoutBlogInput[]
-    upsert?: BlogTagUpsertWithWhereUniqueWithoutBlogInput | BlogTagUpsertWithWhereUniqueWithoutBlogInput[]
-    createMany?: BlogTagCreateManyBlogInputEnvelope
-    set?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    disconnect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    delete?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    connect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    update?: BlogTagUpdateWithWhereUniqueWithoutBlogInput | BlogTagUpdateWithWhereUniqueWithoutBlogInput[]
-    updateMany?: BlogTagUpdateManyWithWhereWithoutBlogInput | BlogTagUpdateManyWithWhereWithoutBlogInput[]
-    deleteMany?: BlogTagScalarWhereInput | BlogTagScalarWhereInput[]
-  }
-
-  export type BlogTagUncheckedUpdateManyWithoutBlogNestedInput = {
-    create?: XOR<BlogTagCreateWithoutBlogInput, BlogTagUncheckedCreateWithoutBlogInput> | BlogTagCreateWithoutBlogInput[] | BlogTagUncheckedCreateWithoutBlogInput[]
-    connectOrCreate?: BlogTagCreateOrConnectWithoutBlogInput | BlogTagCreateOrConnectWithoutBlogInput[]
-    upsert?: BlogTagUpsertWithWhereUniqueWithoutBlogInput | BlogTagUpsertWithWhereUniqueWithoutBlogInput[]
-    createMany?: BlogTagCreateManyBlogInputEnvelope
-    set?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    disconnect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    delete?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    connect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    update?: BlogTagUpdateWithWhereUniqueWithoutBlogInput | BlogTagUpdateWithWhereUniqueWithoutBlogInput[]
-    updateMany?: BlogTagUpdateManyWithWhereWithoutBlogInput | BlogTagUpdateManyWithWhereWithoutBlogInput[]
-    deleteMany?: BlogTagScalarWhereInput | BlogTagScalarWhereInput[]
-  }
-
-  export type PhotoTagCreateNestedManyWithoutPhotoInput = {
-    create?: XOR<PhotoTagCreateWithoutPhotoInput, PhotoTagUncheckedCreateWithoutPhotoInput> | PhotoTagCreateWithoutPhotoInput[] | PhotoTagUncheckedCreateWithoutPhotoInput[]
-    connectOrCreate?: PhotoTagCreateOrConnectWithoutPhotoInput | PhotoTagCreateOrConnectWithoutPhotoInput[]
-    createMany?: PhotoTagCreateManyPhotoInputEnvelope
-    connect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-  }
-
-  export type PhotoTagUncheckedCreateNestedManyWithoutPhotoInput = {
-    create?: XOR<PhotoTagCreateWithoutPhotoInput, PhotoTagUncheckedCreateWithoutPhotoInput> | PhotoTagCreateWithoutPhotoInput[] | PhotoTagUncheckedCreateWithoutPhotoInput[]
-    connectOrCreate?: PhotoTagCreateOrConnectWithoutPhotoInput | PhotoTagCreateOrConnectWithoutPhotoInput[]
-    createMany?: PhotoTagCreateManyPhotoInputEnvelope
-    connect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-  }
-
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
-  }
-
-  export type PhotoTagUpdateManyWithoutPhotoNestedInput = {
-    create?: XOR<PhotoTagCreateWithoutPhotoInput, PhotoTagUncheckedCreateWithoutPhotoInput> | PhotoTagCreateWithoutPhotoInput[] | PhotoTagUncheckedCreateWithoutPhotoInput[]
-    connectOrCreate?: PhotoTagCreateOrConnectWithoutPhotoInput | PhotoTagCreateOrConnectWithoutPhotoInput[]
-    upsert?: PhotoTagUpsertWithWhereUniqueWithoutPhotoInput | PhotoTagUpsertWithWhereUniqueWithoutPhotoInput[]
-    createMany?: PhotoTagCreateManyPhotoInputEnvelope
-    set?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    disconnect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    delete?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    connect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    update?: PhotoTagUpdateWithWhereUniqueWithoutPhotoInput | PhotoTagUpdateWithWhereUniqueWithoutPhotoInput[]
-    updateMany?: PhotoTagUpdateManyWithWhereWithoutPhotoInput | PhotoTagUpdateManyWithWhereWithoutPhotoInput[]
-    deleteMany?: PhotoTagScalarWhereInput | PhotoTagScalarWhereInput[]
-  }
-
-  export type PhotoTagUncheckedUpdateManyWithoutPhotoNestedInput = {
-    create?: XOR<PhotoTagCreateWithoutPhotoInput, PhotoTagUncheckedCreateWithoutPhotoInput> | PhotoTagCreateWithoutPhotoInput[] | PhotoTagUncheckedCreateWithoutPhotoInput[]
-    connectOrCreate?: PhotoTagCreateOrConnectWithoutPhotoInput | PhotoTagCreateOrConnectWithoutPhotoInput[]
-    upsert?: PhotoTagUpsertWithWhereUniqueWithoutPhotoInput | PhotoTagUpsertWithWhereUniqueWithoutPhotoInput[]
-    createMany?: PhotoTagCreateManyPhotoInputEnvelope
-    set?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    disconnect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    delete?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    connect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    update?: PhotoTagUpdateWithWhereUniqueWithoutPhotoInput | PhotoTagUpdateWithWhereUniqueWithoutPhotoInput[]
-    updateMany?: PhotoTagUpdateManyWithWhereWithoutPhotoInput | PhotoTagUpdateManyWithWhereWithoutPhotoInput[]
-    deleteMany?: PhotoTagScalarWhereInput | PhotoTagScalarWhereInput[]
-  }
-
-  export type BlogTagCreateNestedManyWithoutTagInput = {
-    create?: XOR<BlogTagCreateWithoutTagInput, BlogTagUncheckedCreateWithoutTagInput> | BlogTagCreateWithoutTagInput[] | BlogTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: BlogTagCreateOrConnectWithoutTagInput | BlogTagCreateOrConnectWithoutTagInput[]
-    createMany?: BlogTagCreateManyTagInputEnvelope
-    connect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-  }
-
-  export type PhotoTagCreateNestedManyWithoutTagInput = {
-    create?: XOR<PhotoTagCreateWithoutTagInput, PhotoTagUncheckedCreateWithoutTagInput> | PhotoTagCreateWithoutTagInput[] | PhotoTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: PhotoTagCreateOrConnectWithoutTagInput | PhotoTagCreateOrConnectWithoutTagInput[]
-    createMany?: PhotoTagCreateManyTagInputEnvelope
-    connect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-  }
-
-  export type VlogTagCreateNestedManyWithoutTagInput = {
-    create?: XOR<VlogTagCreateWithoutTagInput, VlogTagUncheckedCreateWithoutTagInput> | VlogTagCreateWithoutTagInput[] | VlogTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: VlogTagCreateOrConnectWithoutTagInput | VlogTagCreateOrConnectWithoutTagInput[]
-    createMany?: VlogTagCreateManyTagInputEnvelope
-    connect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-  }
-
-  export type BlogTagUncheckedCreateNestedManyWithoutTagInput = {
-    create?: XOR<BlogTagCreateWithoutTagInput, BlogTagUncheckedCreateWithoutTagInput> | BlogTagCreateWithoutTagInput[] | BlogTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: BlogTagCreateOrConnectWithoutTagInput | BlogTagCreateOrConnectWithoutTagInput[]
-    createMany?: BlogTagCreateManyTagInputEnvelope
-    connect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-  }
-
-  export type PhotoTagUncheckedCreateNestedManyWithoutTagInput = {
-    create?: XOR<PhotoTagCreateWithoutTagInput, PhotoTagUncheckedCreateWithoutTagInput> | PhotoTagCreateWithoutTagInput[] | PhotoTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: PhotoTagCreateOrConnectWithoutTagInput | PhotoTagCreateOrConnectWithoutTagInput[]
-    createMany?: PhotoTagCreateManyTagInputEnvelope
-    connect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-  }
-
-  export type VlogTagUncheckedCreateNestedManyWithoutTagInput = {
-    create?: XOR<VlogTagCreateWithoutTagInput, VlogTagUncheckedCreateWithoutTagInput> | VlogTagCreateWithoutTagInput[] | VlogTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: VlogTagCreateOrConnectWithoutTagInput | VlogTagCreateOrConnectWithoutTagInput[]
-    createMany?: VlogTagCreateManyTagInputEnvelope
-    connect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-  }
-
-  export type BlogTagUpdateManyWithoutTagNestedInput = {
-    create?: XOR<BlogTagCreateWithoutTagInput, BlogTagUncheckedCreateWithoutTagInput> | BlogTagCreateWithoutTagInput[] | BlogTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: BlogTagCreateOrConnectWithoutTagInput | BlogTagCreateOrConnectWithoutTagInput[]
-    upsert?: BlogTagUpsertWithWhereUniqueWithoutTagInput | BlogTagUpsertWithWhereUniqueWithoutTagInput[]
-    createMany?: BlogTagCreateManyTagInputEnvelope
-    set?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    disconnect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    delete?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    connect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    update?: BlogTagUpdateWithWhereUniqueWithoutTagInput | BlogTagUpdateWithWhereUniqueWithoutTagInput[]
-    updateMany?: BlogTagUpdateManyWithWhereWithoutTagInput | BlogTagUpdateManyWithWhereWithoutTagInput[]
-    deleteMany?: BlogTagScalarWhereInput | BlogTagScalarWhereInput[]
-  }
-
-  export type PhotoTagUpdateManyWithoutTagNestedInput = {
-    create?: XOR<PhotoTagCreateWithoutTagInput, PhotoTagUncheckedCreateWithoutTagInput> | PhotoTagCreateWithoutTagInput[] | PhotoTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: PhotoTagCreateOrConnectWithoutTagInput | PhotoTagCreateOrConnectWithoutTagInput[]
-    upsert?: PhotoTagUpsertWithWhereUniqueWithoutTagInput | PhotoTagUpsertWithWhereUniqueWithoutTagInput[]
-    createMany?: PhotoTagCreateManyTagInputEnvelope
-    set?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    disconnect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    delete?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    connect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    update?: PhotoTagUpdateWithWhereUniqueWithoutTagInput | PhotoTagUpdateWithWhereUniqueWithoutTagInput[]
-    updateMany?: PhotoTagUpdateManyWithWhereWithoutTagInput | PhotoTagUpdateManyWithWhereWithoutTagInput[]
-    deleteMany?: PhotoTagScalarWhereInput | PhotoTagScalarWhereInput[]
-  }
-
-  export type VlogTagUpdateManyWithoutTagNestedInput = {
-    create?: XOR<VlogTagCreateWithoutTagInput, VlogTagUncheckedCreateWithoutTagInput> | VlogTagCreateWithoutTagInput[] | VlogTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: VlogTagCreateOrConnectWithoutTagInput | VlogTagCreateOrConnectWithoutTagInput[]
-    upsert?: VlogTagUpsertWithWhereUniqueWithoutTagInput | VlogTagUpsertWithWhereUniqueWithoutTagInput[]
-    createMany?: VlogTagCreateManyTagInputEnvelope
-    set?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    disconnect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    delete?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    connect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    update?: VlogTagUpdateWithWhereUniqueWithoutTagInput | VlogTagUpdateWithWhereUniqueWithoutTagInput[]
-    updateMany?: VlogTagUpdateManyWithWhereWithoutTagInput | VlogTagUpdateManyWithWhereWithoutTagInput[]
-    deleteMany?: VlogTagScalarWhereInput | VlogTagScalarWhereInput[]
-  }
-
-  export type BlogTagUncheckedUpdateManyWithoutTagNestedInput = {
-    create?: XOR<BlogTagCreateWithoutTagInput, BlogTagUncheckedCreateWithoutTagInput> | BlogTagCreateWithoutTagInput[] | BlogTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: BlogTagCreateOrConnectWithoutTagInput | BlogTagCreateOrConnectWithoutTagInput[]
-    upsert?: BlogTagUpsertWithWhereUniqueWithoutTagInput | BlogTagUpsertWithWhereUniqueWithoutTagInput[]
-    createMany?: BlogTagCreateManyTagInputEnvelope
-    set?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    disconnect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    delete?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    connect?: BlogTagWhereUniqueInput | BlogTagWhereUniqueInput[]
-    update?: BlogTagUpdateWithWhereUniqueWithoutTagInput | BlogTagUpdateWithWhereUniqueWithoutTagInput[]
-    updateMany?: BlogTagUpdateManyWithWhereWithoutTagInput | BlogTagUpdateManyWithWhereWithoutTagInput[]
-    deleteMany?: BlogTagScalarWhereInput | BlogTagScalarWhereInput[]
-  }
-
-  export type PhotoTagUncheckedUpdateManyWithoutTagNestedInput = {
-    create?: XOR<PhotoTagCreateWithoutTagInput, PhotoTagUncheckedCreateWithoutTagInput> | PhotoTagCreateWithoutTagInput[] | PhotoTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: PhotoTagCreateOrConnectWithoutTagInput | PhotoTagCreateOrConnectWithoutTagInput[]
-    upsert?: PhotoTagUpsertWithWhereUniqueWithoutTagInput | PhotoTagUpsertWithWhereUniqueWithoutTagInput[]
-    createMany?: PhotoTagCreateManyTagInputEnvelope
-    set?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    disconnect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    delete?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    connect?: PhotoTagWhereUniqueInput | PhotoTagWhereUniqueInput[]
-    update?: PhotoTagUpdateWithWhereUniqueWithoutTagInput | PhotoTagUpdateWithWhereUniqueWithoutTagInput[]
-    updateMany?: PhotoTagUpdateManyWithWhereWithoutTagInput | PhotoTagUpdateManyWithWhereWithoutTagInput[]
-    deleteMany?: PhotoTagScalarWhereInput | PhotoTagScalarWhereInput[]
-  }
-
-  export type VlogTagUncheckedUpdateManyWithoutTagNestedInput = {
-    create?: XOR<VlogTagCreateWithoutTagInput, VlogTagUncheckedCreateWithoutTagInput> | VlogTagCreateWithoutTagInput[] | VlogTagUncheckedCreateWithoutTagInput[]
-    connectOrCreate?: VlogTagCreateOrConnectWithoutTagInput | VlogTagCreateOrConnectWithoutTagInput[]
-    upsert?: VlogTagUpsertWithWhereUniqueWithoutTagInput | VlogTagUpsertWithWhereUniqueWithoutTagInput[]
-    createMany?: VlogTagCreateManyTagInputEnvelope
-    set?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    disconnect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    delete?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    connect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    update?: VlogTagUpdateWithWhereUniqueWithoutTagInput | VlogTagUpdateWithWhereUniqueWithoutTagInput[]
-    updateMany?: VlogTagUpdateManyWithWhereWithoutTagInput | VlogTagUpdateManyWithWhereWithoutTagInput[]
-    deleteMany?: VlogTagScalarWhereInput | VlogTagScalarWhereInput[]
-  }
-
-  export type BlogCreateNestedOneWithoutTagsInput = {
-    create?: XOR<BlogCreateWithoutTagsInput, BlogUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: BlogCreateOrConnectWithoutTagsInput
-    connect?: BlogWhereUniqueInput
-  }
-
-  export type TagCreateNestedOneWithoutBlogsInput = {
-    create?: XOR<TagCreateWithoutBlogsInput, TagUncheckedCreateWithoutBlogsInput>
-    connectOrCreate?: TagCreateOrConnectWithoutBlogsInput
-    connect?: TagWhereUniqueInput
-  }
-
-  export type BlogUpdateOneRequiredWithoutTagsNestedInput = {
-    create?: XOR<BlogCreateWithoutTagsInput, BlogUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: BlogCreateOrConnectWithoutTagsInput
-    upsert?: BlogUpsertWithoutTagsInput
-    connect?: BlogWhereUniqueInput
-    update?: XOR<XOR<BlogUpdateToOneWithWhereWithoutTagsInput, BlogUpdateWithoutTagsInput>, BlogUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type TagUpdateOneRequiredWithoutBlogsNestedInput = {
-    create?: XOR<TagCreateWithoutBlogsInput, TagUncheckedCreateWithoutBlogsInput>
-    connectOrCreate?: TagCreateOrConnectWithoutBlogsInput
-    upsert?: TagUpsertWithoutBlogsInput
-    connect?: TagWhereUniqueInput
-    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutBlogsInput, TagUpdateWithoutBlogsInput>, TagUncheckedUpdateWithoutBlogsInput>
-  }
-
-  export type PhotoCreateNestedOneWithoutTagsInput = {
-    create?: XOR<PhotoCreateWithoutTagsInput, PhotoUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: PhotoCreateOrConnectWithoutTagsInput
-    connect?: PhotoWhereUniqueInput
-  }
-
-  export type TagCreateNestedOneWithoutPhotosInput = {
-    create?: XOR<TagCreateWithoutPhotosInput, TagUncheckedCreateWithoutPhotosInput>
-    connectOrCreate?: TagCreateOrConnectWithoutPhotosInput
-    connect?: TagWhereUniqueInput
-  }
-
-  export type PhotoUpdateOneRequiredWithoutTagsNestedInput = {
-    create?: XOR<PhotoCreateWithoutTagsInput, PhotoUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: PhotoCreateOrConnectWithoutTagsInput
-    upsert?: PhotoUpsertWithoutTagsInput
-    connect?: PhotoWhereUniqueInput
-    update?: XOR<XOR<PhotoUpdateToOneWithWhereWithoutTagsInput, PhotoUpdateWithoutTagsInput>, PhotoUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type TagUpdateOneRequiredWithoutPhotosNestedInput = {
-    create?: XOR<TagCreateWithoutPhotosInput, TagUncheckedCreateWithoutPhotosInput>
-    connectOrCreate?: TagCreateOrConnectWithoutPhotosInput
-    upsert?: TagUpsertWithoutPhotosInput
-    connect?: TagWhereUniqueInput
-    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutPhotosInput, TagUpdateWithoutPhotosInput>, TagUncheckedUpdateWithoutPhotosInput>
-  }
-
-  export type VlogTagCreateNestedManyWithoutVlogInput = {
-    create?: XOR<VlogTagCreateWithoutVlogInput, VlogTagUncheckedCreateWithoutVlogInput> | VlogTagCreateWithoutVlogInput[] | VlogTagUncheckedCreateWithoutVlogInput[]
-    connectOrCreate?: VlogTagCreateOrConnectWithoutVlogInput | VlogTagCreateOrConnectWithoutVlogInput[]
-    createMany?: VlogTagCreateManyVlogInputEnvelope
-    connect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-  }
-
-  export type VlogTagUncheckedCreateNestedManyWithoutVlogInput = {
-    create?: XOR<VlogTagCreateWithoutVlogInput, VlogTagUncheckedCreateWithoutVlogInput> | VlogTagCreateWithoutVlogInput[] | VlogTagUncheckedCreateWithoutVlogInput[]
-    connectOrCreate?: VlogTagCreateOrConnectWithoutVlogInput | VlogTagCreateOrConnectWithoutVlogInput[]
-    createMany?: VlogTagCreateManyVlogInputEnvelope
-    connect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-  }
-
-  export type VlogTagUpdateManyWithoutVlogNestedInput = {
-    create?: XOR<VlogTagCreateWithoutVlogInput, VlogTagUncheckedCreateWithoutVlogInput> | VlogTagCreateWithoutVlogInput[] | VlogTagUncheckedCreateWithoutVlogInput[]
-    connectOrCreate?: VlogTagCreateOrConnectWithoutVlogInput | VlogTagCreateOrConnectWithoutVlogInput[]
-    upsert?: VlogTagUpsertWithWhereUniqueWithoutVlogInput | VlogTagUpsertWithWhereUniqueWithoutVlogInput[]
-    createMany?: VlogTagCreateManyVlogInputEnvelope
-    set?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    disconnect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    delete?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    connect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    update?: VlogTagUpdateWithWhereUniqueWithoutVlogInput | VlogTagUpdateWithWhereUniqueWithoutVlogInput[]
-    updateMany?: VlogTagUpdateManyWithWhereWithoutVlogInput | VlogTagUpdateManyWithWhereWithoutVlogInput[]
-    deleteMany?: VlogTagScalarWhereInput | VlogTagScalarWhereInput[]
-  }
-
-  export type VlogTagUncheckedUpdateManyWithoutVlogNestedInput = {
-    create?: XOR<VlogTagCreateWithoutVlogInput, VlogTagUncheckedCreateWithoutVlogInput> | VlogTagCreateWithoutVlogInput[] | VlogTagUncheckedCreateWithoutVlogInput[]
-    connectOrCreate?: VlogTagCreateOrConnectWithoutVlogInput | VlogTagCreateOrConnectWithoutVlogInput[]
-    upsert?: VlogTagUpsertWithWhereUniqueWithoutVlogInput | VlogTagUpsertWithWhereUniqueWithoutVlogInput[]
-    createMany?: VlogTagCreateManyVlogInputEnvelope
-    set?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    disconnect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    delete?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    connect?: VlogTagWhereUniqueInput | VlogTagWhereUniqueInput[]
-    update?: VlogTagUpdateWithWhereUniqueWithoutVlogInput | VlogTagUpdateWithWhereUniqueWithoutVlogInput[]
-    updateMany?: VlogTagUpdateManyWithWhereWithoutVlogInput | VlogTagUpdateManyWithWhereWithoutVlogInput[]
-    deleteMany?: VlogTagScalarWhereInput | VlogTagScalarWhereInput[]
-  }
-
-  export type VlogCreateNestedOneWithoutTagsInput = {
-    create?: XOR<VlogCreateWithoutTagsInput, VlogUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: VlogCreateOrConnectWithoutTagsInput
-    connect?: VlogWhereUniqueInput
-  }
-
-  export type TagCreateNestedOneWithoutVlogsInput = {
-    create?: XOR<TagCreateWithoutVlogsInput, TagUncheckedCreateWithoutVlogsInput>
-    connectOrCreate?: TagCreateOrConnectWithoutVlogsInput
-    connect?: TagWhereUniqueInput
-  }
-
-  export type VlogUpdateOneRequiredWithoutTagsNestedInput = {
-    create?: XOR<VlogCreateWithoutTagsInput, VlogUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: VlogCreateOrConnectWithoutTagsInput
-    upsert?: VlogUpsertWithoutTagsInput
-    connect?: VlogWhereUniqueInput
-    update?: XOR<XOR<VlogUpdateToOneWithWhereWithoutTagsInput, VlogUpdateWithoutTagsInput>, VlogUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type TagUpdateOneRequiredWithoutVlogsNestedInput = {
-    create?: XOR<TagCreateWithoutVlogsInput, TagUncheckedCreateWithoutVlogsInput>
-    connectOrCreate?: TagCreateOrConnectWithoutVlogsInput
-    upsert?: TagUpsertWithoutVlogsInput
-    connect?: TagWhereUniqueInput
-    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutVlogsInput, TagUpdateWithoutVlogsInput>, TagUncheckedUpdateWithoutVlogsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -12844,666 +7030,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type BlogTagCreateWithoutBlogInput = {
-    tag: TagCreateNestedOneWithoutBlogsInput
-  }
-
-  export type BlogTagUncheckedCreateWithoutBlogInput = {
-    tag_id: number
-  }
-
-  export type BlogTagCreateOrConnectWithoutBlogInput = {
-    where: BlogTagWhereUniqueInput
-    create: XOR<BlogTagCreateWithoutBlogInput, BlogTagUncheckedCreateWithoutBlogInput>
-  }
-
-  export type BlogTagCreateManyBlogInputEnvelope = {
-    data: BlogTagCreateManyBlogInput | BlogTagCreateManyBlogInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type BlogTagUpsertWithWhereUniqueWithoutBlogInput = {
-    where: BlogTagWhereUniqueInput
-    update: XOR<BlogTagUpdateWithoutBlogInput, BlogTagUncheckedUpdateWithoutBlogInput>
-    create: XOR<BlogTagCreateWithoutBlogInput, BlogTagUncheckedCreateWithoutBlogInput>
-  }
-
-  export type BlogTagUpdateWithWhereUniqueWithoutBlogInput = {
-    where: BlogTagWhereUniqueInput
-    data: XOR<BlogTagUpdateWithoutBlogInput, BlogTagUncheckedUpdateWithoutBlogInput>
-  }
-
-  export type BlogTagUpdateManyWithWhereWithoutBlogInput = {
-    where: BlogTagScalarWhereInput
-    data: XOR<BlogTagUpdateManyMutationInput, BlogTagUncheckedUpdateManyWithoutBlogInput>
-  }
-
-  export type BlogTagScalarWhereInput = {
-    AND?: BlogTagScalarWhereInput | BlogTagScalarWhereInput[]
-    OR?: BlogTagScalarWhereInput[]
-    NOT?: BlogTagScalarWhereInput | BlogTagScalarWhereInput[]
-    blog_id?: IntFilter<"BlogTag"> | number
-    tag_id?: IntFilter<"BlogTag"> | number
-  }
-
-  export type PhotoTagCreateWithoutPhotoInput = {
-    tag: TagCreateNestedOneWithoutPhotosInput
-  }
-
-  export type PhotoTagUncheckedCreateWithoutPhotoInput = {
-    tag_id: number
-  }
-
-  export type PhotoTagCreateOrConnectWithoutPhotoInput = {
-    where: PhotoTagWhereUniqueInput
-    create: XOR<PhotoTagCreateWithoutPhotoInput, PhotoTagUncheckedCreateWithoutPhotoInput>
-  }
-
-  export type PhotoTagCreateManyPhotoInputEnvelope = {
-    data: PhotoTagCreateManyPhotoInput | PhotoTagCreateManyPhotoInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type PhotoTagUpsertWithWhereUniqueWithoutPhotoInput = {
-    where: PhotoTagWhereUniqueInput
-    update: XOR<PhotoTagUpdateWithoutPhotoInput, PhotoTagUncheckedUpdateWithoutPhotoInput>
-    create: XOR<PhotoTagCreateWithoutPhotoInput, PhotoTagUncheckedCreateWithoutPhotoInput>
-  }
-
-  export type PhotoTagUpdateWithWhereUniqueWithoutPhotoInput = {
-    where: PhotoTagWhereUniqueInput
-    data: XOR<PhotoTagUpdateWithoutPhotoInput, PhotoTagUncheckedUpdateWithoutPhotoInput>
-  }
-
-  export type PhotoTagUpdateManyWithWhereWithoutPhotoInput = {
-    where: PhotoTagScalarWhereInput
-    data: XOR<PhotoTagUpdateManyMutationInput, PhotoTagUncheckedUpdateManyWithoutPhotoInput>
-  }
-
-  export type PhotoTagScalarWhereInput = {
-    AND?: PhotoTagScalarWhereInput | PhotoTagScalarWhereInput[]
-    OR?: PhotoTagScalarWhereInput[]
-    NOT?: PhotoTagScalarWhereInput | PhotoTagScalarWhereInput[]
-    photo_id?: IntFilter<"PhotoTag"> | number
-    tag_id?: IntFilter<"PhotoTag"> | number
-  }
-
-  export type BlogTagCreateWithoutTagInput = {
-    blog: BlogCreateNestedOneWithoutTagsInput
-  }
-
-  export type BlogTagUncheckedCreateWithoutTagInput = {
-    blog_id: number
-  }
-
-  export type BlogTagCreateOrConnectWithoutTagInput = {
-    where: BlogTagWhereUniqueInput
-    create: XOR<BlogTagCreateWithoutTagInput, BlogTagUncheckedCreateWithoutTagInput>
-  }
-
-  export type BlogTagCreateManyTagInputEnvelope = {
-    data: BlogTagCreateManyTagInput | BlogTagCreateManyTagInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type PhotoTagCreateWithoutTagInput = {
-    photo: PhotoCreateNestedOneWithoutTagsInput
-  }
-
-  export type PhotoTagUncheckedCreateWithoutTagInput = {
-    photo_id: number
-  }
-
-  export type PhotoTagCreateOrConnectWithoutTagInput = {
-    where: PhotoTagWhereUniqueInput
-    create: XOR<PhotoTagCreateWithoutTagInput, PhotoTagUncheckedCreateWithoutTagInput>
-  }
-
-  export type PhotoTagCreateManyTagInputEnvelope = {
-    data: PhotoTagCreateManyTagInput | PhotoTagCreateManyTagInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type VlogTagCreateWithoutTagInput = {
-    vlog: VlogCreateNestedOneWithoutTagsInput
-  }
-
-  export type VlogTagUncheckedCreateWithoutTagInput = {
-    vlog_id: number
-  }
-
-  export type VlogTagCreateOrConnectWithoutTagInput = {
-    where: VlogTagWhereUniqueInput
-    create: XOR<VlogTagCreateWithoutTagInput, VlogTagUncheckedCreateWithoutTagInput>
-  }
-
-  export type VlogTagCreateManyTagInputEnvelope = {
-    data: VlogTagCreateManyTagInput | VlogTagCreateManyTagInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type BlogTagUpsertWithWhereUniqueWithoutTagInput = {
-    where: BlogTagWhereUniqueInput
-    update: XOR<BlogTagUpdateWithoutTagInput, BlogTagUncheckedUpdateWithoutTagInput>
-    create: XOR<BlogTagCreateWithoutTagInput, BlogTagUncheckedCreateWithoutTagInput>
-  }
-
-  export type BlogTagUpdateWithWhereUniqueWithoutTagInput = {
-    where: BlogTagWhereUniqueInput
-    data: XOR<BlogTagUpdateWithoutTagInput, BlogTagUncheckedUpdateWithoutTagInput>
-  }
-
-  export type BlogTagUpdateManyWithWhereWithoutTagInput = {
-    where: BlogTagScalarWhereInput
-    data: XOR<BlogTagUpdateManyMutationInput, BlogTagUncheckedUpdateManyWithoutTagInput>
-  }
-
-  export type PhotoTagUpsertWithWhereUniqueWithoutTagInput = {
-    where: PhotoTagWhereUniqueInput
-    update: XOR<PhotoTagUpdateWithoutTagInput, PhotoTagUncheckedUpdateWithoutTagInput>
-    create: XOR<PhotoTagCreateWithoutTagInput, PhotoTagUncheckedCreateWithoutTagInput>
-  }
-
-  export type PhotoTagUpdateWithWhereUniqueWithoutTagInput = {
-    where: PhotoTagWhereUniqueInput
-    data: XOR<PhotoTagUpdateWithoutTagInput, PhotoTagUncheckedUpdateWithoutTagInput>
-  }
-
-  export type PhotoTagUpdateManyWithWhereWithoutTagInput = {
-    where: PhotoTagScalarWhereInput
-    data: XOR<PhotoTagUpdateManyMutationInput, PhotoTagUncheckedUpdateManyWithoutTagInput>
-  }
-
-  export type VlogTagUpsertWithWhereUniqueWithoutTagInput = {
-    where: VlogTagWhereUniqueInput
-    update: XOR<VlogTagUpdateWithoutTagInput, VlogTagUncheckedUpdateWithoutTagInput>
-    create: XOR<VlogTagCreateWithoutTagInput, VlogTagUncheckedCreateWithoutTagInput>
-  }
-
-  export type VlogTagUpdateWithWhereUniqueWithoutTagInput = {
-    where: VlogTagWhereUniqueInput
-    data: XOR<VlogTagUpdateWithoutTagInput, VlogTagUncheckedUpdateWithoutTagInput>
-  }
-
-  export type VlogTagUpdateManyWithWhereWithoutTagInput = {
-    where: VlogTagScalarWhereInput
-    data: XOR<VlogTagUpdateManyMutationInput, VlogTagUncheckedUpdateManyWithoutTagInput>
-  }
-
-  export type VlogTagScalarWhereInput = {
-    AND?: VlogTagScalarWhereInput | VlogTagScalarWhereInput[]
-    OR?: VlogTagScalarWhereInput[]
-    NOT?: VlogTagScalarWhereInput | VlogTagScalarWhereInput[]
-    vlog_id?: IntFilter<"VlogTag"> | number
-    tag_id?: IntFilter<"VlogTag"> | number
-  }
-
-  export type BlogCreateWithoutTagsInput = {
-    title: string
-    description: string
-    slug: string
-    content: string
-    author: string
-    priority?: number
-    category: string
-    published_at?: Date | string
-    created_at?: Date | string
-    updated_at?: Date | string
-    is_published?: boolean
-    featured_image_url?: string | null
-  }
-
-  export type BlogUncheckedCreateWithoutTagsInput = {
-    id?: number
-    title: string
-    description: string
-    slug: string
-    content: string
-    author: string
-    priority?: number
-    category: string
-    published_at?: Date | string
-    created_at?: Date | string
-    updated_at?: Date | string
-    is_published?: boolean
-    featured_image_url?: string | null
-  }
-
-  export type BlogCreateOrConnectWithoutTagsInput = {
-    where: BlogWhereUniqueInput
-    create: XOR<BlogCreateWithoutTagsInput, BlogUncheckedCreateWithoutTagsInput>
-  }
-
-  export type TagCreateWithoutBlogsInput = {
-    name: string
-    slug: string
-    photos?: PhotoTagCreateNestedManyWithoutTagInput
-    vlogs?: VlogTagCreateNestedManyWithoutTagInput
-  }
-
-  export type TagUncheckedCreateWithoutBlogsInput = {
-    id?: number
-    name: string
-    slug: string
-    photos?: PhotoTagUncheckedCreateNestedManyWithoutTagInput
-    vlogs?: VlogTagUncheckedCreateNestedManyWithoutTagInput
-  }
-
-  export type TagCreateOrConnectWithoutBlogsInput = {
-    where: TagWhereUniqueInput
-    create: XOR<TagCreateWithoutBlogsInput, TagUncheckedCreateWithoutBlogsInput>
-  }
-
-  export type BlogUpsertWithoutTagsInput = {
-    update: XOR<BlogUpdateWithoutTagsInput, BlogUncheckedUpdateWithoutTagsInput>
-    create: XOR<BlogCreateWithoutTagsInput, BlogUncheckedCreateWithoutTagsInput>
-    where?: BlogWhereInput
-  }
-
-  export type BlogUpdateToOneWithWhereWithoutTagsInput = {
-    where?: BlogWhereInput
-    data: XOR<BlogUpdateWithoutTagsInput, BlogUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type BlogUpdateWithoutTagsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    author?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    category?: StringFieldUpdateOperationsInput | string
-    published_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-    featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type BlogUncheckedUpdateWithoutTagsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    author?: StringFieldUpdateOperationsInput | string
-    priority?: IntFieldUpdateOperationsInput | number
-    category?: StringFieldUpdateOperationsInput | string
-    published_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-    featured_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TagUpsertWithoutBlogsInput = {
-    update: XOR<TagUpdateWithoutBlogsInput, TagUncheckedUpdateWithoutBlogsInput>
-    create: XOR<TagCreateWithoutBlogsInput, TagUncheckedCreateWithoutBlogsInput>
-    where?: TagWhereInput
-  }
-
-  export type TagUpdateToOneWithWhereWithoutBlogsInput = {
-    where?: TagWhereInput
-    data: XOR<TagUpdateWithoutBlogsInput, TagUncheckedUpdateWithoutBlogsInput>
-  }
-
-  export type TagUpdateWithoutBlogsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    photos?: PhotoTagUpdateManyWithoutTagNestedInput
-    vlogs?: VlogTagUpdateManyWithoutTagNestedInput
-  }
-
-  export type TagUncheckedUpdateWithoutBlogsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    photos?: PhotoTagUncheckedUpdateManyWithoutTagNestedInput
-    vlogs?: VlogTagUncheckedUpdateManyWithoutTagNestedInput
-  }
-
-  export type PhotoCreateWithoutTagsInput = {
-    title: string
-    description?: string | null
-    image_url: string
-    taken_at?: Date | string | null
-    uploaded_at?: Date | string
-    created_at?: Date | string
-    updated_at?: Date | string
-    location?: string | null
-  }
-
-  export type PhotoUncheckedCreateWithoutTagsInput = {
-    id?: number
-    title: string
-    description?: string | null
-    image_url: string
-    taken_at?: Date | string | null
-    uploaded_at?: Date | string
-    created_at?: Date | string
-    updated_at?: Date | string
-    location?: string | null
-  }
-
-  export type PhotoCreateOrConnectWithoutTagsInput = {
-    where: PhotoWhereUniqueInput
-    create: XOR<PhotoCreateWithoutTagsInput, PhotoUncheckedCreateWithoutTagsInput>
-  }
-
-  export type TagCreateWithoutPhotosInput = {
-    name: string
-    slug: string
-    blogs?: BlogTagCreateNestedManyWithoutTagInput
-    vlogs?: VlogTagCreateNestedManyWithoutTagInput
-  }
-
-  export type TagUncheckedCreateWithoutPhotosInput = {
-    id?: number
-    name: string
-    slug: string
-    blogs?: BlogTagUncheckedCreateNestedManyWithoutTagInput
-    vlogs?: VlogTagUncheckedCreateNestedManyWithoutTagInput
-  }
-
-  export type TagCreateOrConnectWithoutPhotosInput = {
-    where: TagWhereUniqueInput
-    create: XOR<TagCreateWithoutPhotosInput, TagUncheckedCreateWithoutPhotosInput>
-  }
-
-  export type PhotoUpsertWithoutTagsInput = {
-    update: XOR<PhotoUpdateWithoutTagsInput, PhotoUncheckedUpdateWithoutTagsInput>
-    create: XOR<PhotoCreateWithoutTagsInput, PhotoUncheckedCreateWithoutTagsInput>
-    where?: PhotoWhereInput
-  }
-
-  export type PhotoUpdateToOneWithWhereWithoutTagsInput = {
-    where?: PhotoWhereInput
-    data: XOR<PhotoUpdateWithoutTagsInput, PhotoUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type PhotoUpdateWithoutTagsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    image_url?: StringFieldUpdateOperationsInput | string
-    taken_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type PhotoUncheckedUpdateWithoutTagsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    image_url?: StringFieldUpdateOperationsInput | string
-    taken_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TagUpsertWithoutPhotosInput = {
-    update: XOR<TagUpdateWithoutPhotosInput, TagUncheckedUpdateWithoutPhotosInput>
-    create: XOR<TagCreateWithoutPhotosInput, TagUncheckedCreateWithoutPhotosInput>
-    where?: TagWhereInput
-  }
-
-  export type TagUpdateToOneWithWhereWithoutPhotosInput = {
-    where?: TagWhereInput
-    data: XOR<TagUpdateWithoutPhotosInput, TagUncheckedUpdateWithoutPhotosInput>
-  }
-
-  export type TagUpdateWithoutPhotosInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    blogs?: BlogTagUpdateManyWithoutTagNestedInput
-    vlogs?: VlogTagUpdateManyWithoutTagNestedInput
-  }
-
-  export type TagUncheckedUpdateWithoutPhotosInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    blogs?: BlogTagUncheckedUpdateManyWithoutTagNestedInput
-    vlogs?: VlogTagUncheckedUpdateManyWithoutTagNestedInput
-  }
-
-  export type VlogTagCreateWithoutVlogInput = {
-    tag: TagCreateNestedOneWithoutVlogsInput
-  }
-
-  export type VlogTagUncheckedCreateWithoutVlogInput = {
-    tag_id: number
-  }
-
-  export type VlogTagCreateOrConnectWithoutVlogInput = {
-    where: VlogTagWhereUniqueInput
-    create: XOR<VlogTagCreateWithoutVlogInput, VlogTagUncheckedCreateWithoutVlogInput>
-  }
-
-  export type VlogTagCreateManyVlogInputEnvelope = {
-    data: VlogTagCreateManyVlogInput | VlogTagCreateManyVlogInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type VlogTagUpsertWithWhereUniqueWithoutVlogInput = {
-    where: VlogTagWhereUniqueInput
-    update: XOR<VlogTagUpdateWithoutVlogInput, VlogTagUncheckedUpdateWithoutVlogInput>
-    create: XOR<VlogTagCreateWithoutVlogInput, VlogTagUncheckedCreateWithoutVlogInput>
-  }
-
-  export type VlogTagUpdateWithWhereUniqueWithoutVlogInput = {
-    where: VlogTagWhereUniqueInput
-    data: XOR<VlogTagUpdateWithoutVlogInput, VlogTagUncheckedUpdateWithoutVlogInput>
-  }
-
-  export type VlogTagUpdateManyWithWhereWithoutVlogInput = {
-    where: VlogTagScalarWhereInput
-    data: XOR<VlogTagUpdateManyMutationInput, VlogTagUncheckedUpdateManyWithoutVlogInput>
-  }
-
-  export type VlogCreateWithoutTagsInput = {
-    title: string
-    description?: string | null
-    video_url: string
-    published_at?: Date | string
-    created_at?: Date | string
-    updated_at?: Date | string
-    is_published?: boolean
-  }
-
-  export type VlogUncheckedCreateWithoutTagsInput = {
-    id?: number
-    title: string
-    description?: string | null
-    video_url: string
-    published_at?: Date | string
-    created_at?: Date | string
-    updated_at?: Date | string
-    is_published?: boolean
-  }
-
-  export type VlogCreateOrConnectWithoutTagsInput = {
-    where: VlogWhereUniqueInput
-    create: XOR<VlogCreateWithoutTagsInput, VlogUncheckedCreateWithoutTagsInput>
-  }
-
-  export type TagCreateWithoutVlogsInput = {
-    name: string
-    slug: string
-    blogs?: BlogTagCreateNestedManyWithoutTagInput
-    photos?: PhotoTagCreateNestedManyWithoutTagInput
-  }
-
-  export type TagUncheckedCreateWithoutVlogsInput = {
-    id?: number
-    name: string
-    slug: string
-    blogs?: BlogTagUncheckedCreateNestedManyWithoutTagInput
-    photos?: PhotoTagUncheckedCreateNestedManyWithoutTagInput
-  }
-
-  export type TagCreateOrConnectWithoutVlogsInput = {
-    where: TagWhereUniqueInput
-    create: XOR<TagCreateWithoutVlogsInput, TagUncheckedCreateWithoutVlogsInput>
-  }
-
-  export type VlogUpsertWithoutTagsInput = {
-    update: XOR<VlogUpdateWithoutTagsInput, VlogUncheckedUpdateWithoutTagsInput>
-    create: XOR<VlogCreateWithoutTagsInput, VlogUncheckedCreateWithoutTagsInput>
-    where?: VlogWhereInput
-  }
-
-  export type VlogUpdateToOneWithWhereWithoutTagsInput = {
-    where?: VlogWhereInput
-    data: XOR<VlogUpdateWithoutTagsInput, VlogUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type VlogUpdateWithoutTagsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    video_url?: StringFieldUpdateOperationsInput | string
-    published_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type VlogUncheckedUpdateWithoutTagsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    video_url?: StringFieldUpdateOperationsInput | string
-    published_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type TagUpsertWithoutVlogsInput = {
-    update: XOR<TagUpdateWithoutVlogsInput, TagUncheckedUpdateWithoutVlogsInput>
-    create: XOR<TagCreateWithoutVlogsInput, TagUncheckedCreateWithoutVlogsInput>
-    where?: TagWhereInput
-  }
-
-  export type TagUpdateToOneWithWhereWithoutVlogsInput = {
-    where?: TagWhereInput
-    data: XOR<TagUpdateWithoutVlogsInput, TagUncheckedUpdateWithoutVlogsInput>
-  }
-
-  export type TagUpdateWithoutVlogsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    blogs?: BlogTagUpdateManyWithoutTagNestedInput
-    photos?: PhotoTagUpdateManyWithoutTagNestedInput
-  }
-
-  export type TagUncheckedUpdateWithoutVlogsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    blogs?: BlogTagUncheckedUpdateManyWithoutTagNestedInput
-    photos?: PhotoTagUncheckedUpdateManyWithoutTagNestedInput
-  }
-
-  export type BlogTagCreateManyBlogInput = {
-    tag_id: number
-  }
-
-  export type BlogTagUpdateWithoutBlogInput = {
-    tag?: TagUpdateOneRequiredWithoutBlogsNestedInput
-  }
-
-  export type BlogTagUncheckedUpdateWithoutBlogInput = {
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type BlogTagUncheckedUpdateManyWithoutBlogInput = {
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PhotoTagCreateManyPhotoInput = {
-    tag_id: number
-  }
-
-  export type PhotoTagUpdateWithoutPhotoInput = {
-    tag?: TagUpdateOneRequiredWithoutPhotosNestedInput
-  }
-
-  export type PhotoTagUncheckedUpdateWithoutPhotoInput = {
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PhotoTagUncheckedUpdateManyWithoutPhotoInput = {
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type BlogTagCreateManyTagInput = {
-    blog_id: number
-  }
-
-  export type PhotoTagCreateManyTagInput = {
-    photo_id: number
-  }
-
-  export type VlogTagCreateManyTagInput = {
-    vlog_id: number
-  }
-
-  export type BlogTagUpdateWithoutTagInput = {
-    blog?: BlogUpdateOneRequiredWithoutTagsNestedInput
-  }
-
-  export type BlogTagUncheckedUpdateWithoutTagInput = {
-    blog_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type BlogTagUncheckedUpdateManyWithoutTagInput = {
-    blog_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PhotoTagUpdateWithoutTagInput = {
-    photo?: PhotoUpdateOneRequiredWithoutTagsNestedInput
-  }
-
-  export type PhotoTagUncheckedUpdateWithoutTagInput = {
-    photo_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PhotoTagUncheckedUpdateManyWithoutTagInput = {
-    photo_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type VlogTagUpdateWithoutTagInput = {
-    vlog?: VlogUpdateOneRequiredWithoutTagsNestedInput
-  }
-
-  export type VlogTagUncheckedUpdateWithoutTagInput = {
-    vlog_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type VlogTagUncheckedUpdateManyWithoutTagInput = {
-    vlog_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type VlogTagCreateManyVlogInput = {
-    tag_id: number
-  }
-
-  export type VlogTagUpdateWithoutVlogInput = {
-    tag?: TagUpdateOneRequiredWithoutVlogsNestedInput
-  }
-
-  export type VlogTagUncheckedUpdateWithoutVlogInput = {
-    tag_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type VlogTagUncheckedUpdateManyWithoutVlogInput = {
-    tag_id?: IntFieldUpdateOperationsInput | number
   }
 
 

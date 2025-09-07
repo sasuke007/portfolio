@@ -1,11 +1,42 @@
-import { Tag } from '@/prisma/generated/client'
-import { z } from "zod";
+import {z} from "zod";
+import {Prisma} from "@/prisma/generated/client";
 
-export interface PhotoTag {
-  tag: Tag
-}
+
+export const photoEntitySchema = z.object({
+  reference_id: z.string().optional(),
+  is_published: z.boolean(),
+  title: z.string(),
+  description: z.string().nullable(),
+  image_url: z.string(),
+  taken_at: z.date().nullable(),
+  uploaded_at: z.date().optional(),
+  location: z.string().optional(),
+});
+
+export type PhotoEntity = z.infer<typeof photoEntitySchema>;
+
 
 export const createPhotoSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  image_url: z.string().url("Valid image URL is required"),
+  location: z.string().nullish(),
+  is_published: z.boolean(),
+  taken_at: z.string()
+});
+
+export type CreatePhoto = z.infer<typeof createPhotoSchema>;
+
+export const getPhotoEntityFromCreatePhoto = (data: CreatePhoto): PhotoEntity => ({
+  is_published: data.is_published,
+  title: data.title,
+  description: data.description,
+  image_url: data.image_url,
+  taken_at: data.taken_at ? new Date(data.taken_at) : new Date(),
+  location: data.location ? data.location : "Not Known"
+});
+
+export const updatePhotoSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   image_url: z.string().url("Valid image URL is required"),
@@ -15,36 +46,7 @@ export const createPhotoSchema = z.object({
   meta_title: z.string().optional(),
   meta_description: z.string().optional(),
   meta_keywords: z.string().optional(),
-  author: z.string().optional(),
-  category: z.string().optional(),
-  is_published: z.boolean().default(false),
-  priority: z.number().default(0),
-  tags: z.array(z.string()).default([]),
-  taken_at: z.string().optional(),
-  published_at: z.string().optional(),
+  author: z.string().optional()
 });
 
-export type CreatePhoto = z.infer<typeof createPhotoSchema>;
-
-export interface PhotoDTO {
-  id: number;
-  title: string;
-  description: string | null;
-  image_url: string;
-  taken_at: Date | null;
-  uploaded_at: Date;
-  location: string | null;
-  camera_details?: string;
-  content?: string;
-  meta_title?: string;
-  meta_description?: string;
-  meta_keywords?: string;
-  author?: string;
-  category?: string;
-  is_published?: boolean;
-  priority?: number;
-  published_at?: Date;
-  created_at?: Date;
-  updated_at?: Date;
-  tags: PhotoTag[];
-} 
+export type UpdatePhoto = z.infer<typeof updatePhotoSchema>;

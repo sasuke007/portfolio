@@ -18,7 +18,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ImagePlus,
-  Tag,
   FileText,
   Search,
   Calendar,
@@ -55,7 +54,6 @@ export default function CreateVlogPage() {
     category: "",
     is_published: false,
     priority: 0,
-    tags: [] as string[],
     published_at: new Date().toISOString().split("T")[0],
   });
 
@@ -82,10 +80,6 @@ export default function CreateVlogPage() {
     setFormData((prev) => ({ ...prev, is_published: checked }));
   };
 
-  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const tagsArray = e.target.value.split(",").map((tag) => tag.trim());
-    setFormData((prev) => ({ ...prev, tags: tagsArray }));
-  };
 
   const handleMetaGenerate = () => {
     if (!formData.description) {
@@ -408,22 +402,6 @@ export default function CreateVlogPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <Tag className="h-4 w-4" />
-                      <Label htmlFor="tags">Tags (comma separated)</Label>
-                    </div>
-                    <Input
-                      id="tags"
-                      name="tags"
-                      placeholder="travel, tutorial, vlog"
-                      value={formData.tags.join(", ")}
-                      onChange={handleTagsChange}
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Add relevant tags to help viewers find your content
-                    </p>
-                  </div>
 
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2">

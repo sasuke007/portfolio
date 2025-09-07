@@ -6,80 +6,14 @@ async function main() {
   console.log('🌱 Starting database seed...')
 
   // First, clean existing data (optional - remove if you want to keep existing data)
-  await prisma.blogTag.deleteMany()
-  await prisma.photoTag.deleteMany()
-  await prisma.vlogTag.deleteMany()
+
   await prisma.blog.deleteMany()
   await prisma.photo.deleteMany()
   await prisma.poem.deleteMany()
   await prisma.vlog.deleteMany()
-  await prisma.tag.deleteMany()
+
 
   console.log('🧹 Cleaned existing data')
-
-  // Create Tags first (needed for relationships)
-  const tags = await Promise.all([
-    // Tech tags
-    prisma.tag.create({
-      data: { name: 'JavaScript', slug: 'javascript' }
-    }),
-    prisma.tag.create({
-      data: { name: 'TypeScript', slug: 'typescript' }
-    }),
-    prisma.tag.create({
-      data: { name: 'React', slug: 'react' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Next.js', slug: 'nextjs' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Node.js', slug: 'nodejs' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Prisma', slug: 'prisma' }
-    }),
-    
-    // Photography tags
-    prisma.tag.create({
-      data: { name: 'Portrait', slug: 'portrait' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Landscape', slug: 'landscape' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Street Photography', slug: 'street-photography' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Nature', slug: 'nature' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Travel', slug: 'travel' }
-    }),
-    
-    // Poetry tags
-    prisma.tag.create({
-      data: { name: 'Love', slug: 'love' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Life', slug: 'life' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Philosophy', slug: 'philosophy' }
-    }),
-    
-    // General tags
-    prisma.tag.create({
-      data: { name: 'Personal', slug: 'personal' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Tutorial', slug: 'tutorial' }
-    }),
-    prisma.tag.create({
-      data: { name: 'Creative', slug: 'creative' }
-    }),
-  ])
-
-  console.log('🏷️  Created tags')
 
   // Create Blog Posts
   const blogs = await Promise.all([
@@ -538,75 +472,16 @@ So go ahead, create your art.`,
 
   console.log('🎥 Created vlogs')
 
-  // Create relationships between content and tags
-  
-  // Blog Tags
-  await prisma.blogTag.createMany({
-    data: [
-      { blog_id: blogs[0].id, tag_id: tags.find(t => t.name === 'Next.js')!.id },
-      { blog_id: blogs[0].id, tag_id: tags.find(t => t.name === 'TypeScript')!.id },
-      { blog_id: blogs[0].id, tag_id: tags.find(t => t.name === 'Tutorial')!.id },
-      
-      { blog_id: blogs[1].id, tag_id: tags.find(t => t.name === 'JavaScript')!.id },
-      { blog_id: blogs[1].id, tag_id: tags.find(t => t.name === 'Tutorial')!.id },
-      
-      { blog_id: blogs[2].id, tag_id: tags.find(t => t.name === 'React')!.id },
-      { blog_id: blogs[2].id, tag_id: tags.find(t => t.name === 'JavaScript')!.id },
-      
-      { blog_id: blogs[3].id, tag_id: tags.find(t => t.name === 'Prisma')!.id },
-      { blog_id: blogs[3].id, tag_id: tags.find(t => t.name === 'Tutorial')!.id },
-    ]
-  })
-
-  // Photo Tags
-  await prisma.photoTag.createMany({
-    data: [
-      { photo_id: photos[0].id, tag_id: tags.find(t => t.name === 'Portrait')!.id },
-      { photo_id: photos[0].id, tag_id: tags.find(t => t.name === 'Travel')!.id },
-      
-      { photo_id: photos[1].id, tag_id: tags.find(t => t.name === 'Landscape')!.id },
-      { photo_id: photos[1].id, tag_id: tags.find(t => t.name === 'Nature')!.id },
-      { photo_id: photos[1].id, tag_id: tags.find(t => t.name === 'Travel')!.id },
-      
-      { photo_id: photos[2].id, tag_id: tags.find(t => t.name === 'Street Photography')!.id },
-      
-      { photo_id: photos[3].id, tag_id: tags.find(t => t.name === 'Landscape')!.id },
-      { photo_id: photos[3].id, tag_id: tags.find(t => t.name === 'Nature')!.id },
-      
-      { photo_id: photos[4].id, tag_id: tags.find(t => t.name === 'Nature')!.id },
-      { photo_id: photos[4].id, tag_id: tags.find(t => t.name === 'Travel')!.id },
-    ]
-  })
-
-  // Vlog Tags
-  await prisma.vlogTag.createMany({
-    data: [
-      { vlog_id: vlogs[0].id, tag_id: tags.find(t => t.name === 'Personal')!.id },
-      { vlog_id: vlogs[0].id, tag_id: tags.find(t => t.name === 'JavaScript')!.id },
-      
-      { vlog_id: vlogs[1].id, tag_id: tags.find(t => t.name === 'Next.js')!.id },
-      { vlog_id: vlogs[1].id, tag_id: tags.find(t => t.name === 'Tutorial')!.id },
-      { vlog_id: vlogs[1].id, tag_id: tags.find(t => t.name === 'TypeScript')!.id },
-      
-      { vlog_id: vlogs[2].id, tag_id: tags.find(t => t.name === 'Creative')!.id },
-      { vlog_id: vlogs[2].id, tag_id: tags.find(t => t.name === 'Travel')!.id },
-      
-      { vlog_id: vlogs[3].id, tag_id: tags.find(t => t.name === 'React')!.id },
-      { vlog_id: vlogs[3].id, tag_id: tags.find(t => t.name === 'Tutorial')!.id },
-    ]
-  })
-
-  console.log('🔗 Created content-tag relationships')
+  console.log('🔗 All content created successfully')
 
   console.log('✅ Database seeded successfully!')
   console.log(`
 📊 Seed Summary:
-- ${tags.length} tags created
 - ${blogs.length} blog posts created  
 - ${photos.length} photos created
 - ${poems.length} poems created
 - ${vlogs.length} vlogs created
-- Multiple tag relationships established
+- All content relationships ready
   `)
 }
 
