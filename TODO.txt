@@ -19,6 +19,15 @@ when in preview mode, make the editor big take the whole space and make the edit
 
 When i download an image the image link should open in new tab.
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+heading should be a drop down with h1-h6.
+keyboard shortcuts should work in editor.
+Picture and code block should work.
+
+
+
+
 
 
 
