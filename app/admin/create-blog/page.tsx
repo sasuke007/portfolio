@@ -10,12 +10,12 @@ import {Label} from "@/components/ui/label";
 import {Switch} from "@/components/ui/switch";
 // import {ShadcnBlogEditor} from "@/components/shadcn-blog-editor"; // Removed for testing
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {ArrowLeft, Calendar, FileText, ImagePlus, Save, Search} from "lucide-react";
+import {ArrowLeft, Calendar, FileText, ImagePlus, Save, Search, PenTool} from "lucide-react";
 import {Calendar as CalendarComponent} from "@/components/ui/calendar";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {format} from "date-fns";
 import {cn} from "@/lib/utils";
+import { BlogEditor } from "@/components/blog-editor";
 
 export default function CreateBlogPage() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function CreateBlogPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
-  const [previewMode, setPreviewMode] = useState(false);
+  const [content, setContent] = useState<string>("");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -40,7 +40,6 @@ export default function CreateBlogPage() {
     priority: 0,
     published_at: new Date().toISOString().split("T")[0],
   });
-  const [content, setContent] = useState("");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -167,7 +166,7 @@ export default function CreateBlogPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Button
@@ -214,31 +213,69 @@ export default function CreateBlogPage() {
         </div>
       </div>
 
-      <Tabs
-        defaultValue="content"
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="w-full"
-      >
-        <TabsList className="grid grid-cols-3 mb-6">
-          <TabsTrigger value="content" className="flex items-center">
+      <div className="w-full">
+        <div className="flex w-full mb-4 p-1 bg-muted rounded-lg">
+          <button
+            type="button"
+            onClick={() => setActiveTab("content")}
+            className={`flex-1 flex items-center justify-center py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+              activeTab === "content"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
             <FileText className="mr-2 h-4 w-4" />
-            Content
-          </TabsTrigger>
-          <TabsTrigger value="media" className="flex items-center">
+            Details
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("write")}
+            className={`flex-1 flex items-center justify-center py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+              activeTab === "write"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <PenTool className="mr-2 h-4 w-4" />
+            Write
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("media")}
+            className={`flex-1 flex items-center justify-center py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+              activeTab === "media"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
             <ImagePlus className="mr-2 h-4 w-4" />
             Media
-          </TabsTrigger>
-          <TabsTrigger value="seo" className="flex items-center">
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("seo")}
+            className={`flex-1 flex items-center justify-center py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+              activeTab === "seo"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
             <Search className="mr-2 h-4 w-4" />
             SEO
-          </TabsTrigger>
-        </TabsList>
+          </button>
+        </div>
 
         <form id="blog-form" onSubmit={handleSubmit}>
-          <TabsContent value="content" className="space-y-6">
+          {/* Content Tab */}
+          <div className={`space-y-6 ${activeTab === "content" ? "block" : "hidden"}`}>
             <Card>
-              <CardContent className="pt-6 space-y-6">
+              <CardHeader>
+                <CardTitle>Blog Details</CardTitle>
+                <CardDescription>
+                  Set up the basic information for your blog post
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="title">Post Title</Label>
@@ -289,58 +326,9 @@ export default function CreateBlogPage() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label>Content</Label>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground">
-                        Write your blog content using the editor below
-                      </span>
-                      <div className="flex items-center space-x-2">
-                        <Label htmlFor="preview-mode" className="text-sm">
-                          Preview
-                        </Label>
-                        <Switch
-                          id="preview-mode"
-                          checked={previewMode}
-                          onCheckedChange={setPreviewMode}
-                        />
-                      </div>
-                    </div>
-                    <div className="min-h-[400px] border rounded-md p-4 flex items-center justify-center bg-gray-50">
-                      <h2 className="text-2xl font-bold text-gray-600">Hello World - Create Blog Editor Placeholder</h2>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="media" className="space-y-6">
-            <Card>
-              <CardContent className="pt-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <Label>Featured Image</Label>
-                    <div className="space-y-4">
-                      <div className="flex flex-col justify-center items-center space-y-2">
-                        <Label htmlFor="image-url">Image URL</Label>
-                        <Input
-                          id="image-url"
-                          placeholder="https://example.com/image.jpg"
-                          value={imageUrl}
-                          onChange={handleImageUrlChange}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-6">
-
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <FileText className="h-4 w-4" />
-                        <Label htmlFor="category">Category</Label>
-                      </div>
+                      <Label htmlFor="category">Category</Label>
                       <Input
                         id="category"
                         name="category"
@@ -351,6 +339,95 @@ export default function CreateBlogPage() {
                       />
                     </div>
 
+                    <div className="space-y-2">
+                      <Label htmlFor="author">Author</Label>
+                      <Input
+                        id="author"
+                        name="author"
+                        value={formData.author}
+                        onChange={handleInputChange}
+                        placeholder="Author name"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Write Tab - Always mounted */}
+          <div className={`space-y-2 ${activeTab === "write" ? "block" : "hidden"}`}>
+            {/* Minimal header with essential controls */}
+            <div className="flex items-center justify-between py-1 px-1">
+              <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                <span>
+                  {content ? `${content.replace(/<[^>]*>/g, '').length} characters` : '0 characters'}
+                </span>
+                <span>•</span>
+                <span>
+                  {content ? `~${Math.ceil(content.replace(/<[^>]*>/g, '').split(' ').length / 200)} min read` : '0 min read'}
+                </span>
+              </div>
+            </div>
+            
+            {/* Full-height editor without card wrapper */}
+            <div className="h-[calc(100vh-180px)] min-h-[600px]">
+              <div className="h-full border rounded-lg overflow-hidden">
+                <BlogEditor
+                  initialContent={content}
+                  onChange={(newContent) => {
+                    console.log('Content updated:', newContent);
+                    setContent(newContent);
+                  }}
+                  placeholder="Start writing your blog post..."
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Media Tab */}
+          <div className={`space-y-6 ${activeTab === "media" ? "block" : "hidden"}`}>
+            <Card>
+              <CardHeader>
+                <CardTitle>Featured Image & Publishing</CardTitle>
+                <CardDescription>
+                  Add a featured image and set publishing options for your blog post
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="image-url">Featured Image URL</Label>
+                      <Input
+                        id="image-url"
+                        placeholder="https://example.com/image.jpg"
+                        value={imageUrl}
+                        onChange={handleImageUrlChange}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Add a compelling featured image for your blog post
+                      </p>
+                    </div>
+                    
+                    {imagePreview && (
+                      <div className="mt-4">
+                        <div className="rounded-md overflow-hidden border border-border">
+                          <img
+                            src={imagePreview}
+                            alt="Featured image preview"
+                            className="w-full h-auto max-h-[200px] object-cover"
+                            onError={handleImagePreviewError}
+                          />
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Featured image preview
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-6">
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
                         <Calendar className="h-4 w-4" />
@@ -389,13 +466,31 @@ export default function CreateBlogPage() {
                           : "Set 'Publish' to enable date selection"}
                       </p>
                     </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="priority">Priority (0-10)</Label>
+                      <Input
+                        id="priority"
+                        name="priority"
+                        type="number"
+                        min="0"
+                        max="10"
+                        value={formData.priority}
+                        onChange={handleInputChange}
+                        placeholder="0"
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Higher priority posts appear first in listings
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
 
-          <TabsContent value="seo" className="space-y-6">
+          {/* SEO Tab */}
+          <div className={`space-y-6 ${activeTab === "seo" ? "block" : "hidden"}`}>
             <Card>
               <CardHeader>
                 <CardTitle>SEO Settings</CardTitle>
@@ -490,9 +585,9 @@ export default function CreateBlogPage() {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
         </form>
-      </Tabs>
+      </div>
     </div>
   );
 }

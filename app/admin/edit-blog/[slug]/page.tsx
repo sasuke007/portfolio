@@ -27,6 +27,7 @@ import {
   Save,
   ArrowLeft,
   Upload,
+  PenTool,
 } from "lucide-react";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -34,6 +35,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import BlogShimmer from "../blog-shimmer";
 import Image from "next/image";
+import { BlogEditor } from "@/components/blog-editor";
 
 export default function EditBlogPage() {
   const router = useRouter();
@@ -43,7 +45,6 @@ export default function EditBlogPage() {
   const [activeTab, setActiveTab] = useState("content");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
-  const [previewMode, setPreviewMode] = useState(false);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -260,7 +261,7 @@ export default function EditBlogPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Button
@@ -310,110 +311,205 @@ export default function EditBlogPage() {
       <form id="blog-form" onSubmit={handleSubmit} className="space-y-6">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="content">Content</TabsTrigger>
-            <TabsTrigger value="metadata">Metadata</TabsTrigger>
-            <TabsTrigger value="media">Media</TabsTrigger>
-            <TabsTrigger value="publishing">Publishing</TabsTrigger>
+            <TabsTrigger value="content" className="flex items-center">
+              <FileText className="mr-2 h-4 w-4" />
+              Details
+            </TabsTrigger>
+            <TabsTrigger value="write" className="flex items-center">
+              <PenTool className="mr-2 h-4 w-4" />
+              Write
+            </TabsTrigger>
+            <TabsTrigger value="media" className="flex items-center">
+              <ImagePlus className="mr-2 h-4 w-4" />
+              Media
+            </TabsTrigger>
+            <TabsTrigger value="seo" className="flex items-center">
+              <Search className="mr-2 h-4 w-4" />
+              SEO
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="content" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Blog Content</CardTitle>
+                <CardTitle>Blog Details</CardTitle>
                 <CardDescription>
-                  Write your blog post content in the editor below.
+                  Set up the basic information for your blog post
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="title">Title</Label>
-                  <Input
-                    id="title"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleInputChange}
-                    placeholder="Enter blog title"
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    placeholder="Brief description of your blog post"
-                    rows={3}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="content">Content</Label>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setPreviewMode(!previewMode)}
-                    >
-                      {previewMode ? "Edit" : "Preview"}
-                    </Button>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="title">Post Title</Label>
+                    <Input
+                      id="title"
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      placeholder="Enter your blog post title"
+                      className="text-lg"
+                      required
+                    />
                   </div>
-                  
-                  <div className="min-h-[400px] border rounded-md p-4 flex items-center justify-center bg-gray-50">
-                    <h2 className="text-2xl font-bold text-gray-600">Hello World - Edit Blog Editor Placeholder</h2>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="description">Short Description</Label>
+                    <Textarea
+                      id="description"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      placeholder="A brief description of your blog post (used in previews)"
+                      rows={3}
+                      required
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="category">Category</Label>
+                      <Input
+                        id="category"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleInputChange}
+                        placeholder="e.g. Technology, Travel, Personal"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="author">Author</Label>
+                      <Input
+                        id="author"
+                        name="author"
+                        value={formData.author}
+                        onChange={handleInputChange}
+                        placeholder="Author name"
+                      />
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
+
+          <TabsContent value="write" className="space-y-2">
+            {/* Minimal header with essential controls */}
+            <div className="flex items-center justify-between py-1 px-1">
+              <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                <span>
+                  {content ? `${content.replace(/<[^>]*>/g, '').length} characters` : '0 characters'}
+                </span>
+                <span>•</span>
+                <span>
+                  {content ? `~${Math.ceil(content.replace(/<[^>]*>/g, '').split(' ').length / 200)} min read` : '0 min read'}
+                </span>
+              </div>
+            </div>
+            
+            {/* Full-height editor without card wrapper */}
+            <div className="h-[calc(100vh-180px)] min-h-[600px]">
+              <div className="h-full border rounded-lg overflow-hidden">
+                <BlogEditor
+                  key="persistent-editor"
+                  initialContent={content}
+                  onChange={(newContent) => {
+                    console.log('Content updated:', newContent);
+                    setContent(newContent);
+                  }}
+                  placeholder="Start writing your blog post..."
+                />
+              </div>
+            </div>
+          </TabsContent>
           
-          <TabsContent value="metadata" className="space-y-4">
+          <TabsContent value="media" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Metadata & SEO</CardTitle>
+                <CardTitle>Featured Image & Publishing</CardTitle>
                 <CardDescription>
-                  Optimize your blog post for search engines.
+                  Add a featured image and set publishing options for your blog post
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="slug">
-                      Slug <span className="text-sm text-muted-foreground">(URL path)</span>
-                    </Label>
-                    <div className="flex space-x-2">
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="image-url">Featured Image URL</Label>
                       <Input
-                        id="slug"
-                        name="slug"
-                        value={formData.slug}
-                        onChange={handleInputChange}
-                        placeholder="blog-post-url"
-                        required
+                        id="image-url"
+                        placeholder="https://example.com/image.jpg"
+                        value={formData.featured_image_url || ''}
+                        onChange={(e) => setFormData(prev => ({ ...prev, featured_image_url: e.target.value }))}
                       />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={handleSlugGenerate}
-                        className="shrink-0"
-                      >
-                        <FileText className="h-4 w-4 mr-2" />
-                        Generate
-                      </Button>
+                      <p className="text-xs text-muted-foreground">
+                        Add a compelling featured image for your blog post
+                      </p>
                     </div>
+                    
+                    {formData.featured_image_url && (
+                      <div className="mt-4">
+                        <div className="rounded-md overflow-hidden border border-border">
+                          <img
+                            src={formData.featured_image_url}
+                            alt="Featured image preview"
+                            className="w-full h-auto max-h-[200px] object-cover"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Featured image preview
+                        </p>
+                      </div>
+                    )}
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Category</Label>
-                    <Input
-                      id="category"
-                      name="category"
-                      value={formData.category}
-                      onChange={handleInputChange}
-                      placeholder="e.g. Technology, Travel"
-                    />
+
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="slug">
+                        URL Slug <span className="text-sm text-muted-foreground">(URL path)</span>
+                      </Label>
+                      <div className="flex space-x-2">
+                        <Input
+                          id="slug"
+                          name="slug"
+                          value={formData.slug}
+                          onChange={handleInputChange}
+                          placeholder="blog-post-url"
+                          required
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={handleSlugGenerate}
+                          className="shrink-0"
+                        >
+                          <FileText className="h-4 w-4 mr-2" />
+                          Generate
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="priority">Priority (0-10)</Label>
+                      <Input
+                        id="priority"
+                        name="priority"
+                        type="number"
+                        min="0"
+                        max="10"
+                        value={formData.priority}
+                        onChange={handleInputChange}
+                        placeholder="0"
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Higher priority posts appear first in listings
+                      </p>
+                    </div>
                   </div>
                 </div>
                 
