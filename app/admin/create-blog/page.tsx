@@ -8,7 +8,7 @@ import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {Label} from "@/components/ui/label";
 import {Switch} from "@/components/ui/switch";
-import {BlogEditor} from "@/components/blog-editor";
+// import {ShadcnBlogEditor} from "@/components/shadcn-blog-editor"; // Removed for testing
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {ArrowLeft, Calendar, FileText, ImagePlus, Save, Search} from "lucide-react";
@@ -306,14 +306,8 @@ export default function CreateBlogPage() {
                         />
                       </div>
                     </div>
-                    <div
-                      className={`border rounded-md min-h-[400px] ${previewMode ? "bg-card/50" : "bg-card"}`}
-                    >
-                      <BlogEditor
-                        content={content}
-                        onChange={setContent}
-                        previewMode={previewMode}
-                      />
+                    <div className="min-h-[400px] border rounded-md p-4 flex items-center justify-center bg-gray-50">
+                      <h2 className="text-2xl font-bold text-gray-600">Hello World - Create Blog Editor Placeholder</h2>
                     </div>
                   </div>
                 </div>

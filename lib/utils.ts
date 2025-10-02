@@ -1,12 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import * as showdown from 'showdown';
-
-var config = {
-  extensions: [],
-  sanitize: false
-};
-const converter = new showdown.Converter();
+// Removed showdown import and converter - not used
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -21,9 +15,7 @@ export const formatDate = (date: Date): string => {
   });
 }
 
-export const markDownToHTMLConverter = (markdown: string): string => {
-  return converter.makeHtml(markdown);
-}
+// Removed markDownToHTMLConverter function - not used
 
 
 /**

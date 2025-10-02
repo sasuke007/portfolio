@@ -43,12 +43,7 @@ export default async function BlogPage() {
                     <div className="flex items-center gap-2 text-xs text-gray-500">
                       <CalendarIcon className="h-3 w-3" />
                       <span>{formatDate(blog.published_at)}</span>
-                      {blog.tags && blog.tags.length > 0 && (
-                        <>
-                          <TagIcon className="h-3 w-3 ml-2" />
-                          <span>{blog.tags[0].tag.name}</span>
-                        </>
-                      )}
+                      
                     </div>
                   </div>
                 }
