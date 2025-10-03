@@ -1,4 +1,5 @@
-import ReactComponentName from "react-scan/react-component-name/webpack";
+// Temporarily commented out react-scan to fix webpack module error
+// import ReactComponentName from "react-scan/react-component-name/webpack";
 
 let userConfig = undefined
 try {
@@ -29,10 +30,11 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-  webpack: (config) => {
-    config.plugins.push(ReactComponentName({}));
-    return config;
-  },
+  // Temporarily commented out webpack config to fix module error
+  // webpack: (config) => {
+  //   config.plugins.push(ReactComponentName({}));
+  //   return config;
+  // },
 }
 
 if (userConfig) {

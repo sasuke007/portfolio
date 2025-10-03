@@ -33,7 +33,6 @@ export function Editor({
   onChange?: (editorState: EditorState) => void
   onSerializedChange?: (editorSerializedState: SerializedEditorState) => void
 }) {
-  console.log('Editor component rendering with nodes:', nodes.length)
   return (
     <div className="bg-background overflow-hidden rounded-lg border shadow h-full flex flex-col">
       <LexicalComposer

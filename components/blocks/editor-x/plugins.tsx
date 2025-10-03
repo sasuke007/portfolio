@@ -108,7 +108,6 @@ const placeholder = "Press / for commands..."
 const maxLength = 500
 
 export function Plugins({}) {
-  console.log('Plugins component rendering...')
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null)
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false)

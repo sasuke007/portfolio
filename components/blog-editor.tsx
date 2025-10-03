@@ -48,11 +48,9 @@ export function BlogEditor({ initialContent, onChange, placeholder }: BlogEditor
 
   // Initialize editor and handle content updates
   useEffect(() => {
-    console.log('Editor effect - initialContent:', initialContent, 'lastInitialContent:', lastInitialContent);
     
     // Only reinitialize if content has actually changed and we have content
     if (initialContent !== lastInitialContent && initialContent && initialContent.trim()) {
-      console.log('Reinitializing editor with updated content:', initialContent);
       
       // For now, we'll create a simple text representation
       // In a full implementation, you'd want to properly parse HTML to Lexical state
@@ -100,7 +98,6 @@ export function BlogEditor({ initialContent, onChange, placeholder }: BlogEditor
   }, [initialContent, lastInitialContent, isInitialized]);
 
   const handleEditorChange = (serializedState: SerializedEditorState) => {
-    console.log('Editor state changed:', serializedState);
     setEditorState(serializedState);
     
     // Convert the serialized state to HTML
@@ -117,6 +114,21 @@ export function BlogEditor({ initialContent, onChange, placeholder }: BlogEditor
             } else if (child.type === "image") {
               // Handle image nodes properly
               return `<img src="${child.src}" alt="${child.altText || ''}" />`;
+            } else if (child.type === "table") {
+              if (child.children && child.children.length > 0) {
+                const tableRows = child.children.map((row: any) => {
+                  if (row.type === "tablerow" && row.children) {
+                    const cells = row.children.map((cell: any) => {
+                      const cellContent = cell.children ? extractTextFromChildren(cell.children) : '';
+                      return `<td>${cellContent}</td>`;
+                    }).join('');
+                    return `<tr>${cells}</tr>`;
+                  }
+                  return '';
+                }).join('');
+                return `<table><tbody>${tableRows}</tbody></table>`;
+              }
+              return '<table></table>';
             } else if (child.children) {
               const text = extractTextFromChildren(child.children);
               switch (child.type) {
@@ -134,6 +146,10 @@ export function BlogEditor({ initialContent, onChange, placeholder }: BlogEditor
                   return text ? `<blockquote>${text}</blockquote>` : "";
                 case "code":
                   return text ? `<pre><code>${text}</code></pre>` : "";
+                case "tablerow":
+                  return text ? `<tr>${text}</tr>` : "";
+                case "tablecell":
+                  return text ? `<td>${text}</td>` : "";
                 default:
                   return text;
               }
@@ -144,7 +160,6 @@ export function BlogEditor({ initialContent, onChange, placeholder }: BlogEditor
       };
 
       const htmlContent = extractTextFromChildren(state.root.children);
-      console.log('Extracted HTML content:', htmlContent);
       return htmlContent;
     };
 

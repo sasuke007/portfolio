@@ -30,13 +30,64 @@
 .EditorTheme__table {
   border-collapse: collapse;
   border-spacing: 0;
-  overflow-y: scroll;
-  overflow-x: scroll;
-  table-layout: fixed;
-  width: fit-content;
-  width: 100%;
+  table-layout: fixed !important;
+  width: auto !important;
+  max-width: none !important;
   margin: 0px 0px 30px 0px;
+  display: table !important;
 }
+
+.EditorTheme__tableCell {
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+  white-space: nowrap !important;
+  vertical-align: top;
+  display: table-cell !important;
+}
+
+.EditorTheme__table td,
+.EditorTheme__table th {
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+  white-space: nowrap !important;
+  vertical-align: top;
+  display: table-cell !important;
+}
+
+.EditorTheme__table tr {
+  display: table-row !important;
+}
+
+.EditorTheme__table tbody {
+  display: table-row-group !important;
+}
+
+/* Additional table layout enforcement */
+.ContentEditable__root table {
+  table-layout: fixed !important;
+  width: auto !important;
+  display: table !important;
+}
+
+.ContentEditable__root table td,
+.ContentEditable__root table th {
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+  white-space: nowrap !important;
+  display: table-cell !important;
+}
+
+.ContentEditable__root table tr {
+  display: table-row !important;
+}
+
+.ContentEditable__root table tbody {
+  display: table-row-group !important;
+}
+
 .EditorTheme__tokenComment {
   color: slategray;
 }
