@@ -32,7 +32,6 @@
   border-spacing: 0;
   table-layout: fixed !important;
   width: auto !important;
-  max-width: none !important;
   margin: 0px 0px 30px 0px;
   display: table !important;
 }
@@ -86,6 +85,66 @@
 
 .ContentEditable__root table tbody {
   display: table-row-group !important;
+}
+
+/* Fix editor scrolling - target the specific editor structure */
+.blog-editor-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-editor-container > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure the content editable area can scroll */
+.ContentEditable__root {
+  min-height: 400px;
+  height: auto;
+  max-height: none;
+}
+
+/* Target the scrollable container specifically */
+.blog-editor-container .ContentEditable__root {
+  overflow-y: visible;
+  overflow-x: hidden;
+  height: auto;
+  min-height: 400px;
+}
+
+/* Make sure the parent container of ContentEditable handles scrolling */
+[data-lexical-editor] {
+  height: 100%;
+  overflow: auto;
+}
+
+/* Ensure the scrollable div handles both directions */
+.ContentEditable__root {
+  overflow: auto !important;
+  min-height: 400px;
+  height: auto;
+}
+
+/* Ensure ContentEditable handles scrolling properly */
+.ContentEditable__root {
+  overflow: auto !important;
+  max-width: 100% !important;
+  word-wrap: break-word;
+}
+
+/* Tables should be able to scroll horizontally */
+.EditorTheme__table {
+  min-width: fit-content !important;
+  max-width: none !important;
+  overflow-x: visible !important;
+}
+
+/* Ensure wide content doesn't break the layout */
+.ContentEditable__root * {
+  max-width: none !important;
 }
 
 .EditorTheme__tokenComment {

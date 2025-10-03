@@ -372,7 +372,7 @@ export default function CreateBlogPage() {
             
             {/* Full-height editor without card wrapper */}
             <div className="h-[calc(100vh-180px)] min-h-[600px]">
-              <div className="h-full border rounded-lg overflow-hidden">
+              <div className="h-full border rounded-lg flex flex-col">
                 <BlogEditor
                   initialContent={content}
                   onChange={(newContent) => {

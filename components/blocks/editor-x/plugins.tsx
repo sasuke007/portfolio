@@ -119,7 +119,7 @@ export function Plugins({}) {
   }
 
   return (
-    <div className="relative">
+    <div className="relative h-full flex flex-col">
       <ToolbarPlugin>
         {({ blockType }) => (
           <div className="vertical-align-middle sticky top-0 z-10 flex items-center gap-2 overflow-auto border-b p-1">
@@ -168,17 +168,15 @@ export function Plugins({}) {
           </div>
         )}
       </ToolbarPlugin>
-      <div className="relative">
+      <div className="relative flex-1 overflow-hidden">
         <AutoFocusPlugin />
         <RichTextPlugin
           contentEditable={
-            <div className="flex-1 flex flex-col">
-              <div className="flex-1" ref={onRef}>
-                <ContentEditable
-                  placeholder={placeholder}
-                  className="ContentEditable__root relative block h-full min-h-[400px] overflow-auto px-8 py-4 focus:outline-none"
-                />
-              </div>
+            <div className="flex-1 overflow-auto" ref={onRef}>
+              <ContentEditable
+                placeholder={placeholder}
+                className="ContentEditable__root relative block min-h-full px-8 py-4 focus:outline-none overflow-auto"
+              />
             </div>
           }
           ErrorBoundary={LexicalErrorBoundary}
