@@ -1,16 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, registerGsap } from "@/lib/gsap";
 import { identity } from "@/content";
+import { FluidPhotoReveal } from "./FluidPhotoReveal";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
-  const portraitRef = useRef<HTMLDivElement>(null);
   const taglineRef = useRef<HTMLDivElement>(null);
   const welcomeRef = useRef<HTMLDivElement>(null);
   const chevronsRef = useRef<HTMLDivElement>(null);
@@ -21,10 +20,10 @@ export function Hero() {
       if (!sectionRef.current) return;
 
       // Initial states
-      gsap.set(portraitRef.current, { xPercent: 60, scale: 0.78, opacity: 0 });
       gsap.set(taglineRef.current, { y: 24, scale: 0.94, opacity: 0 });
       gsap.set(welcomeRef.current, { y: 24, opacity: 0 });
 
+      // Scroll-driven cinematic timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -34,42 +33,20 @@ export function Hero() {
         },
       });
 
-      // 0 → 0.4: name zooms gently (scale 1 → 1.15), opacity full
+      // 0 → 0.4: name zooms gently
       tl.to(
         nameRef.current,
         { scale: 1.15, ease: "none", duration: 0.4 },
         0,
       );
-      // 0.4 → 0.7: name continues zoom + fade out
+      // 0.4 → 0.7: name continues zoom + fades
       tl.to(
         nameRef.current,
         { scale: 1.3, opacity: 0, ease: "none", duration: 0.3 },
         0.4,
       );
 
-      // 0 → 0.55: portrait sweeps right→left, fades in then out
-      tl.to(
-        portraitRef.current,
-        {
-          xPercent: -60,
-          scale: 1.18,
-          ease: "none",
-          duration: 0.55,
-        },
-        0,
-      );
-      tl.to(
-        portraitRef.current,
-        { opacity: 1, ease: "power2.out", duration: 0.12 },
-        0.04,
-      );
-      tl.to(
-        portraitRef.current,
-        { opacity: 0, ease: "power2.in", duration: 0.13 },
-        0.42,
-      );
-
-      // 0.42 → 0.58: tagline rises
+      // 0.42 → 0.58: tagline rises into view
       tl.to(
         taglineRef.current,
         { y: 0, scale: 1, opacity: 1, ease: "power2.out", duration: 0.16 },
@@ -89,7 +66,7 @@ export function Hero() {
         0.72,
       );
 
-      // Chevrons: fade out as hero leaves
+      // Chevrons fade as the hero leaves the top
       tl.to(
         chevronsRef.current,
         { opacity: 0, ease: "none", duration: 0.15 },
@@ -111,19 +88,30 @@ export function Hero() {
   return (
     <section ref={sectionRef} id="top" className="relative h-[400vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
+        {/* Grain */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-1 opacity-[0.04] mix-blend-multiply bg-size-[200px_200px]"
+          className="pointer-events-none absolute inset-0 z-[1] opacity-[0.04] mix-blend-multiply bg-size-[200px_200px]"
           style={{
             backgroundImage:
               "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")",
           }}
         />
 
+        {/* Layer B — Photo + WebGL fluid-trail reveal mask */}
+        <div className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center">
+          <div className="pointer-events-auto relative h-[min(86vh,820px)] w-[min(82vw,900px)]">
+            <FluidPhotoReveal
+              src="/profile_photo.jpeg"
+              className="absolute inset-0"
+            />
+          </div>
+        </div>
+
         {/* Layer A — Name */}
         <div
           ref={nameRef}
-          className="absolute inset-0 z-2 flex flex-col items-center justify-center will-change-[transform,opacity]"
+          className="pointer-events-none absolute inset-0 z-[3] flex flex-col items-center justify-center will-change-[transform,opacity] mix-blend-multiply"
         >
           <span className="block overflow-hidden px-[0.06em] py-[0.04em]">
             <span className="hero-name-line block font-display font-normal text-text text-display tracking-display leading-[0.95]">
@@ -137,27 +125,10 @@ export function Hero() {
           </span>
         </div>
 
-        {/* Layer B — Portrait */}
-        <div
-          ref={portraitRef}
-          className="absolute inset-0 z-3 flex items-center justify-center will-change-[transform,opacity]"
-        >
-          <div className="h-[min(34vw,380px)] w-[min(34vw,380px)] overflow-hidden rounded-full shadow-[0_20px_60px_-20px_rgba(0,0,0,0.35)] filter-[grayscale(20%)_contrast(0.97)]">
-            <Image
-              src="/profile_photo.jpeg"
-              alt={`${identity.firstName} ${identity.lastName}`}
-              width={760}
-              height={760}
-              priority
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </div>
-
         {/* Layer C — Tagline */}
         <div
           ref={taglineRef}
-          className="absolute inset-0 z-4 flex items-center justify-center px-6 text-center will-change-[transform,opacity]"
+          className="pointer-events-none absolute inset-0 z-[4] flex items-center justify-center px-6 text-center will-change-[transform,opacity]"
         >
           <h2 className="max-w-[900px] font-display font-normal text-hero-sub leading-[1.1] tracking-[-0.01em]">
             Crafting <em className="italic">{identity.niche}</em> &mdash;{" "}
@@ -168,7 +139,7 @@ export function Hero() {
         {/* Layer D — Welcome */}
         <div
           ref={welcomeRef}
-          className="absolute inset-0 z-5 flex items-center justify-center px-6 will-change-[transform,opacity]"
+          className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center px-6 will-change-[transform,opacity]"
         >
           <p className="font-display italic font-normal text-[clamp(1.4rem,2.6vw,2.4rem)] text-text tracking-[-0.005em]">
             {identity.welcome}
@@ -176,7 +147,7 @@ export function Hero() {
         </div>
 
         {/* Chevrons */}
-        <div ref={chevronsRef} aria-hidden className="z-6">
+        <div ref={chevronsRef} aria-hidden className="z-[6]">
           <div className="pointer-events-none absolute bottom-8 left-8">
             <ChevronDown
               size={20}
