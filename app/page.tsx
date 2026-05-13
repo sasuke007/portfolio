@@ -1,115 +1,25 @@
-import { FeaturedPhotos } from "@/components/featured-photos"
-import { FeaturedPost } from "@/components/featured-post"
-import { HeroSection } from "@/components/hero-section"
-import { SectionHeading } from "@/components/section-heading"
-import { VideoCard } from "@/components/video-card"
-import { getHighlightedBlogs } from "@/lib/services/blog.service"
-import { getHighlightedPhotos } from "@/lib/services/photo.service"
-import { getHighlightedVlogs } from "@/lib/services/vlog.service"
-import { formatDate } from "@/lib/utils"
+import { Hero } from "@/components/Hero";
+import { About } from "@/components/About";
+import { TechMarquee } from "@/components/TechMarquee";
+import { Projects } from "@/components/Projects";
+import { Experience } from "@/components/Experience";
+import { Achievements } from "@/components/Achievements";
+import { Journal } from "@/components/Journal";
+import { Tools } from "@/components/Tools";
+import { Contact } from "@/components/Contact";
 
-export default async function Home() {
-  // Make all API calls in parallel and wait for all to complete
-  const [blogs, photos, vlogs] = await Promise.all([
-    getHighlightedBlogs().catch(() => []),
-    getHighlightedPhotos().catch(() => []),
-    getHighlightedVlogs().catch(() => [])
-  ]);
-
+export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <HeroSection />
-      <section className="w-full pt-1 md:pt-4 lg:pt-6 bg-dark-200/50 outline-blue-500" >
-        <div className="container px-4 md:px-6">
-          <SectionHeading
-            title="Latest Writing"
-            description="Explore my recent thoughts and stories."
-            link="/blog"
-            linkText="View All Posts"
-          />
-          <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3">
-            {
-              blogs.map((blog) => (
-                <FeaturedPost
-                  key={blog.title}
-                  title={blog.title}
-                  excerpt={blog.description}
-                  date={blog.published_at}
-                  category={blog.category}
-                  slug={blog.slug}
-                  featured_image_url={blog.featured_image_url || undefined}
-                />
-              ))
-            }
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Photography */}
-      <section className="w-full py-1 md:py-2 lg:py-3">
-        <div className="container px-4 md:px-6">
-          <SectionHeading
-            title="Photography"
-            description="Capturing moments through my lens."
-            link="/photography"
-            linkText="View Gallery"
-          />
-          <div className="grid grid-cols-2 gap-4 mt-8 md:grid-cols-3 lg:grid-cols-4">
-            {
-              photos.map((photo) => (
-                <FeaturedPhotos
-                  key={photo.id}
-                  image={photo.image_url}
-                  title={photo.title}
-                />
-              ))
-            }
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Vlogs */}
-      <section className="w-full py-1 md:py-2 lg:py-3 bg-dark-200/50">
-        <div className="container px-4 md:px-6">
-          <SectionHeading
-            title="Vlogs"
-            description="Visual stories from my adventures."
-            link="/vlogs"
-            linkText="Watch More"
-          />
-          <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
-            {vlogs.map((vlog) => (
-              <VideoCard
-                key={vlog.id}
-                title={vlog.title}
-                description={vlog.description}
-                date={formatDate(vlog.published_at)}
-                videoId={vlog.id}
-                videoUrl={vlog.video_url}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* Journey Section Teaser */}
-      <section className="w-full py-1 md:py-2 lg:py-3 bg-dark-200/50">
-        <div className="container px-4 md:px-6">
-          <div className="mt-8 p-6 border rounded-lg bg-card text-card-foreground shadow-sm">
-            <h3 className="text-xl font-semibold mb-2">Professional Timeline</h3>
-            <p className="text-muted-foreground mb-4">
-              From education to professional experience, discover the path that shaped my career in technology and creative work.
-            </p>
-            <div className="flex justify-end">
-              <a href="/journey" className="text-primary hover:underline">
-                Explore my journey →
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  )
+    <>
+      <Hero />
+      <About />
+      <TechMarquee />
+      <Projects />
+      <Experience />
+      <Achievements />
+      <Journal />
+      <Tools />
+      <Contact />
+    </>
+  );
 }

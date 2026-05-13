@@ -1,315 +1,248 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* * {
-  outline: 1px solid yellow;
-} */
+@theme {
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
 
-@layer base {
-  :root {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 270 95% 75%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 240 70% 60%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 70%;
-
-    --accent: 190 90% 50%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 270 95% 75%;
-
-    --radius: 0.5rem;
-
-    --chart-1: 270, 95%, 75%;
-    --chart-2: 240, 70%, 60%;
-  }
+  --color-bg: #fafafa;
+  --color-text: #1a1a1a;
+  --color-muted: #888888;
+  --color-accent: #f0c040;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-dot-grid: rgba(0, 0, 0, 0.06);
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-dark-300 text-foreground;
-    background-image: radial-gradient(
-      circle at center,
-      rgba(147, 51, 234, 0.05) 0%,
-      rgba(59, 130, 246, 0.05) 50%,
-      rgba(10, 10, 10, 1) 100%
-    );
-    background-size: 100% 100%;
-    background-attachment: fixed;
-  }
+:root {
+  --color-bg: #fafafa;
+  --color-text: #1a1a1a;
+  --color-muted: #888888;
+  --color-accent: #f0c040;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-dot-grid: rgba(0, 0, 0, 0.06);
+
+  --text-display: clamp(5rem, 14vw, 14rem);
+  --text-hero-sub: clamp(1.8rem, 4vw, 3.5rem);
+  --text-section-label: 0.7rem;
+  --letter-spacing-display: -0.02em;
+  --section-gap: 8rem;
+  --max-width: 1280px;
+
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-/* Animated background */
-.animated-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  opacity: 0.07;
-  background: radial-gradient(circle at 15% 50%, rgba(147, 51, 234, 0.3) 0%, transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.3) 0%, transparent 25%);
+* {
+  box-sizing: border-box;
 }
 
-/* Glow border effect */
-.glow-border {
-  position: relative;
-  overflow: hidden;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
-.glow-border::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(to right, #9333ea, #3b82f6, #06b6d4);
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-.glow-border:hover::before {
-  opacity: 1;
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: clip;
+  animation: page-fade-in 600ms var(--ease-soft) 120ms both;
 }
 
-/* Gradient text with wave animation */
-.gradient-text {
-  background: linear-gradient(90deg, #9333ea 0%, #3b82f6 50%, #06b6d4 100%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .gradient-text {
-    animation: gradient-wave 8s ease infinite;
-  }
-}
-
-@keyframes gradient-wave {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Shimmer effect */
-.shimmer {
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.05) 25%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0.05) 75%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 200% 100%;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .shimmer {
-    animation: shimmer 2s infinite linear;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-/* Hero section with Ghibli-style background */
-.hero-section {
-  position: relative;
-  isolation: isolate;
-}
-
-.hero-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("/stylish_pic.jpeg");
-  background-size: cover;
-  background-position: center 25%;
-  opacity: 0.45; /* Perfect opacity for visibility while maintaining readability */
-  z-index: -1;
-  filter: saturate(0.95) brightness(0.85); /* Slightly adjusted colors to match theme */
-}
-
-/* Add a subtle gradient overlay for text readability */
-.hero-section::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.65));
-  z-index: -1;
-}
-
-/* Subtitle background with Ghibli landscape */
-.subtitle-container {
-  display: inline-block;
-  margin-top: 0.5rem;
-  backdrop-filter: blur(3px);
-  background-color: rgba(0, 0, 0, 0.25);
-  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
-  border: 1px solid rgba(147, 51, 234, 0.2);
-}
-
-.subtitle-bg {
-  background-size: cover;
-  background-position: center 30%;
-  opacity: 0.6; /* Increased opacity for better visibility */
-  filter: saturate(1) brightness(0.9);
-  z-index: -1;
-}
-
-/* Fade-in animation for sections */
-/* Add these styles for the hero section */
-.fade-in {
-  animation: fadeIn 1s ease-in-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.subtitle-bg {
-  background: linear-gradient(90deg, rgba(79, 70, 229, 0.2) 0%, rgba(219, 39, 119, 0.2) 100%);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.border-glow-purple {
-  border: 1px solid rgba(139, 92, 246, 0.5);
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
-}
-
-.border-glow-blue {
-  border: 1px solid rgba(59, 130, 246, 0.5);
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
-}
-
-.hover-scale {
-  transition: transform 0.2s ease-in-out;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-/* Pulse animation for highlights */
-.pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-/* Hover scale effect */
-.hover-scale {
-  transition: transform 0.3s ease;
-}
-
-.hover-scale:hover {
-  transform: scale(1.03);
-}
-
-/* Glow effect */
-.glow {
-  box-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
-  animation: glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
+@keyframes page-fade-in {
   from {
-    box-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
-  }
-  to {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-  }
-}
-
-.text-glow {
-  color: #fff; /* Ensure text is white for the glow effect */
-  text-shadow: 0 0 5px rgba(147, 51, 234, 0.5), 0 0 10px rgba(59, 130, 246, 0.5);
-}
-
-
-/* Gradient text utility class */
-.gradient-text-simple {
-  @apply bg-clip-text text-transparent;
-  background-image: linear-gradient(to right, #9333ea, #3b82f6, #06b6d4);
-}
-
-/* Add this to your existing globals.css */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-/* Add this to your globals.css file */
-.slow-fade-in {
-  animation: slowFadeIn 2s ease-in-out forwards;
-  opacity: 0;
-}
-
-@keyframes slowFadeIn {
-  0% {
     opacity: 0;
   }
-  100% {
+  to {
     opacity: 1;
+  }
+}
+
+html {
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-text);
+}
+
+/* Global paper-grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+}
+
+/* Marquee animations */
+@keyframes marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.marquee-left {
+  animation: marquee-left 30s linear infinite;
+}
+
+.marquee-right {
+  animation: marquee-right 35s linear infinite;
+}
+
+.marquee-left-slow {
+  animation: marquee-left 55s linear infinite;
+}
+
+.marquee-right-slow {
+  animation: marquee-right 60s linear infinite;
+}
+
+/* Hero chevron bounce */
+@keyframes chevron-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+.chevron-bounce {
+  animation: chevron-bounce 1.8s ease-in-out infinite;
+}
+
+/* Hero name text-reveal */
+@keyframes mask-reveal {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.mask-reveal {
+  display: block;
+  animation: mask-reveal 900ms var(--ease-soft) both;
+}
+
+/* Animated underline */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 400ms var(--ease-soft);
+}
+
+.link-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Editorial body utility */
+.body-editorial {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+
+.body-editorial-tight {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.label-micro {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 11px;
+  color: var(--color-muted);
+}
+
+.label-pill {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10px;
+}
+
+/* Dot-grid texture */
+.dot-grid {
+  background-image: radial-gradient(var(--color-dot-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0;
+}
+
+.dot-grid-strong {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0;
+}
+
+/* Custom cursor — hide native */
+@media (pointer: fine) {
+  body.cursor-custom,
+  body.cursor-custom * {
+    cursor: none !important;
+  }
+}
+
+@media (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
