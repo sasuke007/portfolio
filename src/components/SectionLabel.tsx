@@ -27,10 +27,8 @@ export function SectionLabel({ index, name }: { index: string; name: string }) {
 
   return (
     <div ref={ref} className="label-micro inline-block">
-      <span style={{ color: "var(--color-text)" }}>{index}</span>
-      <span className="mx-2" style={{ color: "var(--color-muted)" }}>
-        /
-      </span>
+      <span className="text-text">{index}</span>
+      <span className="mx-2 text-muted">/</span>
       <span>{name}</span>
     </div>
   );

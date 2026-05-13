@@ -2,6 +2,7 @@
 
 import { SectionLabel } from "./SectionLabel";
 import { tools } from "@/content";
+import { cn } from "@/lib/cn";
 
 function BigRow({
   items,
@@ -12,42 +13,23 @@ function BigRow({
 }) {
   const doubled = [...items, ...items, ...items];
   return (
-    <div
-      className="overflow-hidden"
-      style={{
-        maskImage:
-          "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
-      }}
-    >
+    <div className="overflow-hidden mask-[linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
       <div
-        className={direction === "left" ? "marquee-left-slow" : "marquee-right-slow"}
-        style={{
-          display: "flex",
-          width: "max-content",
-          alignItems: "center",
-          gap: 56,
-        }}
+        className={cn(
+          "flex w-max items-center gap-14",
+          direction === "left" ? "marquee-left-slow" : "marquee-right-slow",
+        )}
       >
         {doubled.map((tool, i) => (
           <span
             key={`${tool.name}-${i}`}
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 400,
-              fontSize: "clamp(3rem, 8vw, 7.5rem)",
-              lineHeight: 1,
-              letterSpacing: "-0.02em",
-              color: "var(--color-text)",
-              opacity: tool.muted ? 0.18 : 1,
-              fontStyle: tool.muted ? "italic" : "normal",
-              whiteSpace: "nowrap",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 56,
-            }}
+            className={cn(
+              "inline-flex items-center gap-14 whitespace-nowrap font-display font-normal text-[clamp(3rem,8vw,7.5rem)] leading-none tracking-display text-text",
+              tool.muted ? "italic opacity-[0.18]" : "opacity-100",
+            )}
           >
             {tool.name}
-            <span aria-hidden style={{ opacity: 0.35, fontStyle: "normal" }}>
+            <span aria-hidden className="not-italic opacity-[0.35]">
               ·
             </span>
           </span>
@@ -61,23 +43,11 @@ export function Tools() {
   const reversed = [...tools].reverse();
 
   return (
-    <section
-      className="relative mx-auto px-6 py-32 md:py-44"
-      style={{ maxWidth: "var(--max-width)" }}
-    >
+    <section className="relative mx-auto max-w-(--max-width) px-6 py-32 md:py-44">
       <SectionLabel index="05" name="TOOLS" />
 
-      <h2
-        style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 400,
-          fontSize: "clamp(2.5rem, 5.5vw, 4.5rem)",
-          lineHeight: 1.05,
-          letterSpacing: "-0.015em",
-          margin: "32px 0 64px 0",
-        }}
-      >
-        Tools of the <em style={{ fontStyle: "italic" }}>Trade</em>.
+      <h2 className="mt-8 mb-16 font-display font-normal text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[1.05] tracking-[-0.015em]">
+        Tools of the <em className="italic">Trade</em>.
       </h2>
 
       <div className="-mx-6 flex flex-col gap-6">

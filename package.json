@@ -6,19 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "doctor": "react-doctor",
     "scan": "react-scan localhost:3000"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@swc/helpers": "^0.5.21",
+    "clsx": "^2.1.1",
     "gsap": "^3.15.0",
     "lenis": "^1.1.20",
     "lucide-react": "^0.454.0",
-    "next": "^15.5.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "next": "^16.2.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.0",
@@ -29,7 +30,7 @@
     "postcss": "^8.4.47",
     "react-doctor": "^0.1.6",
     "react-grab": "^0.1.34",
-    "react-scan": "^1.2.0",
+    "react-scan": "^0.5.6",
     "tailwindcss": "^4.1.0",
     "typescript": "^5"
   }

@@ -109,69 +109,29 @@ export function Hero() {
   );
 
   return (
-    <section
-      ref={sectionRef}
-      id="top"
-      style={{ height: "400vh", position: "relative" }}
-    >
-      <div
-        className="sticky top-0 overflow-hidden"
-        style={{ height: "100vh" }}
-      >
+    <section ref={sectionRef} id="top" className="relative h-[400vh]">
+      <div className="sticky top-0 h-screen overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 z-1 opacity-[0.04] mix-blend-multiply bg-size-[200px_200px]"
           style={{
-            zIndex: 1,
-            opacity: 0.04,
-            mixBlendMode: "multiply",
             backgroundImage:
               "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")",
-            backgroundSize: "200px 200px",
           }}
         />
 
         {/* Layer A — Name */}
         <div
           ref={nameRef}
-          className="absolute inset-0 flex flex-col items-center justify-center"
-          style={{ zIndex: 2, willChange: "transform, opacity" }}
+          className="absolute inset-0 z-2 flex flex-col items-center justify-center will-change-[transform,opacity]"
         >
-          <span
-            className="block overflow-hidden"
-            style={{ padding: "0.04em 0.06em" }}
-          >
-            <span
-              className="hero-name-line"
-              style={{
-                display: "block",
-                fontFamily: "var(--font-display)",
-                fontSize: "var(--text-display)",
-                fontWeight: 400,
-                letterSpacing: "var(--letter-spacing-display)",
-                lineHeight: 0.95,
-                color: "var(--color-text)",
-              }}
-            >
+          <span className="block overflow-hidden px-[0.06em] py-[0.04em]">
+            <span className="hero-name-line block font-display font-normal text-text text-display tracking-display leading-[0.95]">
               {identity.firstName}
             </span>
           </span>
-          <span
-            className="block overflow-hidden"
-            style={{ padding: "0.04em 0.06em" }}
-          >
-            <span
-              className="hero-name-line"
-              style={{
-                display: "block",
-                fontFamily: "var(--font-display)",
-                fontSize: "var(--text-display)",
-                fontWeight: 400,
-                letterSpacing: "var(--letter-spacing-display)",
-                lineHeight: 0.95,
-                color: "var(--color-text)",
-              }}
-            >
+          <span className="block overflow-hidden px-[0.06em] py-[0.04em]">
+            <span className="hero-name-line block font-display font-normal text-text text-display tracking-display leading-[0.95]">
               {identity.lastName}
             </span>
           </span>
@@ -180,25 +140,16 @@ export function Hero() {
         {/* Layer B — Portrait */}
         <div
           ref={portraitRef}
-          className="absolute inset-0 flex items-center justify-center"
-          style={{ zIndex: 3, willChange: "transform, opacity" }}
+          className="absolute inset-0 z-3 flex items-center justify-center will-change-[transform,opacity]"
         >
-          <div
-            className="overflow-hidden rounded-full"
-            style={{
-              width: "min(34vw, 380px)",
-              height: "min(34vw, 380px)",
-              boxShadow: "0 20px 60px -20px rgba(0,0,0,0.35)",
-              filter: "grayscale(20%) contrast(0.97)",
-            }}
-          >
+          <div className="h-[min(34vw,380px)] w-[min(34vw,380px)] overflow-hidden rounded-full shadow-[0_20px_60px_-20px_rgba(0,0,0,0.35)] filter-[grayscale(20%)_contrast(0.97)]">
             <Image
               src="/profile_photo.jpeg"
               alt={`${identity.firstName} ${identity.lastName}`}
               width={760}
               height={760}
               priority
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              className="h-full w-full object-cover"
             />
           </div>
         </div>
@@ -206,47 +157,26 @@ export function Hero() {
         {/* Layer C — Tagline */}
         <div
           ref={taglineRef}
-          className="absolute inset-0 flex items-center justify-center px-6 text-center"
-          style={{ zIndex: 4, willChange: "transform, opacity" }}
+          className="absolute inset-0 z-4 flex items-center justify-center px-6 text-center will-change-[transform,opacity]"
         >
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 400,
-              fontSize: "var(--text-hero-sub)",
-              lineHeight: 1.1,
-              letterSpacing: "-0.01em",
-              maxWidth: 900,
-            }}
-          >
-            Crafting{" "}
-            <em style={{ fontStyle: "italic" }}>{identity.niche}</em> &mdash;{" "}
-            <em style={{ fontStyle: "italic" }}>{identity.role}</em>
+          <h2 className="max-w-[900px] font-display font-normal text-hero-sub leading-[1.1] tracking-[-0.01em]">
+            Crafting <em className="italic">{identity.niche}</em> &mdash;{" "}
+            <em className="italic">{identity.role}</em>
           </h2>
         </div>
 
         {/* Layer D — Welcome */}
         <div
           ref={welcomeRef}
-          className="absolute inset-0 flex items-center justify-center px-6"
-          style={{ zIndex: 5, willChange: "transform, opacity" }}
+          className="absolute inset-0 z-5 flex items-center justify-center px-6 will-change-[transform,opacity]"
         >
-          <p
-            style={{
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
-              fontWeight: 400,
-              fontSize: "clamp(1.4rem, 2.6vw, 2.4rem)",
-              color: "var(--color-text)",
-              letterSpacing: "-0.005em",
-            }}
-          >
+          <p className="font-display italic font-normal text-[clamp(1.4rem,2.6vw,2.4rem)] text-text tracking-[-0.005em]">
             {identity.welcome}
           </p>
         </div>
 
         {/* Chevrons */}
-        <div ref={chevronsRef} aria-hidden style={{ zIndex: 6 }}>
+        <div ref={chevronsRef} aria-hidden className="z-6">
           <div className="pointer-events-none absolute bottom-8 left-8">
             <ChevronDown
               size={20}

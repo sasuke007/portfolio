@@ -10,24 +10,18 @@
   --color-accent: #f0c040;
   --color-border: rgba(0, 0, 0, 0.08);
   --color-dot-grid: rgba(0, 0, 0, 0.06);
-}
-
-:root {
-  --color-bg: #fafafa;
-  --color-text: #1a1a1a;
-  --color-muted: #888888;
-  --color-accent: #f0c040;
-  --color-border: rgba(0, 0, 0, 0.08);
-  --color-dot-grid: rgba(0, 0, 0, 0.06);
 
   --text-display: clamp(5rem, 14vw, 14rem);
   --text-hero-sub: clamp(1.8rem, 4vw, 3.5rem);
   --text-section-label: 0.7rem;
-  --letter-spacing-display: -0.02em;
-  --section-gap: 8rem;
-  --max-width: 1280px;
+  --tracking-display: -0.02em;
 
   --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:root {
+  --section-gap: 8rem;
+  --max-width: 1280px;
 }
 
 * {

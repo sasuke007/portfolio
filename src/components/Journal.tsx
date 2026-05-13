@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, registerGsap } from "@/lib/gsap";
 import { journalPhotos } from "@/content";
+import { cn } from "@/lib/cn";
 
 export function Journal() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -72,98 +73,53 @@ export function Journal() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden"
-      style={{
-        padding: "12rem 0",
-        minHeight: "min(120vh, 900px)",
-      }}
+      className="relative min-h-[min(120vh,900px)] overflow-hidden py-48"
     >
       {journalPhotos.map((photo, i) => (
         <div
           key={photo.src}
           data-journal-photo
           data-parallax={photo.parallax}
-          className="pointer-events-none absolute"
+          className="pointer-events-none absolute bg-white p-2 shadow-[0_22px_50px_-22px_rgba(0,0,0,0.28)] will-change-transform"
           style={{
             ...photo.position,
             width: photo.width,
             zIndex: photo.z,
             transform: `rotate(${photo.rotation}deg)`,
-            willChange: "transform",
-            background: "#fff",
-            padding: 8,
-            boxShadow: "0 22px 50px -22px rgba(0,0,0,0.28)",
           }}
         >
           <div
-            style={{
-              position: "relative",
-              width: "100%",
-              aspectRatio: i === 1 ? "3 / 4" : "4 / 5",
-              overflow: "hidden",
-            }}
+            className={cn(
+              "relative w-full overflow-hidden",
+              i === 1 ? "aspect-3/4" : "aspect-4/5",
+            )}
           >
             <Image
               src={photo.src}
               alt={photo.alt}
               fill
               sizes="(max-width: 768px) 50vw, 25vw"
-              style={{
-                objectFit: "cover",
-                filter: "grayscale(15%) contrast(0.95)",
-              }}
+              className="object-cover filter-[grayscale(15%)_contrast(0.95)]"
             />
           </div>
         </div>
       ))}
 
-      <div
-        className="journal-text relative mx-auto px-6 text-center"
-        style={{ maxWidth: 720, zIndex: 4 }}
-      >
-        <p className="label-micro" style={{ display: "inline-block" }}>
-          PERSONAL JOURNAL
-        </p>
-        <p
-          style={{
-            fontFamily: "var(--font-body)",
-            fontWeight: 400,
-            fontSize: "clamp(1.4rem, 2.8vw, 2.25rem)",
-            color: "var(--color-text)",
-            marginTop: 28,
-            letterSpacing: "0.01em",
-          }}
-        >
+      <div className="journal-text relative z-4 mx-auto max-w-180 px-6 text-center">
+        <p className="label-micro inline-block">PERSONAL JOURNAL</p>
+        <p className="mt-7 font-body font-normal text-[clamp(1.4rem,2.8vw,2.25rem)] tracking-[0.01em] text-text">
           My life in a
         </p>
 
-        <div style={{ position: "relative", display: "inline-block" }}>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
-              fontWeight: 400,
-              fontSize: "clamp(4rem, 12vw, 9rem)",
-              lineHeight: 1,
-              margin: 0,
-              letterSpacing: "-0.02em",
-            }}
-          >
+        <div className="relative inline-block">
+          <h2 className="m-0 font-display italic font-normal text-[clamp(4rem,12vw,9rem)] leading-none tracking-display">
             glimpse
           </h2>
           <svg
             aria-hidden
             viewBox="0 0 320 24"
             preserveAspectRatio="none"
-            className="journal-squiggle"
-            style={{
-              position: "absolute",
-              left: 0,
-              right: 0,
-              bottom: "-12px",
-              width: "100%",
-              height: 18,
-            }}
+            className="journal-squiggle absolute -bottom-3 left-0 right-0 h-4.5 w-full"
           >
             <path
               d="M2 14 C 30 2, 60 22, 90 12 S 150 2, 180 12 S 240 22, 270 12 S 310 4, 318 14"
@@ -175,7 +131,7 @@ export function Journal() {
           </svg>
         </div>
 
-        <p className="body-editorial mx-auto mt-12 max-w-sm" style={{ marginTop: 56 }}>
+        <p className="body-editorial mx-auto mt-14 max-w-sm">
           Photographs, half-thoughts, and the small things worth saving.
         </p>
       </div>

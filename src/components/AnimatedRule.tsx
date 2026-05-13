@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, registerGsap } from "@/lib/gsap";
+import { cn } from "@/lib/cn";
 
 export function AnimatedRule({
   className = "",
@@ -34,14 +35,10 @@ export function AnimatedRule({
   return (
     <div
       ref={ref}
-      className={className}
-      style={{
-        height: 1,
-        width: "100%",
-        background: "currentColor",
-        opacity: 0.18,
-        transformOrigin: "left center",
-      }}
+      className={cn(
+        "h-px w-full origin-left bg-current opacity-[0.18]",
+        className,
+      )}
     />
   );
 }

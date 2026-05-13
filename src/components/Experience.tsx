@@ -5,52 +5,32 @@ import { useGSAP } from "@gsap/react";
 import { gsap, registerGsap } from "@/lib/gsap";
 import { SectionLabel } from "./SectionLabel";
 import { experience, type Experience as Role } from "@/content";
+import { cn } from "@/lib/cn";
 
 function Row({ role }: { role: Role }) {
   return (
     <div className="experience-row grid grid-cols-1 gap-4 py-8 md:grid-cols-[1.1fr_2.4fr_1.5fr] md:items-baseline">
       <div className="flex items-center gap-3">
-        <span
-          style={{
-            fontFamily: "var(--font-body)",
-            fontWeight: 500,
-            fontSize: 14,
-            letterSpacing: "0.02em",
-            color: "var(--color-muted)",
-          }}
-        >
+        <span className="font-body font-medium text-[14px] -tracking-display text-muted">
           {role.start} &mdash; {role.end}
         </span>
-        <span
-          className="label-pill rounded-full border px-2 py-0.5"
-          style={{
-            borderColor: "var(--color-border)",
-            color: "var(--color-muted)",
-            fontSize: 9,
-          }}
-        >
+        <span className="label-pill rounded-full border border-border px-2 py-0.5 text-[9px] text-muted">
           {role.location}
         </span>
       </div>
 
       <h3
-        style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 400,
-          fontSize: role.current
-            ? "clamp(1.6rem, 2.6vw, 2.25rem)"
-            : "clamp(1.25rem, 2vw, 1.7rem)",
-          lineHeight: 1.1,
-          color: role.current ? "var(--color-text)" : "rgba(26,26,26,0.7)",
-          margin: 0,
-        }}
+        className={cn(
+          "m-0 font-display font-normal leading-[1.1]",
+          role.current
+            ? "text-[clamp(1.6rem,2.6vw,2.25rem)] text-text"
+            : "text-[clamp(1.25rem,2vw,1.7rem)] text-[rgba(26,26,26,0.7)]",
+        )}
       >
         {role.title}
       </h3>
 
-      <p className="label-micro md:text-right" style={{ margin: 0 }}>
-        {role.company}
-      </p>
+      <p className="label-micro m-0 md:text-right">{role.company}</p>
     </div>
   );
 }
@@ -103,23 +83,13 @@ export function Experience() {
     <section
       ref={sectionRef}
       id="journey"
-      className="relative mx-auto px-6 py-32 md:py-44"
-      style={{ maxWidth: "var(--max-width)" }}
+      className="relative mx-auto max-w-(--max-width) px-6 py-32 md:py-44"
     >
       <div className="experience-head">
         <SectionLabel index="03" name="EXPERIENCE" />
 
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 400,
-            fontSize: "clamp(2.5rem, 5.5vw, 4.5rem)",
-            lineHeight: 1.05,
-            letterSpacing: "-0.015em",
-            margin: "32px 0 0 0",
-          }}
-        >
-          Professional <em style={{ fontStyle: "italic" }}>Journey</em>.
+        <h2 className="mt-8 font-display font-normal text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[1.05] tracking-[-0.015em]">
+          Professional <em className="italic">Journey</em>.
         </h2>
 
         <p className="body-editorial mt-6 max-w-xl">
@@ -130,29 +100,11 @@ export function Experience() {
       <div className="experience-list mt-14">
         {experience.map((role) => (
           <div key={`${role.title}-${role.company}`}>
-            <div
-              className="experience-rule"
-              style={{
-                height: 1,
-                width: "100%",
-                background: "currentColor",
-                opacity: 0.18,
-                transformOrigin: "left center",
-              }}
-            />
+            <div className="experience-rule h-px w-full origin-left bg-current opacity-[0.18]" />
             <Row role={role} />
           </div>
         ))}
-        <div
-          className="experience-rule"
-          style={{
-            height: 1,
-            width: "100%",
-            background: "currentColor",
-            opacity: 0.18,
-            transformOrigin: "left center",
-          }}
-        />
+        <div className="experience-rule h-px w-full origin-left bg-current opacity-[0.18]" />
       </div>
     </section>
   );

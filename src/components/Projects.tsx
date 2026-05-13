@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap, registerGsap } from "@/lib/gsap";
 import { SectionLabel } from "./SectionLabel";
 import { projects, type Project } from "@/content";
+import { cn } from "@/lib/cn";
 
 function spanClasses(span: Project["span"]) {
   switch (span) {
@@ -26,56 +27,31 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <a
       href={project.href}
-      className={`project-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border ${spanClasses(project.span)}`}
-      style={{
-        background: "#ffffff",
-        borderColor: "var(--color-border)",
-        padding: isFeature ? "2.5rem" : "1.75rem",
-        minHeight: isFeature ? 520 : isTall ? 520 : 320,
-      }}
+      className={cn(
+        "project-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-white",
+        spanClasses(project.span),
+        isFeature ? "p-10 min-h-130" : "p-7 min-h-80",
+        isTall && "min-h-130",
+      )}
     >
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(var(--color-dot-grid) 1px, transparent 1px)",
-          backgroundSize: "20px 20px",
-          backgroundPosition: "0 0",
-          opacity: 0.6,
-          transition: "opacity 500ms var(--ease-soft)",
-          pointerEvents: "none",
-        }}
-      />
+      <div className="pointer-events-none absolute inset-0 dot-grid opacity-60 transition-opacity duration-500 ease-soft" />
 
       <div className="relative z-10 flex items-start justify-between gap-6">
         <div>
           <h3
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 400,
-              fontSize: isFeature
-                ? "clamp(2.4rem, 4vw, 3.5rem)"
+            className={cn(
+              "m-0 font-display font-normal leading-[1.05] tracking-[-0.01em]",
+              isFeature
+                ? "text-[clamp(2.4rem,4vw,3.5rem)]"
                 : isTall
-                  ? "clamp(2rem, 3.2vw, 2.6rem)"
-                  : "clamp(1.5rem, 2.2vw, 1.9rem)",
-              lineHeight: 1.05,
-              letterSpacing: "-0.01em",
-              margin: 0,
-            }}
+                  ? "text-[clamp(2rem,3.2vw,2.6rem)]"
+                  : "text-[clamp(1.5rem,2.2vw,1.9rem)]",
+            )}
           >
             {project.name}
           </h3>
           {project.oneWord && (
-            <p
-              style={{
-                fontFamily: "var(--font-display)",
-                fontStyle: "italic",
-                fontSize: "clamp(1rem, 1.4vw, 1.25rem)",
-                marginTop: 6,
-                color: "var(--color-muted)",
-              }}
-            >
+            <p className="mt-1.5 font-display italic text-[clamp(1rem,1.4vw,1.25rem)] text-muted">
               {project.oneWord}
             </p>
           )}
@@ -83,22 +59,12 @@ function ProjectCard({ project }: { project: Project }) {
 
         <div className="flex flex-wrap items-start justify-end gap-1.5">
           {project.status ? (
-            <span
-              className="label-pill rounded-full border px-2.5 py-1"
-              style={{
-                borderColor: "var(--color-border)",
-                color: "var(--color-text)",
-              }}
-            >
+            <span className="label-pill rounded-full border border-border px-2.5 py-1 text-text">
               {project.status}
             </span>
           ) : (
             project.stack.map((s) => (
-              <span
-                key={s}
-                className="label-pill"
-                style={{ color: "var(--color-muted)", marginLeft: 8 }}
-              >
+              <span key={s} className="label-pill ml-2 text-muted">
                 {s}
               </span>
             ))
@@ -108,23 +74,11 @@ function ProjectCard({ project }: { project: Project }) {
 
       <div className="relative z-10 mt-auto pt-12">
         {!project.oneWord && (
-          <p
-            className="body-editorial-tight max-w-md"
-            style={{ marginBottom: 18 }}
-          >
+          <p className="body-editorial-tight mb-4.5 max-w-md">
             {project.description}
           </p>
         )}
-        <div
-          className="inline-flex items-center gap-1.5"
-          style={{
-            fontFamily: "var(--font-body)",
-            fontWeight: 500,
-            fontSize: 12,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-          }}
-        >
+        <div className="inline-flex items-center gap-1.5 font-body font-medium text-[12px] uppercase tracking-[0.08em]">
           <span className="link-underline">View Case Study</span>
           <ArrowUpRight
             size={14}
@@ -137,20 +91,7 @@ function ProjectCard({ project }: { project: Project }) {
       {isFeature && (
         <div
           aria-hidden
-          className="pointer-events-none absolute bottom-8 right-8"
-          style={{
-            width: 96,
-            height: 96,
-            borderRadius: "50%",
-            border: "1px solid var(--color-border)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: "var(--font-display)",
-            fontStyle: "italic",
-            fontSize: 28,
-            color: "rgba(26,26,26,0.35)",
-          }}
+          className="pointer-events-none absolute bottom-8 right-8 flex h-24 w-24 items-center justify-center rounded-full border border-border font-display italic text-[28px] text-[rgba(26,26,26,0.35)]"
         >
           01
         </div>
@@ -196,27 +137,16 @@ export function Projects() {
     <section
       ref={sectionRef}
       id="work"
-      className="relative mx-auto px-6 py-32 md:py-44"
-      style={{ maxWidth: "var(--max-width)" }}
+      className="relative mx-auto max-w-(--max-width) px-6 py-32 md:py-44"
     >
       <div className="project-head">
         <SectionLabel index="02" name="SELECTED WORKS" />
 
-        <h2
-          className="mt-8"
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 400,
-            fontSize: "clamp(2.5rem, 5.5vw, 4.5rem)",
-            lineHeight: 1.05,
-            letterSpacing: "-0.015em",
-            margin: "32px 0 0 0",
-          }}
-        >
-          Creating with <em style={{ fontStyle: "italic" }}>Code</em>.
+        <h2 className="mt-8 font-display font-normal text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[1.05] tracking-[-0.015em]">
+          Creating with <em className="italic">Code</em>.
         </h2>
 
-        <p className="body-editorial mt-6 max-w-xl" style={{ marginTop: 18 }}>
+        <p className="body-editorial mt-4.5 max-w-xl">
           A curated handful of the work I&rsquo;m proudest of — products,
           platforms, and provocations.
         </p>

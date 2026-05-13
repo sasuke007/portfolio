@@ -58,71 +58,29 @@ export function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative mx-auto px-6 py-32 md:py-44"
-      style={{ maxWidth: "var(--max-width)" }}
+      className="relative mx-auto max-w-(--max-width) px-6 py-32 md:py-44"
     >
       <SectionLabel index="01" name="INTRODUCTION" />
 
       <div className="about-head mt-10">
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 400,
-            fontSize: "clamp(2.5rem, 6vw, 4.2rem)",
-            lineHeight: 1.05,
-            letterSpacing: "-0.015em",
-            margin: 0,
-          }}
-        >
-          Building <em style={{ fontStyle: "italic" }}>elegant</em> software{" "}
-          <em
-            style={{
-              fontStyle: "italic",
-              color: "var(--color-accent)",
-              fontWeight: 400,
-            }}
-          >
-            &
-          </em>{" "}
-          AI.
+        <h2 className="m-0 font-display font-normal text-[clamp(2.5rem,6vw,4.2rem)] leading-[1.05] tracking-[-0.015em]">
+          Building <em className="italic">elegant</em> software{" "}
+          <em className="italic font-normal text-accent">&</em> AI.
         </h2>
 
-        <p
-          className="mt-4"
-          style={{
-            fontFamily: "var(--font-display)",
-            fontStyle: "italic",
-            fontWeight: 400,
-            fontSize: "clamp(1.25rem, 1.8vw, 1.6rem)",
-            lineHeight: 1.4,
-            margin: 0,
-            color: "var(--color-muted)",
-            maxWidth: 640,
-          }}
-        >
+        <p className="m-0 mt-4 max-w-160 font-display italic font-normal text-[clamp(1.25rem,1.8vw,1.6rem)] leading-[1.4] text-muted">
           For the people who care about the details.
         </p>
 
-        <div style={{ marginTop: 28, maxWidth: 560 }}>
+        <div className="mt-7 max-w-140">
           <AnimatedRule />
         </div>
       </div>
 
-      <p
-        className="about-statement mt-16 max-w-3xl"
-        style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 400,
-          fontSize: "clamp(1.5rem, 2.6vw, 2.1rem)",
-          lineHeight: 1.4,
-          color: "var(--color-text)",
-        }}
-      >
-        I am a{" "}
-        <em style={{ fontStyle: "italic" }}>Full Stack Engineer</em> and{" "}
-        <em style={{ fontStyle: "italic" }}>Product Builder</em> passionate
-        about architecting{" "}
-        <em style={{ fontStyle: "italic" }}>elegant, scalable</em> systems —
+      <p className="about-statement mt-16 max-w-3xl font-display font-normal text-[clamp(1.5rem,2.6vw,2.1rem)] leading-[1.4] text-text">
+        I am a <em className="italic">Full Stack Engineer</em> and{" "}
+        <em className="italic">Product Builder</em> passionate about
+        architecting <em className="italic">elegant, scalable</em> systems —
         and the quiet craft beneath them.
       </p>
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { identity, navLinks } from "@/content";
+import { cn } from "@/lib/cn";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -15,31 +16,17 @@ export function Navbar() {
 
   return (
     <header
-      className="fixed left-0 right-0 top-0 z-50"
-      style={{
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
-        background: scrolled ? "rgba(250,250,250,0.65)" : "rgba(250,250,250,0.0)",
-        borderBottom: scrolled
-          ? "1px solid var(--color-border)"
-          : "1px solid transparent",
-        transition:
-          "background 400ms var(--ease-soft), border-color 400ms var(--ease-soft)",
-      }}
+      className={cn(
+        "fixed left-0 right-0 top-0 z-50 border-b backdrop-blur-[10px] transition-[background-color,border-color] duration-400 ease-soft",
+        scrolled
+          ? "border-border bg-[rgba(250,250,250,0.65)]"
+          : "border-transparent bg-transparent",
+      )}
     >
-      <nav
-        className="mx-auto flex items-center justify-between px-6 py-5"
-        style={{ maxWidth: "var(--max-width)" }}
-      >
+      <nav className="mx-auto flex max-w-(--max-width) items-center justify-between px-6 py-5">
         <a
           href="#top"
-          className="leading-none"
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 600,
-            fontSize: 22,
-            letterSpacing: "-0.02em",
-          }}
+          className="font-display font-semibold text-[22px] leading-none tracking-display"
         >
           {identity.monogram}
         </a>
@@ -49,15 +36,7 @@ export function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="link-underline"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontWeight: 400,
-                  fontSize: 12,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.12em",
-                  color: "var(--color-text)",
-                }}
+                className="link-underline font-body font-normal text-[12px] uppercase tracking-[0.12em] text-text"
               >
                 {link.label}
               </a>
@@ -69,16 +48,7 @@ export function Navbar() {
           href={identity.resumeUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block rounded-full px-5 py-2 transition-transform hover:scale-[1.03]"
-          style={{
-            background: "var(--color-text)",
-            color: "var(--color-bg)",
-            fontFamily: "var(--font-body)",
-            fontWeight: 400,
-            fontSize: 12,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-          }}
+          className="inline-block rounded-full bg-text px-5 py-2 font-body font-normal text-[12px] uppercase tracking-[0.12em] text-bg transition-transform hover:scale-[1.03]"
         >
           Resume
         </a>
