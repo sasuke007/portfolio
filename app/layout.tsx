@@ -4,6 +4,7 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import { LenisProvider } from "@/components/LenisProvider";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Navbar } from "@/components/Navbar";
+import { DevTools } from "@/components/dev/DevTools";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -40,6 +41,7 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
         </LenisProvider>
+        <DevTools />
       </body>
     </html>
   );
