@@ -4,6 +4,7 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import { LenisProvider } from "@/components/LenisProvider";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Navbar } from "@/components/Navbar";
+import { NoiseLinesBackground } from "@/components/NoiseLinesBackground";
 import { DevTools } from "@/components/dev/DevTools";
 import "./globals.css";
 
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
       <body>
         <LenisProvider>
+          <NoiseLinesBackground className="pointer-events-none fixed inset-0 z-[0]" />
           <CustomCursor />
           <Navbar />
           <main>{children}</main>

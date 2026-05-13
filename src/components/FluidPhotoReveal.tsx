@@ -17,6 +17,16 @@ type Props = {
   splatForce?: number;
   /** intensity multiplier on the dye-density alpha mask (default 4) */
   revealIntensity?: number;
+  /** photo region max width in CSS px (clamp upper bound) */
+  photoMaxWidthPx?: number;
+  /** photo region max height in CSS px (clamp upper bound) */
+  photoMaxHeightPx?: number;
+  /** photo region width as % of canvas width (clamp lower bound) */
+  photoViewportWidthPct?: number;
+  /** photo region height as % of canvas height (clamp lower bound) */
+  photoViewportHeightPct?: number;
+  /** velocity-displacement scale applied to the photo UV in the distortion zone (default 0.015) */
+  distortionScale?: number;
 };
 
 interface FBO {
@@ -80,6 +90,11 @@ export function FluidPhotoReveal({
   splatRadius = 0.32,
   splatForce = 6000,
   revealIntensity = 4.0,
+  photoMaxWidthPx = 900,
+  photoMaxHeightPx = 820,
+  photoViewportWidthPct = 82,
+  photoViewportHeightPct = 86,
+  distortionScale = 0.005,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -558,7 +573,13 @@ export function FluidPhotoReveal({
       `,
     );
 
-    // ── Photo-mask display shader (replaces inspira's colorful display) ──
+    // ── Photo-mask display shader ──
+    // Whole-canvas photo sampling with velocity-driven UV displacement.
+    // Inside the inner 80% of the photo box: zero distortion (face is sharp).
+    // Toward and beyond photo edges: distortion ramps up; the photo's edge
+    // pixels (clamped) get smeared by the fluid velocity, producing a "drag
+    // along" effect outside the photo bounds.
+    // Output is premultiplied alpha (ONE / ONE_MINUS_SRC_ALPHA blend).
     const photoDisplayShader = compileShader(
       gl.FRAGMENT_SHADER,
       `
@@ -567,25 +588,63 @@ export function FluidPhotoReveal({
         varying vec2 vUv;
         uniform sampler2D uDye;
         uniform sampler2D uPhoto;
+        uniform sampler2D uVelocity;
         uniform float uIntensity;
         uniform float uPhotoAspect;
-        uniform float uCanvasAspect;
+        uniform float uPhotoBoxAspect;
+        uniform vec2 uPhotoBoxMin;
+        uniform vec2 uPhotoBoxMax;
+        uniform float uDistortionScale;
         void main () {
           vec3 dyeColor = texture2D(uDye, vUv).rgb;
-          float density = max(dyeColor.r, max(dyeColor.g, dyeColor.b));
-          density = clamp(density * uIntensity, 0.0, 1.0);
+          float density = clamp(max(dyeColor.r, max(dyeColor.g, dyeColor.b)) * uIntensity, 0.0, 1.0);
 
-          // "object-fit: cover" sampling
-          vec2 sampleUV = vUv - 0.5;
-          if (uCanvasAspect > uPhotoAspect) {
-            sampleUV.y *= uPhotoAspect / uCanvasAspect;
+          // Normalized distance from photo center (1.0 = at edge, >1 = outside box).
+          vec2 boxCenter = (uPhotoBoxMin + uPhotoBoxMax) * 0.5;
+          vec2 halfBox   = max((uPhotoBoxMax - uPhotoBoxMin) * 0.5, vec2(0.0001));
+          vec2 fromCenterN = abs(vUv - boxCenter) / halfBox;
+          float dCenter = max(fromCenterN.x, fromCenterN.y);
+
+          // Safety zone: inner 80% stays sharp; ramp up to full distortion by 130%.
+          float distort = smoothstep(0.8, 1.3, dCenter);
+
+          // Photo UV in the box's local [0..1] space (can go outside [0..1]).
+          vec2 boxSize = uPhotoBoxMax - uPhotoBoxMin;
+          vec2 localUV = (vUv - uPhotoBoxMin) / boxSize;
+
+          // "object-fit: cover" within the photo sub-region.
+          vec2 photoUV = localUV - 0.5;
+          if (uPhotoBoxAspect > uPhotoAspect) {
+            photoUV.y *= uPhotoAspect / uPhotoBoxAspect;
           } else {
-            sampleUV.x *= uCanvasAspect / uPhotoAspect;
+            photoUV.x *= uPhotoBoxAspect / uPhotoAspect;
           }
-          sampleUV += 0.5;
+          photoUV += 0.5;
 
-          vec4 photo = texture2D(uPhoto, sampleUV);
-          gl_FragColor = vec4(photo.rgb, photo.a * density);
+          // Clamp velocity to avoid extreme spikes right after a splat.
+          vec2 vel = clamp(texture2D(uVelocity, vUv).xy, -30.0, 30.0);
+          vec2 offset = vel * uDistortionScale * distort;
+
+          // Multi-sample motion blur along the velocity vector + soft alpha
+          // vignette on the photo so it has no hard edges to streak. This is
+          // the "watercolor bloom" — pixel smears become directional brush strokes.
+          const int N_SAMPLES = 5;
+          vec4 acc = vec4(0.0);
+          for (int i = 0; i < N_SAMPLES; i++) {
+            float t = (float(i) / float(N_SAMPLES - 1) - 0.5) * 2.0; // -1 to 1
+            vec2 sUV = photoUV - offset * t;
+            // Photo's own radial vignette in its UV space (fades outer ~14% to 0).
+            vec2 edgeDist = abs(sUV - 0.5);
+            float vig = 1.0 - smoothstep(0.43, 0.5, max(edgeDist.x, edgeDist.y));
+            vec4 s = texture2D(uPhoto, sUV);
+            acc += vec4(s.rgb * vig, vig);
+          }
+          acc /= float(N_SAMPLES);
+
+          // Distance falloff: trail fades to invisible by ~30% beyond the photo box.
+          float farFade = 1.0 - smoothstep(1.0, 1.3, dCenter);
+          float alpha = acc.a * density * farFade;
+          gl_FragColor = vec4(acc.rgb * density * farFade, alpha);
         }
       `,
     );
@@ -1155,10 +1214,50 @@ export function FluidPhotoReveal({
           photoLoaded ? photoAspect : 1,
         );
       }
-      if (displayProgram.uniforms.uCanvasAspect) {
+
+      // Photo sub-region in canvas UV space.
+      const cssW = canvas!.clientWidth || 1;
+      const cssH = canvas!.clientHeight || 1;
+      const photoWpx = Math.min(
+        (photoViewportWidthPct * cssW) / 100,
+        photoMaxWidthPx,
+      );
+      const photoHpx = Math.min(
+        (photoViewportHeightPct * cssH) / 100,
+        photoMaxHeightPx,
+      );
+      const halfUVx = photoWpx / cssW / 2;
+      const halfUVy = photoHpx / cssH / 2;
+
+      if (displayProgram.uniforms.uPhotoBoxMin) {
+        gl!.uniform2f(
+          displayProgram.uniforms.uPhotoBoxMin,
+          0.5 - halfUVx,
+          0.5 - halfUVy,
+        );
+      }
+      if (displayProgram.uniforms.uPhotoBoxMax) {
+        gl!.uniform2f(
+          displayProgram.uniforms.uPhotoBoxMax,
+          0.5 + halfUVx,
+          0.5 + halfUVy,
+        );
+      }
+      if (displayProgram.uniforms.uPhotoBoxAspect) {
         gl!.uniform1f(
-          displayProgram.uniforms.uCanvasAspect,
-          canvas!.width / canvas!.height,
+          displayProgram.uniforms.uPhotoBoxAspect,
+          photoWpx / photoHpx,
+        );
+      }
+      if (displayProgram.uniforms.uVelocity && velocity) {
+        gl!.activeTexture(gl!.TEXTURE2);
+        gl!.bindTexture(gl!.TEXTURE_2D, velocity.read.texture);
+        gl!.uniform1i(displayProgram.uniforms.uVelocity, 2);
+      }
+      if (displayProgram.uniforms.uDistortionScale) {
+        gl!.uniform1f(
+          displayProgram.uniforms.uDistortionScale,
+          distortionScale,
         );
       }
       blit(null, false);
@@ -1379,6 +1478,11 @@ export function FluidPhotoReveal({
     splatRadius,
     splatForce,
     revealIntensity,
+    photoMaxWidthPx,
+    photoMaxHeightPx,
+    photoViewportWidthPct,
+    photoViewportHeightPct,
+    distortionScale,
   ]);
 
   return (

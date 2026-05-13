@@ -98,15 +98,12 @@ export function Hero() {
           }}
         />
 
-        {/* Layer B — Photo + WebGL fluid-trail reveal mask */}
-        <div className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center">
-          <div className="pointer-events-auto relative h-[min(86vh,820px)] w-[min(82vw,900px)]">
-            <FluidPhotoReveal
-              src="/profile_photo.jpeg"
-              className="absolute inset-0"
-            />
-          </div>
-        </div>
+        {/* Layer B — full-bleed WebGL fluid; photo lives in a centered sub-region
+            inside the shader, smoke wisps render outside that sub-region. */}
+        <FluidPhotoReveal
+          src="/profile_photo.jpeg"
+          className="absolute inset-0 z-[2]"
+        />
 
         {/* Layer A — Name */}
         <div
