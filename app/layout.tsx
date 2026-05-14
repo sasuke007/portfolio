@@ -1,12 +1,16 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Cormorant_Garamond, Inter, Geist } from "next/font/google";
 import { LenisProvider } from "@/components/LenisProvider";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Navbar } from "@/components/Navbar";
 import { NoiseLinesBackground } from "@/components/NoiseLinesBackground";
 import { DevTools } from "@/components/dev/DevTools";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"] as const,
@@ -35,13 +39,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang="en" className={cn(cormorant.variable, inter.variable, "font-sans", geist.variable)}>
       <body>
         <LenisProvider>
-          <NoiseLinesBackground className="pointer-events-none fixed inset-0 z-[0]" />
-          <CustomCursor />
-          <Navbar />
-          <main>{children}</main>
+          <TooltipProvider delayDuration={120} skipDelayDuration={80}>
+            <NoiseLinesBackground className="pointer-events-none fixed inset-0 z-[0]" />
+            <CustomCursor />
+            <Navbar />
+            <main>{children}</main>
+          </TooltipProvider>
         </LenisProvider>
         <DevTools />
       </body>

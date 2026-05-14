@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react";
 import { identity, navLinks } from "@/content";
 import { cn } from "@/lib/cn";
+import { SpotifyPill } from "./SpotifyPill";
+import { XPill } from "./XPill";
+import { GithubPill } from "./GithubPill";
+import { LinkedInLink } from "./LinkedInLink";
+import { EmailLink } from "./EmailLink";
+import { Tooltip } from "./Tooltip";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,7 +29,7 @@ export function Navbar() {
           : "border-transparent bg-transparent",
       )}
     >
-      <nav className="mx-auto flex max-w-(--max-width) items-center justify-between px-6 py-5">
+      <nav className="mx-auto flex max-w-(--max-width) items-center justify-between px-6 pt-10 pb-5">
         <a
           href="#top"
           className="font-display font-semibold text-[22px] leading-none tracking-display"
@@ -44,14 +50,31 @@ export function Navbar() {
           ))}
         </ul>
 
-        <a
-          href={identity.resumeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block rounded-full bg-text px-5 py-2 font-body font-normal text-[12px] uppercase tracking-[0.12em] text-bg transition-transform hover:scale-[1.03]"
-        >
-          Resume
-        </a>
+        <div className="flex items-center gap-3">
+          <Tooltip label="Email">
+            <EmailLink />
+          </Tooltip>
+          <Tooltip label="LinkedIn">
+            <LinkedInLink />
+          </Tooltip>
+          <Tooltip label="GitHub">
+            <GithubPill />
+          </Tooltip>
+          <Tooltip label="X">
+            <XPill />
+          </Tooltip>
+          <Tooltip label="Spotify">
+            <SpotifyPill />
+          </Tooltip>
+          <a
+            href={identity.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block rounded-full bg-text px-5 py-2 font-body font-normal text-[12px] uppercase tracking-[0.12em] text-bg transition-transform hover:scale-[1.03]"
+          >
+            Resume
+          </a>
+        </div>
       </nav>
     </header>
   );
