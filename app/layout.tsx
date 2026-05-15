@@ -30,7 +30,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Rohit Pandit — Full Stack Engineer & AI Product Builder",
   description:
-    "Crafting elegant systems at the intersection of code, design, and intelligence.",
+    "Full-stack engineer and LLM-pipeline builder. I write the systems and the intelligence inside them.",
 };
 
 export default function RootLayout({

@@ -23,18 +23,24 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed left-0 right-0 top-0 z-50 border-b backdrop-blur-[10px] transition-[background-color,border-color] duration-400 ease-soft",
+        "fixed left-0 right-0 top-0 z-50 backdrop-saturate-150 transition-[background,backdrop-filter] duration-500 ease-soft",
         scrolled
-          ? "border-border bg-[rgba(250,250,250,0.65)]"
-          : "border-transparent bg-transparent",
+          ? "backdrop-blur-[20px] bg-[linear-gradient(to_bottom,rgba(250,250,250,0.82)_0%,rgba(250,250,250,0.5)_60%,rgba(250,250,250,0)_100%)]"
+          : "backdrop-blur-[10px] bg-[linear-gradient(to_bottom,rgba(250,250,250,0.35)_0%,rgba(250,250,250,0)_100%)]",
       )}
+      style={{
+        maskImage:
+          "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
+      }}
     >
-      <nav className="mx-auto flex max-w-(--max-width) items-center justify-between px-6 pt-10 pb-5">
+      <nav className="mx-auto flex max-w-(--max-width) items-center justify-between px-6 pt-10 pb-8">
         <a
           href="#top"
           className="font-display font-semibold text-[22px] leading-none tracking-display"
         >
-          {identity.monogram}
+          R<span className="text-accent">P</span>
         </a>
 
         <ul className="hidden gap-9 md:flex">

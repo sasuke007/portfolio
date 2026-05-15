@@ -116,7 +116,7 @@ export function Hero() {
             </span>
           </span>
           <span className="block overflow-hidden px-[0.06em] py-[0.04em]">
-            <span className="hero-name-line block font-display font-normal text-text text-display tracking-display leading-[0.95]">
+            <span className="hero-name-line block font-display font-normal text-accent text-display tracking-display leading-[0.95]">
               {identity.lastName}
             </span>
           </span>
@@ -128,8 +128,9 @@ export function Hero() {
           className="pointer-events-none absolute inset-0 z-[4] flex items-center justify-center px-6 text-center will-change-[transform,opacity]"
         >
           <h2 className="max-w-[900px] font-display font-normal text-hero-sub leading-[1.1] tracking-[-0.01em]">
-            Crafting <em className="italic">{identity.niche}</em> &mdash;{" "}
-            <em className="italic">{identity.role}</em>
+            Senior Full-stack Engineer &amp;{" "}
+            <em className="italic text-accent">AI Integrations Specialist</em>
+            .
           </h2>
         </div>
 

@@ -1,8 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
-import { TechMarquee } from "@/components/TechMarquee";
-import { Projects } from "@/components/Projects";
-import { Experience } from "@/components/Experience";
+import { ProductsSection } from "@/components/ProductsSection";
 import { Achievements } from "@/components/Achievements";
 import { Journal } from "@/components/Journal";
 import { Tools } from "@/components/Tools";
@@ -13,9 +11,7 @@ export default function Home() {
     <>
       <Hero />
       <About />
-      <TechMarquee />
-      <Projects />
-      <Experience />
+      <ProductsSection />
       <Achievements />
       <Journal />
       <Tools />

@@ -1,13 +1,18 @@
-export type ProjectSpan = "feature" | "tall" | "third";
-
-export type Project = {
+export type Product = {
   name: string;
-  stack: string[];
-  description: string;
-  href: string;
-  span: ProjectSpan;
-  status?: string; // optional pill label instead of stack tags
-  oneWord?: string; // for vertical "card 2" style
+  url: string;
+  /** Optional short subtitle shown on the collapsed row, italic. */
+  tagline?: string;
+  /** Optional status pill, e.g. "LIVE", "IN BETA". */
+  status?: string;
+  /** Italic Cormorant pullquote shown at top of expanded panel. */
+  summary?: string;
+  /** Body paragraph framing what the product is. */
+  description?: string;
+  /** Feature bullets (3-5 items). */
+  features?: string[];
+  /** Tech stack pills, lowercase strings. */
+  stack?: string[];
 };
 
 export type Experience = {
@@ -15,8 +20,17 @@ export type Experience = {
   end: string;
   title: string;
   company: string;
-  location: "On-site" | "Remote" | "Hybrid";
   current?: boolean;
+
+  location?: "On-site" | "Remote" | "Hybrid";
+  /** One-sentence italic Cormorant pullquote shown at the top of the expanded panel. */
+  summary?: string;
+  /** Accomplishment bullets — what was owned / shipped. */
+  details?: string[];
+  /** Tech stack used at this role, lowercase strings. */
+  stack?: string[];
+  /** Optional company URL — if present, company name renders as a link. */
+  url?: string;
 };
 
 export type Achievement = {
@@ -45,7 +59,7 @@ export const identity = {
   role: "AI Product Builder",
   niceRole: "Full Stack Engineer & AI Product Builder",
   tagline:
-    "Crafting elegant systems at the intersection of code, design, and intelligence.",
+    "Full-stack engineer and LLM-pipeline builder. I write the systems and the intelligence inside them.",
   resumeUrl: "/resume.pdf",
   welcome: "Welcome to my world.",
 };
@@ -56,93 +70,96 @@ export const socials = {
   email: "pandit.rohit0007@gmail.com",
 };
 
-export const tech = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Node.js",
-  "Python",
-  "Postgres",
-  "Prisma",
-  "Tailwind",
-  "AWS",
-  "Docker",
-  "Redis",
-  "GraphQL",
-  "Figma",
-  "Lexical",
-];
-
-export const projects: Project[] = [
+export const products: Product[] = [
   {
-    name: "Aurora Analytics",
-    stack: ["Next.js", "tRPC", "Postgres", "Prisma"],
+    name: "Replay Chess",
+    tagline: "Replay the moments that made the game.",
+    url: "https://playchess.tech",
+    status: "LIVE",
+    summary:
+      "Step into the position the moment before chess history was made.",
     description:
-      "A real-time business intelligence dashboard with collaborative dashboards, anomaly detection, and natural-language querying over warehouse data.",
-    href: "#",
-    span: "feature" as const,
-  },
-  {
-    name: "Lucent",
-    stack: ["React Native", "Expo", "Supabase"],
-    description: "Mindful daily journaling.",
-    href: "#",
-    span: "tall" as const,
-    oneWord: "Stillness",
-  },
-  {
-    name: "Cartograph",
-    stack: ["React", "Mapbox", "WebGL"],
-    description: "Interactive cartography for urban-design studios.",
-    href: "#",
-    span: "third" as const,
-  },
-  {
-    name: "Echo CLI",
-    stack: ["Rust", "Tokio", "WASM"],
-    description: "A blazing-fast terminal companion for shell power-users.",
-    href: "#",
-    span: "third" as const,
-  },
-  {
-    name: "Atelier",
-    stack: ["TypeScript", "OpenAI", "Vector DB"],
-    description: "AI workshop for creative writing — drafts, prompts, edits.",
-    href: "#",
-    span: "third" as const,
-    status: "In Progress",
+      "Replay Chess turns the most-talked-about positions in chess — from Agadmator's catalogue, classic games, and instructive puzzles — into playable boards you can step through, share with friends, and analyse move-by-move against the engine. It's the fastest path from “how would I have played here?” to actually finding out.",
+    features: [
+      "6,000+ pause-the-video positions from Agadmator's channel, ready to play out.",
+      "One-click shareable links — challenge friends to find the move you found.",
+      "Engine analysis comparing your move to the optimal line, every ply.",
+      "Browse iconic moments from chess history and pick up where the masters left off.",
+    ],
+    stack: [],
   },
 ];
 
 export const experience: Experience[] = [
   {
-    start: "2024",
-    end: "Present",
-    title: "Senior Product Engineer",
-    company: "Anaesthetic Labs",
-    location: "Remote" as const,
+    start: "2025",
+    end: "2026",
+    title: "Senior Software Engineer",
+    company: "Dream11",
     current: true,
+    summary:
+      "Real-time data, observability, and the firehose of IPL traffic.",
+    details: [
+      "Built Dream11's Winners Page using Apache Spark and Flink for real-time data aggregation across millions of users, handling concurrent contest settlements during peak IPL traffic.",
+      "Contributed upstream OpenTelemetry Java instrumentation for Vert.x 3.9, MySQL, Redis, and AWS SDK — patches merged into the official OTel repo, enabling automatic trace propagation.",
+      "Deployed and tuned a SigNoz + ClickHouse observability stack handling ~1 GB/sec ingestion; extended the internal fork with delta temporality, histogram quantiles, and custom aggregations.",
+    ],
+    stack: [
+      "java",
+      "vert.x",
+      "opentelemetry",
+      "clickhouse",
+      "kafka",
+      "kubernetes",
+    ],
   },
   {
     start: "2022",
     end: "2024",
-    title: "Full Stack Engineer",
-    company: "Northwind Studio",
-    location: "Hybrid" as const,
+    title: "Senior Software Engineer",
+    company: "Navi Technologies",
+    summary: "Built the rewards platform powering 75% of India's UPI volume.",
+    details: [
+      "Re-architected the rewards engine into a config-driven platform supporting milestone, randomizer, fixed, and referral strategies, enabling zero-dev launches across UPI, BBPS, and investment products.",
+      "Certified the system at 6,000 RPS — covering 75% of India's UPI volume — by resolving thread contention and DB latency bottlenecks via JVM profiling and query optimization.",
+      "Cut reward-eligibility latency from 800 ms to under 120 ms by optimizing critical DB queries and introducing Redis caching with appropriate TTLs and invalidation strategies.",
+    ],
+    stack: ["java", "spring boot", "spring webflux", "redis", "postgres", "kafka"],
   },
   {
     start: "2020",
     end: "2022",
     title: "Software Engineer",
-    company: "Foglight Systems",
-    location: "On-site" as const,
+    company: "Paysafe Group",
+    summary:
+      "Real-time payments pipelines and an 8× faster merchant analytics API.",
+    details: [
+      "Built a distributed real-time transaction data pipeline consuming events from multiple sources and fanning out to analytics, full-text search, and the merchant-facing portal.",
+      "Reduced merchant analytics API response time from 4 s to 0.5 s (8× improvement) by integrating Apache Druid, enabling sub-second OLAP queries on high-cardinality data.",
+      "Designed Kafka consumer groups, partitioning strategies, and dead-letter queues for at-least-once delivery with idempotent consumers — critical for a payments system where data loss is unacceptable.",
+    ],
+    stack: [
+      "java",
+      "spring boot",
+      "apache druid",
+      "elasticsearch",
+      "kafka",
+      "aws s3",
+    ],
   },
   {
-    start: "2018",
-    end: "2020",
-    title: "Junior Developer",
-    company: "Beacon & Co.",
-    location: "On-site" as const,
+    start: "2019",
+    end: "2019",
+    title: "Software Development Intern",
+    company: "Appointy",
+    summary:
+      "Meta-programmed a GraphQL QA tool that replaced a manual, error-prone process.",
+    details: [
+      "Built an internal tool using meta-programming to automate GraphQL query generation, execution, and response validation — replacing a manual, error-prone QA process for schema changes.",
+      "Designed the tool to introspect the GraphQL schema at runtime and auto-generate test queries for new types and resolvers, broadening coverage without hand-written tests.",
+      "Implemented response validation comparing actual API responses against expected shapes derived from the schema, catching contract regressions before they reached production.",
+    ],
+    stack: ["go", "graphql", "meta programming", "api testing"],
   },
 ];
 
@@ -217,6 +234,5 @@ export const tools = [
 
 export const navLinks = [
   { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Journey", href: "#journey" },
+  { label: "Products", href: "#products" },
 ];

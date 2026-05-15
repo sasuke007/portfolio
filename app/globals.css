@@ -314,9 +314,11 @@ body::before {
   --color-border: var(--border);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
+  /* Note: --color-accent and --color-muted intentionally NOT aliased to the
+     shadcn (near-white) tokens — the editorial @theme block above defines
+     them as gold (#f0c040) and mid-gray (#888888). Aliasing them here would
+     override the editorial palette and make text-muted / text-accent invisible. */
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
