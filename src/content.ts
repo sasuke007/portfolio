@@ -33,14 +33,6 @@ export type Experience = {
   url?: string;
 };
 
-export type Achievement = {
-  title: string;
-  year: string;
-  organizer: string;
-  tag: string;
-  note: string;
-};
-
 export type JournalPhoto = {
   src: string;
   alt: string;
@@ -163,30 +155,6 @@ export const experience: Experience[] = [
   },
 ];
 
-export const achievements: Achievement[] = [
-  {
-    title: "ETH Mumbai Winner",
-    year: "2024",
-    organizer: "ETHGlobal",
-    tag: "Winner across 2 tracks",
-    note: "Built a verifiable AI inference layer leveraging zero-knowledge proofs.",
-  },
-  {
-    title: "Top 1% Open Source",
-    year: "2023",
-    organizer: "GitHub",
-    tag: "Maintainer",
-    note: "Recognized for sustained contributions to developer tooling libraries.",
-  },
-  {
-    title: "Product Hunt #1",
-    year: "2023",
-    organizer: "Product Hunt",
-    tag: "Product of the Day",
-    note: "Launched a tiny dev productivity tool that hit #1 within hours.",
-  },
-];
-
 export const journalPhotos: JournalPhoto[] = [
   {
     src: "/good_lighting.jpeg",
@@ -218,18 +186,18 @@ export const journalPhotos: JournalPhoto[] = [
 ];
 
 export const tools = [
-  { name: "Typescript", muted: false },
-  { name: "React", muted: true },
+  { name: "Java", muted: false },
+  { name: "Spring Boot", muted: true },
+  { name: "Kotlin", muted: false },
+  { name: "TypeScript", muted: true },
   { name: "Next.js", muted: false },
-  { name: "Tailwind", muted: true },
-  { name: "Postgres", muted: false },
-  { name: "Figma", muted: true },
-  { name: "Node", muted: false },
-  { name: "Python", muted: true },
-  { name: "AWS", muted: false },
-  { name: "Docker", muted: true },
+  { name: "PostgreSQL", muted: true },
   { name: "Redis", muted: false },
-  { name: "GraphQL", muted: true },
+  { name: "Kafka", muted: true },
+  { name: "ClickHouse", muted: false },
+  { name: "OpenTelemetry", muted: true },
+  { name: "Kubernetes", muted: false },
+  { name: "AWS", muted: true },
 ];
 
 export const navLinks = [
