@@ -177,26 +177,28 @@ export function ProductEntry({
                 {product.status}
               </span>
             )}
-            <a
-              href={product.url}
-              target="_blank"
-              rel="noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              aria-label={`Open ${product.name}`}
-              className="group/cta relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-text px-5 py-3 font-body font-medium text-[12px] uppercase tracking-[0.13em] text-bg shadow-[0_4px_16px_-4px_rgba(0,0,0,0.22)] transition-[transform,box-shadow] duration-300 ease-out hover:scale-[1.04] hover:shadow-[0_14px_36px_-8px_rgba(0,0,0,0.32)]"
-            >
-              {product.name}
-              <ArrowUpRight
-                size={14}
-                strokeWidth={2}
-                className="transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
-              />
-              {/* Soft "shine" sweep on hover */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(110deg,transparent_30%,rgba(255,255,255,0.18)_50%,transparent_70%)] transition-transform duration-700 ease-out group-hover/cta:translate-x-full"
-              />
-            </a>
+            {product.url && (
+              <a
+                href={product.url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                aria-label={`Open ${product.name}`}
+                className="group/cta relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-text px-5 py-3 font-body font-medium text-[12px] uppercase tracking-[0.13em] text-bg shadow-[0_4px_16px_-4px_rgba(0,0,0,0.22)] transition-[transform,box-shadow] duration-300 ease-out hover:scale-[1.04] hover:shadow-[0_14px_36px_-8px_rgba(0,0,0,0.32)]"
+              >
+                {product.name}
+                <ArrowUpRight
+                  size={14}
+                  strokeWidth={2}
+                  className="transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
+                />
+                {/* Soft "shine" sweep on hover */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(110deg,transparent_30%,rgba(255,255,255,0.18)_50%,transparent_70%)] transition-transform duration-700 ease-out group-hover/cta:translate-x-full"
+                />
+              </a>
+            )}
             <span
               aria-hidden
               className="inline-flex h-5 w-5 items-center justify-center text-muted"

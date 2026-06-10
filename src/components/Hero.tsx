@@ -128,9 +128,8 @@ export function Hero() {
           className="pointer-events-none absolute inset-0 z-[4] flex items-center justify-center px-6 text-center will-change-[transform,opacity]"
         >
           <h2 className="max-w-[900px] font-display font-normal text-hero-sub leading-[1.1] tracking-[-0.01em]">
-            Senior Full-stack Engineer &amp;{" "}
-            <em className="italic text-accent">AI Integrations Specialist</em>
-            .
+            I build <em className="italic text-accent">products</em>, and ship
+            them myself.
           </h2>
         </div>
 

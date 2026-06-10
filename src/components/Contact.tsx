@@ -13,18 +13,18 @@ export function Contact() {
       id="contact"
       className="relative mx-auto max-w-(--max-width) px-6 py-32 md:py-44"
     >
-      <SectionLabel index="06" name="CONCLUSION" />
+      <SectionLabel index="06" name="THE JOURNEY" />
 
       <div className="mt-10 grid grid-cols-1 gap-16 md:grid-cols-[2fr_1fr] md:items-end">
         <div>
           <h2 className="m-0 lowercase font-display font-normal text-[clamp(3rem,8vw,6rem)] leading-[1.02] tracking-display">
-            <span className="italic">let&rsquo;s</span> collaborate
+            <span className="italic">follow</span> the journey
             <span className="text-accent">.</span>
           </h2>
 
           <p className="body-editorial mt-7 max-w-lg">
-            Open to discussing projects, creative ideas, or opportunities to
-            build something quietly excellent.
+            Try Replay Chess, tell me what to build next, or just say hello.
+            The next product always starts with a conversation.
           </p>
         </div>
 

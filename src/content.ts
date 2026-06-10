@@ -1,6 +1,7 @@
 export type Product = {
   name: string;
-  url: string;
+  /** Live product URL — omit while the product is still being built. */
+  url?: string;
   /** Optional short subtitle shown on the collapsed row, italic. */
   tagline?: string;
   /** Optional status pill, e.g. "LIVE", "IN BETA". */
@@ -47,11 +48,11 @@ export const identity = {
   firstName: "ROHIT",
   lastName: "PANDIT",
   monogram: "RP",
-  niche: "Full Stack Engineer",
-  role: "AI Product Builder",
-  niceRole: "Full Stack Engineer & AI Product Builder",
+  niche: "Product Builder",
+  role: "Founder, Replay Chess",
+  niceRole: "Product Builder & Founder of Replay Chess",
   tagline:
-    "Full-stack engineer and LLM-pipeline builder. I write the systems and the intelligence inside them.",
+    "I build and ship my own products. Founder of Replay Chess — with five years of large-scale systems behind every release.",
   resumeUrl: "/resume.pdf",
   welcome: "Welcome to my world.",
 };
@@ -79,6 +80,14 @@ export const products: Product[] = [
       "Browse iconic moments from chess history and pick up where the masters left off.",
     ],
     stack: [],
+  },
+  {
+    name: "The Next One",
+    tagline: "In the workshop, taking shape.",
+    status: "BUILDING",
+    summary: "Every product starts as a question I can't stop asking.",
+    description:
+      "Something new is on the bench — built in public, shipped in pieces, and used before it's announced. Replay Chess started the same way. Say hello below and hear about it first.",
   },
 ];
 
@@ -186,21 +195,21 @@ export const journalPhotos: JournalPhoto[] = [
 ];
 
 export const tools = [
-  { name: "Java", muted: false },
-  { name: "Spring Boot", muted: true },
-  { name: "Kotlin", muted: false },
-  { name: "TypeScript", muted: true },
-  { name: "Next.js", muted: false },
-  { name: "PostgreSQL", muted: true },
-  { name: "Redis", muted: false },
-  { name: "Kafka", muted: true },
-  { name: "ClickHouse", muted: false },
-  { name: "OpenTelemetry", muted: true },
-  { name: "Kubernetes", muted: false },
-  { name: "AWS", muted: true },
+  { name: "TypeScript", muted: false },
+  { name: "Next.js", muted: true },
+  { name: "React", muted: false },
+  { name: "Tailwind", muted: true },
+  { name: "PostgreSQL", muted: false },
+  { name: "Redis", muted: true },
+  { name: "Claude", muted: false },
+  { name: "LLM Pipelines", muted: true },
+  { name: "Vercel", muted: false },
+  { name: "Stripe", muted: true },
+  { name: "GSAP", muted: false },
+  { name: "Java", muted: true },
 ];
 
 export const navLinks = [
-  { label: "About", href: "#about" },
   { label: "Products", href: "#products" },
+  { label: "Backstory", href: "#about" },
 ];
