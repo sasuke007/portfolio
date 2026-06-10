@@ -4,7 +4,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative mx-auto max-w-(--max-width) px-6 py-16 md:py-24"
+      className="relative mx-auto max-w-(--max-width) scroll-mt-28 px-6 py-16 md:scroll-mt-32 md:py-24"
     >
       <h2 className="m-0 max-w-3xl font-display font-normal text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[1.1] tracking-[-0.015em]">
         Five years of systems at scale —{" "}

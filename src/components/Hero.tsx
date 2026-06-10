@@ -128,8 +128,8 @@ export function Hero() {
           className="pointer-events-none absolute inset-0 z-[4] flex items-center justify-center px-6 text-center will-change-[transform,opacity]"
         >
           <h2 className="max-w-[900px] font-display font-normal text-hero-sub leading-[1.1] tracking-[-0.01em]">
-            I build <em className="italic text-accent">products</em>, and ship
-            them myself.
+            I build products I{" "}
+            <em className="italic text-accent">wish existed</em> in the world.
           </h2>
         </div>
 

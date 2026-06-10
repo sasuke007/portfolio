@@ -52,7 +52,7 @@ export const identity = {
   role: "Founder, Replay Chess",
   niceRole: "Product Builder & Founder of Replay Chess",
   tagline:
-    "I build and ship my own products. Founder of Replay Chess — with five years of large-scale systems behind every release.",
+    "I build products I wish existed in the world. Founder of Replay Chess — with five years of large-scale systems behind every release.",
   resumeUrl: "/resume.pdf",
   welcome: "Welcome to my world.",
 };

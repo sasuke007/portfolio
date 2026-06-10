@@ -1,28 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/cn";
+import { useEffect, useState } from "react";
+import { RopePill } from "./RopePill";
 import {
   GithubCommitSchema,
   type GithubCommit,
 } from "@/lib/github-schema";
 
 const POLL_INTERVAL_MS = 5 * 60_000; // 5 minutes
-const EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
-const COLLAPSED_WIDTH = "32px";
-const EXPANDED_WIDTH = "280px";
+const EXPANDED_WIDTH = 280;
 
 const ResponseSchema = GithubCommitSchema.nullable();
 
 export function GithubPill() {
   const [commit, setCommit] = useState<GithubCommit | null>(null);
-  const [expanded, setExpanded] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
-  const wrapRef = useRef<HTMLAnchorElement>(null);
-
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
-  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -69,31 +60,6 @@ export function GithubPill() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!expanded || !isTouch) return;
-    const handler = (e: MouseEvent) => {
-      const target = e.target as Node | null;
-      if (target && wrapRef.current && !wrapRef.current.contains(target)) {
-        setExpanded(false);
-      }
-    };
-    document.addEventListener("click", handler);
-    return () => document.removeEventListener("click", handler);
-  }, [expanded, isTouch]);
-
-  const handleMouseEnter = () => {
-    if (!isTouch) setExpanded(true);
-  };
-  const handleMouseLeave = () => {
-    if (!isTouch) setExpanded(false);
-  };
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isTouch && !expanded) {
-      e.preventDefault();
-      setExpanded(true);
-    }
-  };
-
   if (!commit) return null;
 
   // Show only the first line of the commit message; trim if too long.
@@ -105,56 +71,14 @@ export function GithubPill() {
   const repoShort = commit.repo.split("/")[1] ?? commit.repo;
 
   return (
-    <a
-      ref={wrapRef}
+    <RopePill
       href={commit.url}
-      target="_blank"
-      rel="noreferrer"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-      aria-label={`Latest commit: ${firstLine} in ${commit.repo}`}
-      className={cn(
-        "relative flex h-8 items-center justify-end overflow-hidden rounded-full bg-text",
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-bg/30 focus-visible:ring-offset-2",
-      )}
-      style={{
-        width: expanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH,
-        transition: `width 380ms ${EASE}`,
-        willChange: "width",
-      }}
-    >
-      <span
-        className="min-w-0 flex-1 truncate pl-4 pr-2 font-body text-[12px] leading-none text-bg/95"
-        style={{
-          opacity: expanded ? 1 : 0,
-          transform: expanded ? "translateX(0)" : "translateX(8px)",
-          transition: `opacity 280ms ${EASE} ${expanded ? "100ms" : "0ms"}, transform 280ms ${EASE} ${expanded ? "100ms" : "0ms"}`,
-          willChange: "opacity, transform",
-        }}
-      >
-        {excerpt}
-        <span className="text-bg/55"> · </span>
-        {repoShort}
-        <span className="text-bg/55"> · </span>
-        {formatRelative(commit.createdAt)}
-      </span>
-
-      <span
-        aria-hidden
-        className="mx-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-bg"
-      >
-        <img
-          src="/assets/github.svg"
-          alt=""
-          width={14}
-          height={14}
-          loading="lazy"
-          decoding="async"
-          draggable={false}
-        />
-      </span>
-    </a>
+      ariaLabel={`Latest commit: ${firstLine} in ${commit.repo}`}
+      expandedWidth={EXPANDED_WIDTH}
+      iconSrc="/assets/github.svg"
+      iconSize={14}
+      text={`${excerpt} · ${repoShort} · ${formatRelative(commit.createdAt)}`}
+    />
   );
 }
 

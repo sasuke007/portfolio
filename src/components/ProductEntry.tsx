@@ -184,9 +184,9 @@ export function ProductEntry({
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
                 aria-label={`Open ${product.name}`}
-                className="group/cta relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-text px-5 py-3 font-body font-medium text-[12px] uppercase tracking-[0.13em] text-bg shadow-[0_4px_16px_-4px_rgba(0,0,0,0.22)] transition-[transform,box-shadow] duration-300 ease-out hover:scale-[1.04] hover:shadow-[0_14px_36px_-8px_rgba(0,0,0,0.32)]"
+                className="group/cta relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-text px-3 py-3 font-body font-medium text-[12px] uppercase tracking-[0.13em] text-bg shadow-[0_4px_16px_-4px_rgba(0,0,0,0.22)] transition-[transform,box-shadow] duration-300 ease-out hover:scale-[1.04] hover:shadow-[0_14px_36px_-8px_rgba(0,0,0,0.32)] sm:px-5"
               >
-                {product.name}
+                <span className="hidden sm:inline">{product.name}</span>
                 <ArrowUpRight
                   size={14}
                   strokeWidth={2}

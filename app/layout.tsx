@@ -30,7 +30,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Rohit Pandit — Product Builder & Founder of Replay Chess",
   description:
-    "I build and ship my own products. Founder of Replay Chess, with five years of large-scale engineering behind every release.",
+    "I build products I wish existed in the world. Founder of Replay Chess, with five years of large-scale engineering behind every release.",
 };
 
 export default function RootLayout({

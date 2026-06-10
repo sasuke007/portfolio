@@ -1,25 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/cn";
+import { useEffect, useState } from "react";
+import { RopePill } from "./RopePill";
 import { XTweetSchema, type XTweet } from "@/lib/x-schema";
 
 const POLL_INTERVAL_MS = 3 * 60 * 60_000; // 3 hours
-const EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
-const COLLAPSED_WIDTH = "32px";
-const EXPANDED_WIDTH = "264px";
+const EXPANDED_WIDTH = 264;
 
 const ResponseSchema = XTweetSchema.nullable();
 
 export function XPill() {
   const [tweet, setTweet] = useState<XTweet | null>(null);
-  const [expanded, setExpanded] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
-  const wrapRef = useRef<HTMLAnchorElement>(null);
-
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
-  }, []);
 
   // ─── Polling ────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -67,88 +58,20 @@ export function XPill() {
     };
   }, []);
 
-  // ─── Outside-click collapse on touch ───────────────────────────────────
-  useEffect(() => {
-    if (!expanded || !isTouch) return;
-    const handler = (e: MouseEvent) => {
-      const target = e.target as Node | null;
-      if (target && wrapRef.current && !wrapRef.current.contains(target)) {
-        setExpanded(false);
-      }
-    };
-    document.addEventListener("click", handler);
-    return () => document.removeEventListener("click", handler);
-  }, [expanded, isTouch]);
-
-  const handleMouseEnter = () => {
-    if (!isTouch) setExpanded(true);
-  };
-  const handleMouseLeave = () => {
-    if (!isTouch) setExpanded(false);
-  };
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isTouch && !expanded) {
-      e.preventDefault();
-      setExpanded(true);
-    }
-  };
-
   if (!tweet) return null;
 
   const excerpt =
     tweet.text.length > 70 ? `${tweet.text.slice(0, 70).trim()}…` : tweet.text;
 
   return (
-    <a
-      ref={wrapRef}
+    <RopePill
       href={tweet.url}
-      target="_blank"
-      rel="noreferrer"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-      aria-label={`Latest post: ${tweet.text}`}
-      className={cn(
-        "relative flex h-8 items-center justify-end overflow-hidden rounded-full bg-text",
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-bg/30 focus-visible:ring-offset-2",
-      )}
-      style={{
-        width: expanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH,
-        transition: `width 380ms ${EASE}`,
-        willChange: "width",
-      }}
-    >
-      {/* Tweet excerpt + relative time */}
-      <span
-        className="min-w-0 flex-1 truncate pl-4 pr-2 font-body text-[12px] leading-none text-bg/95"
-        style={{
-          opacity: expanded ? 1 : 0,
-          transform: expanded ? "translateX(0)" : "translateX(8px)",
-          transition: `opacity 280ms ${EASE} ${expanded ? "100ms" : "0ms"}, transform 280ms ${EASE} ${expanded ? "100ms" : "0ms"}`,
-          willChange: "opacity, transform",
-        }}
-      >
-        {excerpt}
-        <span className="text-bg/55"> · </span>
-        {formatRelative(tweet.createdAt)}
-      </span>
-
-      {/* X icon circle — always visible, anchored right */}
-      <span
-        aria-hidden
-        className="mx-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-bg"
-      >
-        <img
-          src="/assets/x.svg"
-          alt=""
-          width={14}
-          height={14}
-          loading="lazy"
-          decoding="async"
-          draggable={false}
-        />
-      </span>
-    </a>
+      ariaLabel={`Latest post: ${tweet.text}`}
+      expandedWidth={EXPANDED_WIDTH}
+      iconSrc="/assets/x.svg"
+      iconSize={14}
+      text={`${excerpt} · ${formatRelative(tweet.createdAt)}`}
+    />
   );
 }
 

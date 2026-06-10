@@ -11,7 +11,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative mx-auto max-w-(--max-width) px-6 py-32 md:py-44"
+      className="relative mx-auto max-w-(--max-width) scroll-mt-28 px-6 py-32 md:scroll-mt-32 md:py-44"
     >
       <SectionLabel index="06" name="THE JOURNEY" />
 

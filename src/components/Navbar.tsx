@@ -35,7 +35,7 @@ export function Navbar() {
           "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
       }}
     >
-      <nav className="mx-auto flex max-w-(--max-width) items-center justify-between px-6 pt-10 pb-8">
+      <nav className="mx-auto flex max-w-(--max-width) items-center justify-between px-4 pt-10 pb-8 sm:px-6">
         <a
           href="#top"
           className="font-display font-semibold text-[22px] leading-none tracking-display"
@@ -56,7 +56,7 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3">
           <Tooltip label="Email">
             <EmailLink />
           </Tooltip>
@@ -76,7 +76,7 @@ export function Navbar() {
             href={identity.resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block rounded-full bg-text px-5 py-2 font-body font-normal text-[12px] uppercase tracking-[0.12em] text-bg transition-transform hover:scale-[1.03]"
+            className="inline-block rounded-full bg-text px-3.5 py-2 font-body font-normal text-[12px] uppercase tracking-[0.12em] text-bg transition-transform hover:scale-[1.03] sm:px-5"
           >
             Resume
           </a>
