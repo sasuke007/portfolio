@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { SectionLabel } from "./SectionLabel";
 import { identity, socials } from "@/content";
 
 export function Contact() {
@@ -13,9 +12,7 @@ export function Contact() {
       id="contact"
       className="relative mx-auto max-w-(--max-width) scroll-mt-28 px-6 py-32 md:scroll-mt-32 md:py-44"
     >
-      <SectionLabel index="06" name="THE JOURNEY" />
-
-      <div className="mt-10 grid grid-cols-1 gap-16 md:grid-cols-[2fr_1fr] md:items-end">
+      <div className="grid grid-cols-1 gap-16 md:grid-cols-[2fr_1fr] md:items-end">
         <div>
           <h2 className="m-0 lowercase font-display font-normal text-[clamp(3rem,8vw,6rem)] leading-[1.02] tracking-display">
             <span className="italic">follow</span> the journey
