@@ -66,9 +66,48 @@ export function RopePill({
 
   useEffect(() => () => window.clearTimeout(closeTimer.current), []);
 
+  // Chrome synthesizes mouseenter when an element appears/moves under a
+  // STATIC cursor — e.g. the retracting ribbon re-exposing the anchor. If
+  // those count as hovers, every close instantly re-opens and the rope gets
+  // stuck deployed. Only enters backed by fresh, real movement may hold.
+  const lastMoveRef = useRef<{ x: number; y: number; t: number } | null>(
+    null,
+  );
+  useEffect(() => {
+    // pointerover too: enter events fire before the first pointermove when
+    // the cursor lands on the element, and synthetic retargets are still
+    // filtered because they reuse the parked cursor's coordinates.
+    const onMove = (e: PointerEvent) => {
+      const p = lastMoveRef.current;
+      if (!p || p.x !== e.clientX || p.y !== e.clientY) {
+        lastMoveRef.current = {
+          x: e.clientX,
+          y: e.clientY,
+          t: performance.now(),
+        };
+      }
+    };
+    window.addEventListener("pointermove", onMove, {
+      passive: true,
+      capture: true,
+    });
+    window.addEventListener("pointerover", onMove, {
+      passive: true,
+      capture: true,
+    });
+    return () => {
+      window.removeEventListener("pointermove", onMove, { capture: true });
+      window.removeEventListener("pointerover", onMove, { capture: true });
+    };
+  }, []);
+
   const hold = () => {
     window.clearTimeout(closeTimer.current);
     setExpanded(true);
+  };
+  const holdIfMoved = () => {
+    const p = lastMoveRef.current;
+    if (p && performance.now() - p.t < 150) hold();
   };
   const release = () => {
     if (isTouch) return; // touch closes via outside-tap, not hover loss
@@ -94,7 +133,7 @@ export function RopePill({
         href={href}
         target="_blank"
         rel="noreferrer"
-        onMouseEnter={isTouch ? undefined : hold}
+        onMouseEnter={isTouch ? undefined : holdIfMoved}
         onMouseLeave={release}
         onClick={handleClick}
         aria-label={ariaLabel}
@@ -154,7 +193,7 @@ export function RopePill({
           iconSrc={iconSrc}
           iconSize={iconSize}
           iconMuted={iconMuted}
-          onHoverChangeAction={(h) => (h ? hold() : release())}
+          onHoverChangeAction={(h) => (h ? holdIfMoved() : release())}
         />
       )}
     </>

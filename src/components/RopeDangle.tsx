@@ -131,7 +131,20 @@ export function RopeDangle({
       }
     };
 
+    // Watchdog: hover state can leak — the rope can swing out from under a
+    // stationary cursor (no mouseleave fires), or the tab can lose focus
+    // after a click-through — leaving the pill stuck open. If the cursor is
+    // genuinely far from both the anchor and every rope point, reel it in.
+    const FAR_PX = 130;
+    // Touch closes via outside-tap instead — last touch point is wherever
+    // the user tapped, which says nothing about attention.
+    const watchdogOn = !window.matchMedia("(pointer: coarse)").matches;
+    let wasFar = false;
+
     const tick = (_time: number, deltaMs: number) => {
+      // Re-measure every frame — the navbar pills load asynchronously and
+      // can shift the anchor after the rope has mounted.
+      measure();
       sim.setAnchor(anchor.x, anchor.y);
       const dt = Math.min(deltaMs / 1000, 1 / 30) / 2;
       const pin = dragRef.current?.pin ?? null;
@@ -153,15 +166,45 @@ export function RopeDangle({
           `translate(${tail.x}, ${tail.y})`,
         );
       }
+
+      if (
+        watchdogOn &&
+        openRef.current &&
+        pointer &&
+        !dragRef.current &&
+        performance.now() > swingUntilRef.current
+      ) {
+        let near =
+          Math.hypot(pointer.x - anchor.x, pointer.y - anchor.y) < FAR_PX;
+        for (let i = 0; !near && i < sim.pts.length; i++) {
+          near =
+            Math.hypot(pointer.x - sim.pts[i].x, pointer.y - sim.pts[i].y) <
+            FAR_PX;
+        }
+        if (!near && !wasFar) {
+          wasFar = true;
+          pillHoveredRef.current = false;
+          hoverChangeRef.current(false);
+        } else if (near) {
+          wasFar = false;
+        }
+      }
+    };
+
+    const onBlur = () => {
+      pillHoveredRef.current = false;
+      hoverChangeRef.current(false);
     };
 
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     window.addEventListener("resize", measure);
+    window.addEventListener("blur", onBlur);
     gsap.ticker.add(tick);
     return () => {
       gsap.ticker.remove(tick);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("resize", measure);
+      window.removeEventListener("blur", onBlur);
       simRef.current = null;
       dragRef.current = null;
       hoverChangeRef.current(false);
