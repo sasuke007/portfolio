@@ -170,31 +170,6 @@ export function IconCloud() {
       ctx!.restore();
     }
 
-    // Soft, subtle warm bloom behind the hovered icon. `strength` (0..1)
-    // eases it in and out so it fades when the icon drifts off the cursor.
-    function paintGlow(n: Node, time: number, strength: number) {
-      const pulse = reduceMotion ? 1 : 0.92 + 0.08 * Math.sin(time * 3.5);
-      const a = strength * pulse;
-      const outer = n.r * 2.7 * pulse;
-      const grad = ctx!.createRadialGradient(
-        n.sx,
-        n.sy,
-        n.r * 0.3,
-        n.sx,
-        n.sy,
-        outer,
-      );
-      grad.addColorStop(0, `rgba(240, 196, 96, ${0.2 * a})`);
-      grad.addColorStop(0.45, `rgba(240, 196, 96, ${0.07 * a})`);
-      grad.addColorStop(1, "rgba(240, 196, 96, 0)");
-      ctx!.save();
-      ctx!.fillStyle = grad;
-      ctx!.beginPath();
-      ctx!.arc(n.sx, n.sy, outer, 0, TAU);
-      ctx!.fill();
-      ctx!.restore();
-    }
-
     // ---- per-frame render (driven by gsap.ticker) -----------------------
     function frame(time: number) {
       // advance rotation
@@ -275,7 +250,6 @@ export function IconCloud() {
       if (topNode >= 0) {
         const n = nodes[topNode];
         n.r *= 1 + 0.12 * glowStrength;
-        paintGlow(n, time, glowStrength);
         paintNode(n, 1, glowStrength);
       }
     }
