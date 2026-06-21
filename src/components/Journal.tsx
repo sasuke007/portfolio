@@ -8,18 +8,24 @@ import { journalPhotos, journalTrailImages } from "@/content";
 import { cn } from "@/lib/cn";
 import { ImageTrailCursor } from "./ImageTrailCursor";
 import { BendingGallery } from "./BendingGallery";
+import { JournalCardCarousel } from "./JournalCardCarousel";
+
+type JournalMode = "static" | "desktop" | "carousel";
 
 export function Journal() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // The cursor trail only makes sense with a fine pointer and motion allowed.
-  // Default `false` so SSR and the first client render both produce the static
-  // collage (no hydration mismatch); capable devices swap to the trail on mount.
-  const [interactive, setInteractive] = useState(false);
+  // Three presentations, resolved on mount (default "static" so SSR and the
+  // first client render both produce the collage — no hydration mismatch):
+  //   carousel — any touch device: the swipeable 3D card carousel (it honours
+  //              reduced-motion internally by swapping instantly).
+  //   desktop  — fine pointer + motion: ambient gallery + cursor image-trail.
+  //   static   — fine pointer + reduced-motion: the tilted photo collage.
+  const [mode, setMode] = useState<JournalMode>("static");
   useEffect(() => {
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setInteractive(!coarse && !reduced);
+    setMode(coarse ? "carousel" : reduced ? "static" : "desktop");
   }, []);
 
   useGSAP(
@@ -85,11 +91,15 @@ export function Journal() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[min(120vh,900px)] overflow-hidden py-48"
+      className={cn(
+        "relative",
+        mode === "carousel"
+          ? "overflow-x-clip py-24"
+          : "min-h-[min(120vh,900px)] overflow-hidden py-48",
+      )}
     >
-      {/* Cursor-driven image trail on capable devices; the original static
-          tilted collage as a graceful fallback on touch / reduced-motion. */}
-      {interactive ? (
+      {/* Desktop: ambient drifting gallery + cursor-driven image-trail. */}
+      {mode === "desktop" && (
         <>
           {/* Ambient background: a curved gallery of the same journal photos
               that drifts continuously. The hover image-trail sits on top. */}
@@ -103,7 +113,10 @@ export function Journal() {
             className="absolute inset-0 z-[1]"
           />
         </>
-      ) : (
+      )}
+
+      {/* Reduced-motion fallback: the static tilted collage. */}
+      {mode === "static" &&
         journalPhotos.map((photo, i) => (
           <div
             key={photo.src}
@@ -132,8 +145,7 @@ export function Journal() {
               />
             </div>
           </div>
-        ))
-      )}
+        ))}
 
       <div className="journal-text pointer-events-none relative z-4 mx-auto max-w-180 px-6 text-center">
         <p className="label-micro inline-block">PERSONAL JOURNAL</p>
@@ -165,6 +177,9 @@ export function Journal() {
           Photographs, half-thoughts, and the small things worth saving.
         </p>
       </div>
+
+      {/* Touch: a swipeable 3D card carousel, stacked below the heading. */}
+      {mode === "carousel" && <JournalCardCarousel />}
     </section>
   );
 }
