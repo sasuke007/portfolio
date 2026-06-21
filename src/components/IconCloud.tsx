@@ -213,7 +213,7 @@ export function IconCloud() {
         const depth = (p.z + R) / (2 * R); // 0 = back, 1 = front
         n.sx = ox + p.x;
         n.sy = oy + p.y;
-        n.r = (0.46 + depth * 0.72) * 22;
+        n.r = (0.46 + depth * 0.72) * 32;
         return { i, z: p.z, depth };
       });
       order.sort((a, b) => a.z - b.z);
