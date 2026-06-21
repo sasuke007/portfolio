@@ -35,6 +35,7 @@ type Node = {
   sx: number;
   sy: number;
   r: number;
+  depth: number; // 0 = back of sphere, 1 = front
 };
 
 export function IconCloud() {
@@ -71,17 +72,30 @@ export function IconCloud() {
         sx: 0,
         sy: 0,
         r: 0,
+        depth: 0,
       };
     });
 
     // ---- mutable interaction state --------------------------------------
     let w = 0;
     let h = 0;
+    let dpr = 1;
     let rotX = -0.15;
     let rotY = 0;
     let velX = 0;
     let velY = reduceMotion ? 0 : AUTO_SPIN;
     let hovered = -1;
+
+    // Hover highlight that eases in/out, so the glow fades smoothly when a
+    // spinning icon drifts out from under a stationary cursor.
+    let glowNode = -1;
+    let glowStrength = 0;
+
+    // Last known pointer position in canvas-local space (re-picked every
+    // frame, not just on move, because the sphere keeps rotating).
+    let ptrX = -1;
+    let ptrY = -1;
+    let ptrInside = false;
 
     let down = false;
     let dragging = false;
@@ -102,7 +116,7 @@ export function IconCloud() {
       const rect = root!.getBoundingClientRect();
       w = rect.width;
       h = rect.height;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas!.width = Math.round(w * dpr);
       canvas!.height = Math.round(h * dpr);
       canvas!.style.width = `${w}px`;
@@ -130,12 +144,22 @@ export function IconCloud() {
       return { x: x1, y: y2, z: z2 };
     }
 
-    function paintNode(n: Node, faceAlpha: number) {
+    function paintNode(n: Node, faceAlpha: number, lift: number) {
       ctx!.save();
       ctx!.globalAlpha = faceAlpha;
 
-      // Just the ink glyph — no chip disc or ring, so the icons float cleanly.
+      // Ink glyph (no chip disc/ring) with a soft drop shadow so each icon
+      // reads as lifted off the page — a 3D "popping out" look. Canvas
+      // shadows ignore the current transform, so offset/blur are set in
+      // device pixels (× dpr) rather than the g-scaled glyph space. Closer
+      // icons (and the hovered one) cast a larger, darker shadow.
       const g = (n.r * 1.2) / TOOL_LOGO_VIEWBOX;
+      const d = n.depth;
+      const lifted = 1 + lift * 0.5;
+      ctx!.shadowColor = `rgba(0, 0, 0, ${0.18 + d * 0.16})`;
+      ctx!.shadowBlur = (8 + d * 9) * dpr;
+      ctx!.shadowOffsetX = 0;
+      ctx!.shadowOffsetY = (5 + d * 7) * lifted * dpr;
       ctx!.translate(
         n.sx - (TOOL_LOGO_VIEWBOX / 2) * g,
         n.sy - (TOOL_LOGO_VIEWBOX / 2) * g,
@@ -146,21 +170,23 @@ export function IconCloud() {
       ctx!.restore();
     }
 
-    // Sun-like radial bloom radiating out from a chip (drawn behind it).
-    function paintGlow(n: Node, time: number) {
-      const pulse = reduceMotion ? 1 : 0.9 + 0.1 * Math.sin(time * 3.5);
-      const outer = n.r * 3.6 * pulse;
+    // Soft, subtle warm bloom behind the hovered icon. `strength` (0..1)
+    // eases it in and out so it fades when the icon drifts off the cursor.
+    function paintGlow(n: Node, time: number, strength: number) {
+      const pulse = reduceMotion ? 1 : 0.92 + 0.08 * Math.sin(time * 3.5);
+      const a = strength * pulse;
+      const outer = n.r * 2.7 * pulse;
       const grad = ctx!.createRadialGradient(
         n.sx,
         n.sy,
-        n.r * 0.35,
+        n.r * 0.3,
         n.sx,
         n.sy,
         outer,
       );
-      grad.addColorStop(0, `rgba(240, 192, 64, ${0.55 * pulse})`);
-      grad.addColorStop(0.4, "rgba(240, 192, 64, 0.2)");
-      grad.addColorStop(1, "rgba(240, 192, 64, 0)");
+      grad.addColorStop(0, `rgba(240, 196, 96, ${0.2 * a})`);
+      grad.addColorStop(0.45, `rgba(240, 196, 96, ${0.07 * a})`);
+      grad.addColorStop(1, "rgba(240, 196, 96, 0)");
       ctx!.save();
       ctx!.fillStyle = grad;
       ctx!.beginPath();
@@ -213,22 +239,44 @@ export function IconCloud() {
         const depth = (p.z + R) / (2 * R); // 0 = back, 1 = front
         n.sx = ox + p.x;
         n.sy = oy + p.y;
-        n.r = (0.46 + depth * 0.72) * 32;
-        return { i, z: p.z, depth };
+        n.r = (0.46 + depth * 0.72) * 38;
+        n.depth = depth;
+        return { i, z: p.z };
       });
       order.sort((a, b) => a.z - b.z);
 
-      for (const item of order) {
-        if (item.i === hovered) continue; // drawn last, on top
-        const n = nodes[item.i];
-        const alpha = clamp(0.12 + item.depth * 1.05, 0.12, 1);
-        paintNode(n, alpha);
+      // Re-pick under the (possibly stationary) pointer every frame, so the
+      // highlight releases as a spinning icon drifts out from under it.
+      if (ptrInside && !dragging) {
+        const hit = pick(ptrX, ptrY);
+        if (hit !== hovered) {
+          hovered = hit;
+          setActive(hit >= 0 ? nodes[hit].name : null);
+          canvas!.style.cursor = hit >= 0 ? "pointer" : "grab";
+        }
       }
-      if (hovered >= 0) {
-        const n = nodes[hovered];
-        n.r *= 1.12;
-        paintGlow(n, time);
-        paintNode(n, 1);
+
+      // Ease the highlight in toward the hovered icon and out when released.
+      if (hovered >= 0) glowNode = hovered;
+      const target = hovered >= 0 ? 1 : 0;
+      glowStrength += (target - glowStrength) * 0.16;
+      if (glowStrength < 0.01 && target === 0) {
+        glowStrength = 0;
+        glowNode = -1;
+      }
+      const topNode = glowStrength > 0.001 ? glowNode : -1;
+
+      for (const item of order) {
+        if (item.i === topNode) continue; // drawn last, on top
+        const n = nodes[item.i];
+        const alpha = clamp(0.3 + n.depth * 0.85, 0.3, 1);
+        paintNode(n, alpha, 0);
+      }
+      if (topNode >= 0) {
+        const n = nodes[topNode];
+        n.r *= 1 + 0.12 * glowStrength;
+        paintGlow(n, time, glowStrength);
+        paintNode(n, 1, glowStrength);
       }
     }
 
@@ -269,6 +317,9 @@ export function IconCloud() {
 
     function onPointerMove(e: PointerEvent) {
       const { x, y } = localPoint(e);
+      ptrX = x;
+      ptrY = y;
+      ptrInside = true;
 
       if (down) {
         const dx = e.clientX - lastX;
@@ -284,13 +335,7 @@ export function IconCloud() {
           velY = dx * DRAG_SPEED;
         }
       }
-
-      const hit = pick(x, y);
-      if (hit !== hovered) {
-        hovered = hit;
-        setActive(hit >= 0 ? nodes[hit].name : null);
-        canvas!.style.cursor = hit >= 0 ? "pointer" : "grab";
-      }
+      // Hover hit-testing runs in frame() so it tracks the spinning sphere.
     }
 
     function focusNode(i: number, time: number) {
@@ -325,6 +370,7 @@ export function IconCloud() {
     function onPointerLeave() {
       down = false;
       dragging = false;
+      ptrInside = false;
       if (hovered !== -1) {
         hovered = -1;
         setActive(null);
