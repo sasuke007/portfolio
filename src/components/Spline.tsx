@@ -67,13 +67,33 @@ export function Spline({
     // — already there — doesn't jump.
     let onScreen = true;
     let lastPointer: { x: number; y: number } | null = null;
+    let overCanvas = false;
+    let lastFedScrollY = 0;
     let scrollRaf = 0;
     const trackPointer = (e: PointerEvent) => {
-      if (e.isTrusted) lastPointer = { x: e.clientX, y: e.clientY };
+      if (!e.isTrusted) return;
+      lastPointer = { x: e.clientX, y: e.clientY };
+      // Track whether the cursor is currently over the robot's canvas.
+      const r = canvas.getBoundingClientRect();
+      overCanvas =
+        e.clientX >= r.left &&
+        e.clientX <= r.right &&
+        e.clientY >= r.top &&
+        e.clientY <= r.bottom;
     };
     const refeedPointer = () => {
       scrollRaf = 0;
       if (!lastPointer || !onScreen) return;
+      // While the cursor is over the robot, Spline already tracks it from real
+      // pointer events. Re-dispatching the same point as the canvas slides
+      // makes the gaze/hover pose re-trigger and flicker, so skip it there.
+      if (overCanvas) return;
+      // Lenis emits a burst of sub-pixel scroll events while easing to a stop;
+      // re-firing the identical cursor point on each one causes a visible
+      // stutter. Only re-feed when the scroll actually moved.
+      const y = window.scrollY;
+      if (Math.abs(y - lastFedScrollY) < 1) return;
+      lastFedScrollY = y;
       window.dispatchEvent(
         new PointerEvent("pointermove", {
           clientX: lastPointer.x,
