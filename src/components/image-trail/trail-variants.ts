@@ -219,9 +219,27 @@ export class ImageTrailVariant2 {
   }
 
   private showNextImage() {
+    const nextPos =
+      this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
+    const img = this.images[nextPos];
+
+    // Only spawn a tile that fits fully inside the box. Near an edge it would
+    // be clipped by the section and show as a cropped sliver, so skip it until
+    // the pointer is at least half a tile away from every edge.
+    const box = this.container.getBoundingClientRect();
+    const halfW = (img.rect?.width ?? 0) / 2;
+    const halfH = (img.rect?.height ?? 0) / 2;
+    if (
+      this.mousePos.x < halfW ||
+      this.mousePos.x > box.width - halfW ||
+      this.mousePos.y < halfH ||
+      this.mousePos.y > box.height - halfH
+    ) {
+      return;
+    }
+
     ++this.zIndexVal;
-    this.imgPosition = this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
-    const img = this.images[this.imgPosition];
+    this.imgPosition = nextPos;
 
     gsap.killTweensOf(img.DOM.el);
     gsap
@@ -258,16 +276,17 @@ export class ImageTrailVariant2 {
         },
         0,
       )
-      // Hold the image at full size, then fade — tiles linger ~1.8s total.
+      // Snap out the instant the entrance finishes — a ~100ms fade so tiles
+      // vanish almost immediately once the cursor stops.
       .to(
         img.DOM.el,
         {
-          duration: 0.6,
-          ease: "power2",
+          duration: 0.1,
+          ease: "power2.in",
           opacity: 0,
           scale: 0.2,
         },
-        1.2,
+        0.6,
       );
   }
 

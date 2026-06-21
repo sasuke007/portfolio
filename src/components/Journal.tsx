@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap, registerGsap } from "@/lib/gsap";
 import { journalPhotos, journalTrailImages } from "@/content";
 import { cn } from "@/lib/cn";
 import { ImageTrailCursor } from "./ImageTrailCursor";
+import { BendingGallery } from "./BendingGallery";
 
 export function Journal() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -81,87 +82,6 @@ export function Journal() {
     { scope: sectionRef },
   );
 
-  // One-shot intro: when the section enters view, play a ~1.2s "ghost cursor"
-  // sweep that traces the image trail once to hint at the hover effect. It's
-  // time-based — NOT coupled to scroll. Dispatching `mousemove` drives the
-  // trail; the custom cursor listens on `pointermove`, so the real cursor stays
-  // put. If the user starts genuinely moving the mouse over the section, the
-  // real cursor takes over and the intro aborts so the two never fight.
-  useGSAP(
-    () => {
-      if (!interactive) return;
-      registerGsap();
-      const section = sectionRef.current;
-      const container =
-        section?.querySelector<HTMLElement>("[data-image-trail]");
-      if (!section || !container) return;
-
-      let intro: gsap.core.Tween | null = null;
-      let lastRealMoveAt = -Infinity;
-      let lastX: number | null = null;
-      let lastY: number | null = null;
-
-      const playIntro = () => {
-        if (intro?.isActive()) return; // already running
-        if (performance.now() - lastRealMoveAt < 500) return; // user already engaging
-        const proxy = { p: 0 };
-        intro = gsap.to(proxy, {
-          p: 1,
-          duration: 1.2,
-          ease: "power1.inOut",
-          onUpdate: () => {
-            const rect = container.getBoundingClientRect();
-            const p = proxy.p;
-            const x = rect.left + rect.width * (0.16 + 0.68 * p);
-            const y =
-              rect.top +
-              rect.height * (0.5 + 0.22 * Math.sin(p * Math.PI * 2));
-            container.dispatchEvent(
-              new MouseEvent("mousemove", {
-                clientX: x,
-                clientY: y,
-                bubbles: true,
-              }),
-            );
-          },
-        });
-      };
-
-      // A genuine real move over the section means the user is taking over —
-      // abort the intro so the two cursors don't fight. Scroll-induced moves
-      // keep the same coords, so they're ignored.
-      const onRealMove = (e: MouseEvent) => {
-        if (!e.isTrusted) return; // ignore our own synthetic events
-        if (
-          lastX !== null &&
-          Math.abs(e.clientX - lastX) + Math.abs(e.clientY - lastY!) > 2
-        ) {
-          lastRealMoveAt = performance.now();
-          intro?.kill();
-          intro = null;
-        }
-        lastX = e.clientX;
-        lastY = e.clientY;
-      };
-      container.addEventListener("mousemove", onRealMove, { passive: true });
-
-      // Fire when the section scrolls into view (from either direction).
-      const st = ScrollTrigger.create({
-        trigger: section,
-        start: "top 80%",
-        onEnter: playIntro,
-        onEnterBack: playIntro,
-      });
-
-      return () => {
-        container.removeEventListener("mousemove", onRealMove);
-        intro?.kill();
-        st.kill();
-      };
-    },
-    { scope: sectionRef, dependencies: [interactive] },
-  );
-
   return (
     <section
       ref={sectionRef}
@@ -170,11 +90,19 @@ export function Journal() {
       {/* Cursor-driven image trail on capable devices; the original static
           tilted collage as a graceful fallback on touch / reduced-motion. */}
       {interactive ? (
-        <ImageTrailCursor
-          images={journalTrailImages}
-          variant="type2"
-          className="absolute inset-0 z-[1]"
-        />
+        <>
+          {/* Ambient background: a curved gallery of the same journal photos
+              that drifts continuously. The hover image-trail sits on top. */}
+          <BendingGallery
+            images={journalTrailImages}
+            className="absolute inset-0 z-0"
+          />
+          <ImageTrailCursor
+            images={journalTrailImages}
+            variant="type2"
+            className="absolute inset-0 z-[1]"
+          />
+        </>
       ) : (
         journalPhotos.map((photo, i) => (
           <div

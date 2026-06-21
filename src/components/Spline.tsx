@@ -58,6 +58,40 @@ export function Spline({
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
+    // Mouse-follow scenes (globalEvents) recompute their look-at only on
+    // `pointermove`. While the page scrolls, the cursor holds still but the
+    // scene slides on screen, so the gaze freezes until the next real mouse
+    // move. Re-feed the last cursor position to Spline on scroll so the eyes
+    // keep tracking it. Spline (with global events) listens for `pointermove`
+    // on `window`; we re-dispatch the same screen coords, so the custom cursor
+    // — already there — doesn't jump.
+    let onScreen = true;
+    let lastPointer: { x: number; y: number } | null = null;
+    let scrollRaf = 0;
+    const trackPointer = (e: PointerEvent) => {
+      if (e.isTrusted) lastPointer = { x: e.clientX, y: e.clientY };
+    };
+    const refeedPointer = () => {
+      scrollRaf = 0;
+      if (!lastPointer || !onScreen) return;
+      window.dispatchEvent(
+        new PointerEvent("pointermove", {
+          clientX: lastPointer.x,
+          clientY: lastPointer.y,
+          pointerType: "mouse",
+          bubbles: true,
+        }),
+      );
+    };
+    const onScroll = () => {
+      if (!scrollRaf) scrollRaf = requestAnimationFrame(refeedPointer);
+    };
+    const trackCursorWhileScrolling = globalEvents && !reduceMotion;
+    if (trackCursorWhileScrolling) {
+      window.addEventListener("pointermove", trackPointer, { passive: true });
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
+
     void (async () => {
       // Loaded lazily so the runtime stays out of the main bundle and never
       // touches `window` during SSR.
@@ -96,6 +130,7 @@ export function Spline({
       } else if (pauseWhenOffscreen) {
         intersectionObserver = new IntersectionObserver(
           ([entry]) => {
+            onScreen = entry.isIntersecting;
             if (!app) return;
             if (entry.isIntersecting) {
               app.play();
@@ -112,6 +147,11 @@ export function Spline({
 
     return () => {
       disposed = true;
+      if (trackCursorWhileScrolling) {
+        if (scrollRaf) cancelAnimationFrame(scrollRaf);
+        window.removeEventListener("pointermove", trackPointer);
+        window.removeEventListener("scroll", onScroll);
+      }
       resizeObserver?.disconnect();
       intersectionObserver?.disconnect();
       app?.dispose();

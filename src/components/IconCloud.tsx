@@ -9,9 +9,6 @@ const TAU = Math.PI * 2;
 
 // Theme tokens, mirrored here so the canvas can paint them.
 const INK = "#1a1a1a";
-const PAPER = "#fafafa";
-const ACCENT = "#f0c040";
-const RING = "rgba(26, 26, 26, 0.16)";
 
 const AUTO_SPIN = 0.0016; // idle rotation per frame (rad), around the Y axis
 const FRICTION = 0.94; // momentum decay after a drag
@@ -133,26 +130,11 @@ export function IconCloud() {
       return { x: x1, y: y2, z: z2 };
     }
 
-    function paintNode(n: Node, faceAlpha: number, isHover: boolean) {
+    function paintNode(n: Node, faceAlpha: number) {
       ctx!.save();
       ctx!.globalAlpha = faceAlpha;
 
-      // Chip: paper-colored disc (covers overlaps cleanly) + hairline ring.
-      ctx!.beginPath();
-      ctx!.arc(n.sx, n.sy, n.r, 0, TAU);
-      ctx!.fillStyle = PAPER;
-      ctx!.fill();
-
-      if (isHover) {
-        ctx!.shadowColor = "rgba(240, 192, 64, 0.55)";
-        ctx!.shadowBlur = 14;
-      }
-      ctx!.lineWidth = isHover ? 1.5 : 1;
-      ctx!.strokeStyle = isHover ? ACCENT : RING;
-      ctx!.stroke();
-      ctx!.shadowBlur = 0;
-
-      // Glyph, ink-tinted, centered in the chip.
+      // Just the ink glyph — no chip disc or ring, so the icons float cleanly.
       const g = (n.r * 1.2) / TOOL_LOGO_VIEWBOX;
       ctx!.translate(
         n.sx - (TOOL_LOGO_VIEWBOX / 2) * g,
@@ -240,13 +222,13 @@ export function IconCloud() {
         if (item.i === hovered) continue; // drawn last, on top
         const n = nodes[item.i];
         const alpha = clamp(0.12 + item.depth * 1.05, 0.12, 1);
-        paintNode(n, alpha, false);
+        paintNode(n, alpha);
       }
       if (hovered >= 0) {
         const n = nodes[hovered];
         n.r *= 1.12;
         paintGlow(n, time);
-        paintNode(n, 1, true);
+        paintNode(n, 1);
       }
     }
 
