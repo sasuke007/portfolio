@@ -2,6 +2,10 @@
 
 import { ArrowUpRight } from "lucide-react";
 import { identity, socials } from "@/content";
+import { Spline } from "@/components/Spline";
+
+const CONTACT_SCENE =
+  "https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode";
 
 export function Contact() {
   const linkClass =
@@ -10,9 +14,17 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative mx-auto max-w-(--max-width) scroll-mt-28 px-6 py-32 md:scroll-mt-32 md:py-44"
+      className="relative isolate mx-auto max-w-(--max-width) scroll-mt-28 px-6 py-32 md:scroll-mt-32 md:py-44"
     >
-      <div className="grid grid-cols-1 gap-16 md:grid-cols-[2fr_1fr] md:items-end">
+      <Spline
+        scene={CONTACT_SCENE}
+        backgroundColor="transparent"
+        globalEvents
+        decorative
+        className="pointer-events-none absolute inset-0 z-0"
+      />
+
+      <div className="relative z-10 grid grid-cols-1 gap-16 md:grid-cols-[2fr_1fr] md:items-end">
         <div>
           <h2 className="m-0 lowercase font-display font-normal text-[clamp(3rem,8vw,6rem)] leading-[1.02] tracking-display">
             <span className="italic">follow</span> the journey
@@ -66,7 +78,7 @@ export function Contact() {
         </div>
       </div>
 
-      <footer className="mt-32 flex items-center justify-between border-t border-border pt-6">
+      <footer className="relative z-10 mt-32 flex items-center justify-between border-t border-border pt-6">
         <p className="label-micro m-0">
           &copy; 2026 {identity.firstName} {identity.lastName}
         </p>

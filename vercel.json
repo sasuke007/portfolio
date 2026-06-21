@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/playground/cleanup",
+      "schedule": "*/5 * * * *"
+    }
+  ]
+}

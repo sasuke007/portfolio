@@ -194,19 +194,50 @@ export const journalPhotos: JournalPhoto[] = [
   },
 ];
 
-export const tools = [
-  { name: "TypeScript", muted: false },
-  { name: "Next.js", muted: true },
-  { name: "React", muted: false },
-  { name: "Tailwind", muted: true },
-  { name: "PostgreSQL", muted: false },
-  { name: "Redis", muted: true },
-  { name: "Claude", muted: false },
-  { name: "LLM Pipelines", muted: true },
-  { name: "Vercel", muted: false },
-  { name: "Stripe", muted: true },
-  { name: "GSAP", muted: false },
-  { name: "Java", muted: true },
+/**
+ * Images that flow from the cursor in the Journal section's image-trail.
+ * Add more by dropping a file in /public and appending its path here — the
+ * trail pools one tile per entry and cycles through them. More images = a
+ * richer trail (less repetition on a fast sweep).
+ */
+export const journalTrailImages: string[] = [
+  "/good_lighting.jpeg",
+  "/nature_lover.jpeg",
+  "/stylish_pic.jpeg",
+];
+
+/**
+ * Tools of the trade. `logo` is the key into `toolLogoPaths`
+ * (src/lib/tool-logos.ts) — the single-color glyph rendered on the IconCloud
+ * sphere. Any unknown key falls back to the generic "pipeline" glyph.
+ */
+export type Tool = { name: string; logo: string };
+
+export const tools: Tool[] = [
+  { name: "TypeScript", logo: "typescript" },
+  { name: "Next.js", logo: "nextdotjs" },
+  { name: "React", logo: "react" },
+  { name: "Tailwind", logo: "tailwindcss" },
+  { name: "PostgreSQL", logo: "postgresql" },
+  { name: "Redis", logo: "redis" },
+  { name: "Claude", logo: "claude" },
+  { name: "Vercel", logo: "vercel" },
+  { name: "Stripe", logo: "stripe" },
+  { name: "GSAP", logo: "greensock" },
+  { name: "Java", logo: "java" },
+  { name: "Node.js", logo: "nodedotjs" },
+  { name: "Python", logo: "python" },
+  { name: "JavaScript", logo: "javascript" },
+  { name: "Framer Motion", logo: "framer" },
+  { name: "Three.js", logo: "threedotjs" },
+  { name: "Figma", logo: "figma" },
+  { name: "Radix UI", logo: "radixui" },
+  { name: "Upstash", logo: "upstash" },
+  { name: "Prisma", logo: "prisma" },
+  { name: "OpenAI", logo: "openai" },
+  { name: "Docker", logo: "docker" },
+  { name: "GitHub", logo: "github" },
+  { name: "AWS", logo: "amazonwebservices" },
 ];
 
 export const navLinks = [

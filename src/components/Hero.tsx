@@ -33,38 +33,40 @@ export function Hero() {
         },
       });
 
-      // 0 → 0.4: name zooms gently
+      // 0 → 0.35: name zooms gently
       tl.to(
         nameRef.current,
-        { scale: 1.15, ease: "none", duration: 0.4 },
+        { scale: 1.15, ease: "none", duration: 0.35 },
         0,
       );
-      // 0.4 → 0.7: name continues zoom + fades
+      // 0.35 → 0.55: name continues zoom + fades
       tl.to(
         nameRef.current,
-        { scale: 1.3, opacity: 0, ease: "none", duration: 0.3 },
-        0.4,
+        { scale: 1.3, opacity: 0, ease: "none", duration: 0.2 },
+        0.35,
       );
 
-      // 0.42 → 0.58: tagline rises into view
+      // 0.37 → 0.47: tagline rises into view, then holds until 0.62
       tl.to(
         taglineRef.current,
-        { y: 0, scale: 1, opacity: 1, ease: "power2.out", duration: 0.16 },
-        0.42,
+        { y: 0, scale: 1, opacity: 1, ease: "power2.out", duration: 0.1 },
+        0.37,
       );
-      // 0.6 → 0.72: tagline exits
+      // 0.62 → 0.7: tagline exits
       tl.to(
         taglineRef.current,
-        { y: -24, scale: 1.05, opacity: 0, ease: "power2.in", duration: 0.12 },
-        0.6,
+        { y: -24, scale: 1.05, opacity: 0, ease: "power2.in", duration: 0.08 },
+        0.62,
       );
 
-      // 0.72 → 0.88: welcome rises
+      // 0.7 → 0.8: welcome rises
       tl.to(
         welcomeRef.current,
-        { y: 0, opacity: 1, ease: "power2.out", duration: 0.16 },
-        0.72,
+        { y: 0, opacity: 1, ease: "power2.out", duration: 0.1 },
+        0.7,
       );
+      // 0.8 → 1: welcome holds on screen before the hero unpins
+      tl.to({}, { duration: 0.2 }, 0.8);
 
       // Chevrons fade as the hero leaves the top
       tl.to(
