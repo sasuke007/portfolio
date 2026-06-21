@@ -104,6 +104,7 @@ export function FluidPhotoReveal({
 
     let disposed = false;
     let rafId = 0;
+    let onScreen = true; // hero in view? sim pauses (and resumes) when scrolled away
 
     const config = {
       SIM_RESOLUTION: simResolution,
@@ -917,7 +918,9 @@ export function FluidPhotoReveal({
     }
 
     function scaleByPixelRatio(input: number) {
-      const pr = window.devicePixelRatio || 1;
+      // Cap DPR at 2 — uncapped, a 3× screen renders 9× the pixels through the
+      // whole sim/dye pipeline for no visible gain.
+      const pr = Math.min(window.devicePixelRatio || 1, 2);
       return Math.floor(input * pr);
     }
 
@@ -1270,7 +1273,12 @@ export function FluidPhotoReveal({
       applyInputs();
       step(dt);
       render();
-      rafId = requestAnimationFrame(updateFrame);
+      // Keep animating only while started, on screen, and the tab is visible.
+      if (started && onScreen && !document.hidden) {
+        rafId = requestAnimationFrame(updateFrame);
+      } else {
+        rafId = 0;
+      }
     }
 
     // ── Pointer handling ───────────────────────────────────────────
@@ -1389,12 +1397,24 @@ export function FluidPhotoReveal({
     }
 
     let started = false;
+    // Single place that starts/stops the rAF from started + onScreen + tab
+    // visibility. Resets the dt clock on (re)start so the sim doesn't jump.
+    const syncLoop = () => {
+      const shouldRun = started && onScreen && !document.hidden && !disposed;
+      if (shouldRun) {
+        if (rafId === 0) {
+          lastUpdateTime =
+            typeof performance !== "undefined" ? performance.now() : Date.now();
+          rafId = requestAnimationFrame(updateFrame);
+        }
+      } else if (rafId !== 0) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
     const startIfNeeded = () => {
-      if (started) return;
       started = true;
-      lastUpdateTime =
-        typeof performance !== "undefined" ? performance.now() : Date.now();
-      rafId = requestAnimationFrame(updateFrame);
+      syncLoop();
     };
 
     const onPointerEnter = (e: PointerEvent) => {
@@ -1451,6 +1471,19 @@ export function FluidPhotoReveal({
     });
     ro.observe(canvas);
 
+    // Pause the (expensive) sim when the hero scrolls out of view or the tab is
+    // hidden; resume seamlessly from the preserved dye/velocity FBOs.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        syncLoop();
+      },
+      { threshold: 0 },
+    );
+    io.observe(canvas);
+    const onVisibility = () => syncLoop();
+    document.addEventListener("visibilitychange", onVisibility);
+
     // Kick off the first frame so the dye dissipates even without input
     startIfNeeded();
 
@@ -1463,6 +1496,8 @@ export function FluidPhotoReveal({
       canvas.removeEventListener("touchstart", onTouchStart);
       canvas.removeEventListener("touchmove", onTouchMove);
       ro.disconnect();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       // WebGL resources are GC'd when the canvas is detached; explicit teardown
       // would require tracking every program/texture/FBO.
     };

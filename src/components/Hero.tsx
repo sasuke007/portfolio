@@ -9,7 +9,7 @@ import { FluidPhotoReveal } from "./FluidPhotoReveal";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const nameRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
   const taglineRef = useRef<HTMLDivElement>(null);
   const welcomeRef = useRef<HTMLDivElement>(null);
   const chevronsRef = useRef<HTMLDivElement>(null);
@@ -107,10 +107,11 @@ export function Hero() {
           className="absolute inset-0 z-[2]"
         />
 
-        {/* Layer A — Name */}
-        <div
+        {/* Layer A — Name (the page's single <h1>) */}
+        <h1
           ref={nameRef}
-          className="pointer-events-none absolute inset-0 z-[3] flex flex-col items-center justify-center will-change-[transform,opacity] mix-blend-multiply"
+          aria-label={`${identity.firstName} ${identity.lastName}`}
+          className="pointer-events-none absolute inset-0 z-[3] m-0 flex flex-col items-center justify-center will-change-[transform,opacity] mix-blend-multiply"
         >
           <span className="block overflow-hidden px-[0.06em] py-[0.04em]">
             <span className="hero-name-line block font-display font-normal text-text text-display tracking-display leading-[0.95]">
@@ -122,7 +123,7 @@ export function Hero() {
               {identity.lastName}
             </span>
           </span>
-        </div>
+        </h1>
 
         {/* Layer C — Tagline */}
         <div

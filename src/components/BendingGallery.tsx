@@ -210,6 +210,8 @@ class Gallery {
   private resizeObserver: ResizeObserver;
   private intersectionObserver: IntersectionObserver;
   private boundUpdate: () => void;
+  private inView = true;
+  private onVisibility: () => void;
 
   constructor(
     private container: HTMLElement,
@@ -244,23 +246,31 @@ class Gallery {
     this.resizeObserver = new ResizeObserver(() => this.onResize());
     this.resizeObserver.observe(this.container);
 
-    // Only burn GPU while the gallery is actually on screen.
+    // Only burn GPU while the gallery is on screen AND the tab is visible.
     this.intersectionObserver = new IntersectionObserver(
       ([entry]) => {
-        const visible = entry.isIntersecting;
-        if (visible && !this.running) {
-          this.running = true;
-          this.raf = requestAnimationFrame(this.boundUpdate);
-        } else if (!visible) {
-          this.running = false;
-          cancelAnimationFrame(this.raf);
-        }
+        this.inView = entry.isIntersecting;
+        this.syncRunning();
       },
       { threshold: 0 },
     );
     this.intersectionObserver.observe(this.container);
 
+    this.onVisibility = () => this.syncRunning();
+    document.addEventListener("visibilitychange", this.onVisibility);
+
     this.raf = requestAnimationFrame(this.boundUpdate);
+  }
+
+  private syncRunning() {
+    const shouldRun = this.inView && !document.hidden;
+    if (shouldRun && !this.running) {
+      this.running = true;
+      this.raf = requestAnimationFrame(this.boundUpdate);
+    } else if (!shouldRun && this.running) {
+      this.running = false;
+      cancelAnimationFrame(this.raf);
+    }
   }
 
   private createMedias(images: string[], bend: number, borderRadius: number) {
@@ -310,6 +320,7 @@ class Gallery {
   destroy() {
     this.running = false;
     cancelAnimationFrame(this.raf);
+    document.removeEventListener("visibilitychange", this.onVisibility);
     this.resizeObserver.disconnect();
     this.intersectionObserver.disconnect();
     const canvas = this.gl.canvas as HTMLCanvasElement;

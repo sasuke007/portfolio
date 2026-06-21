@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { identity, socials } from "@/content";
 import { Spline } from "@/components/Spline";
@@ -12,20 +12,31 @@ export function Contact() {
   const linkClass =
     "link-underline inline-flex items-center gap-1 font-display text-[clamp(1.3rem,2.2vw,1.75rem)] text-text";
 
-  // The robot crowds the narrow mobile layout (and its wide arms get clipped),
-  // so only mount it on >= md viewports. Default false → SSR/first render match;
-  // it appears on desktop after mount (the scene loads async anyway).
+  // The robot is desktop-only (it crowds/clips on mobile) and its Spline runtime
+  // is heavy (~0.5MB), so defer mounting it until the section is near the
+  // viewport — keeps it off the initial desktop load and out of mobile entirely.
+  // Default false → SSR/first render match (no hydration mismatch).
+  const sectionRef = useRef<HTMLElement>(null);
   const [showRobot, setShowRobot] = useState(false);
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const update = () => setShowRobot(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
+    const section = sectionRef.current;
+    if (!section || !window.matchMedia("(min-width: 768px)").matches) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowRobot(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "800px" },
+    );
+    io.observe(section);
+    return () => io.disconnect();
   }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
       className="relative isolate mx-auto max-w-(--max-width) scroll-mt-28 px-6 py-32 md:scroll-mt-32 md:py-44"
     >

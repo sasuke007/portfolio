@@ -1,14 +1,21 @@
 "use client";
 
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, registerGsap } from "@/lib/gsap";
 import { journalPhotos, journalTrailImages } from "@/content";
 import { cn } from "@/lib/cn";
 import { ImageTrailCursor } from "./ImageTrailCursor";
-import { BendingGallery } from "./BendingGallery";
 import { JournalCardCarousel } from "./JournalCardCarousel";
+
+// Desktop-only, below the fold — code-split so its WebGL lib (`ogl`) stays out
+// of the initial bundle and only loads when the desktop gallery mounts.
+const BendingGallery = dynamic(
+  () => import("./BendingGallery").then((m) => m.BendingGallery),
+  { ssr: false },
+);
 
 type JournalMode = "static" | "desktop" | "carousel";
 

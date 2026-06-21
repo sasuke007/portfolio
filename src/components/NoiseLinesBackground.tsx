@@ -318,8 +318,18 @@ export function NoiseLinesBackground({
 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
+    // Cap the slow ambient field at ~30fps — half the frames are imperceptible
+    // for a drifting noise field but halve its always-on main-thread/GPU cost.
+    let lastFrame = 0;
+    const FRAME_MS = 1000 / 32;
+
     function tick() {
       if (disposed) return;
+      rafId = requestAnimationFrame(tick);
+      const nowMs =
+        typeof performance !== "undefined" ? performance.now() : Date.now();
+      if (nowMs - lastFrame < FRAME_MS) return;
+      lastFrame = nowMs;
       resize();
 
       // Smooth mouse position
@@ -385,9 +395,21 @@ export function NoiseLinesBackground({
         lineColorRGB[2],
       );
       gl!.drawElements(gl!.TRIANGLES, 6, gl!.UNSIGNED_SHORT, 0);
-
-      rafId = requestAnimationFrame(tick);
     }
+
+    // Stop entirely while the tab is hidden (no point animating a background
+    // no one can see); resume and render immediately when it returns.
+    const onVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      } else if (!rafId && !disposed) {
+        lastFrame = 0;
+        rafId = requestAnimationFrame(tick);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     rafId = requestAnimationFrame(tick);
 
     // ResizeObserver to handle viewport changes
@@ -397,6 +419,7 @@ export function NoiseLinesBackground({
     return () => {
       disposed = true;
       cancelAnimationFrame(rafId);
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pointermove", onPointerMove);
       ro.disconnect();
       destroyFBO();
