@@ -16,12 +16,14 @@ export function Contact() {
       id="contact"
       className="relative isolate mx-auto max-w-(--max-width) scroll-mt-28 px-6 py-32 md:scroll-mt-32 md:py-44"
     >
+      {/* The robot fills the section on desktop; scale it down on small
+          screens so it doesn't overwhelm the stacked mobile layout. */}
       <Spline
         scene={CONTACT_SCENE}
         backgroundColor="transparent"
         globalEvents
         decorative
-        className="pointer-events-none absolute inset-0 z-0"
+        className="pointer-events-none absolute inset-0 z-0 origin-center scale-50 sm:scale-75 md:scale-100"
       />
 
       <div className="relative z-10 grid grid-cols-1 gap-16 md:grid-cols-[2fr_1fr] md:items-end">

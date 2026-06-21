@@ -15,17 +15,32 @@ type JournalMode = "static" | "desktop" | "carousel";
 export function Journal() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Three presentations, resolved on mount (default "static" so SSR and the
-  // first client render both produce the collage — no hydration mismatch):
-  //   carousel — any touch device: the swipeable 3D card carousel (it honours
-  //              reduced-motion internally by swapping instantly).
-  //   desktop  — fine pointer + motion: ambient gallery + cursor image-trail.
-  //   static   — fine pointer + reduced-motion: the tilted photo collage.
+  // Three presentations, resolved on mount and kept in sync on resize (default
+  // "static" so SSR and the first client render match — no hydration mismatch):
+  //   carousel — narrow viewport OR touch: the swipeable 3D card carousel
+  //              (honours reduced-motion internally by swapping instantly).
+  //   desktop  — wide + fine pointer + motion: ambient gallery + image-trail.
+  //   static   — wide + reduced-motion: the tilted photo collage.
+  // Width-based (not just `pointer: coarse`) so resizing a desktop browser into
+  // a mobile width — the usual way people test — also shows the carousel.
   const [mode, setMode] = useState<JournalMode>("static");
   useEffect(() => {
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setMode(coarse ? "carousel" : reduced ? "static" : "desktop");
+    const narrow = window.matchMedia("(max-width: 768px)");
+    const coarse = window.matchMedia("(pointer: coarse)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => {
+      if (narrow.matches || coarse.matches) setMode("carousel");
+      else setMode(reduced.matches ? "static" : "desktop");
+    };
+    update();
+    narrow.addEventListener("change", update);
+    coarse.addEventListener("change", update);
+    reduced.addEventListener("change", update);
+    return () => {
+      narrow.removeEventListener("change", update);
+      coarse.removeEventListener("change", update);
+      reduced.removeEventListener("change", update);
+    };
   }, []);
 
   useGSAP(
