@@ -12,14 +12,20 @@ import { BendingGallery } from "./BendingGallery";
 export function Journal() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // The cursor trail only makes sense with a fine pointer and motion allowed.
-  // Default `false` so SSR and the first client render both produce the static
-  // collage (no hydration mismatch); capable devices swap to the trail on mount.
-  const [interactive, setInteractive] = useState(false);
+  // Three presentations of the journal:
+  //   "static"      — reduced-motion: the tilted photo collage, no animation.
+  //   "ambient"     — touch devices: the drifting WebGL gallery (no cursor
+  //                   trail, since coarse pointers can't drive it).
+  //   "interactive" — fine pointer: the gallery plus the cursor image-trail.
+  // Default `"static"` so SSR and the first client render match (no hydration
+  // mismatch); capable devices upgrade on mount.
+  const [mode, setMode] = useState<"static" | "ambient" | "interactive">(
+    "static",
+  );
   useEffect(() => {
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setInteractive(!coarse && !reduced);
+    setMode(reduced ? "static" : coarse ? "ambient" : "interactive");
   }, []);
 
   useGSAP(
@@ -87,9 +93,10 @@ export function Journal() {
       ref={sectionRef}
       className="relative min-h-[min(120vh,900px)] overflow-hidden py-48"
     >
-      {/* Cursor-driven image trail on capable devices; the original static
-          tilted collage as a graceful fallback on touch / reduced-motion. */}
-      {interactive ? (
+      {/* Ambient drifting gallery on any device that allows motion; the
+          cursor-driven image-trail layers on top only for fine pointers. The
+          original static tilted collage stays as the reduced-motion fallback. */}
+      {mode !== "static" ? (
         <>
           {/* Ambient background: a curved gallery of the same journal photos
               that drifts continuously. The hover image-trail sits on top. */}
@@ -97,11 +104,13 @@ export function Journal() {
             images={journalTrailImages}
             className="absolute inset-0 z-0"
           />
-          <ImageTrailCursor
-            images={journalTrailImages}
-            variant="type2"
-            className="absolute inset-0 z-[1]"
-          />
+          {mode === "interactive" && (
+            <ImageTrailCursor
+              images={journalTrailImages}
+              variant="type2"
+              className="absolute inset-0 z-[1]"
+            />
+          )}
         </>
       ) : (
         journalPhotos.map((photo, i) => (
