@@ -1,18 +1,19 @@
 "use client";
 
 import { useRef } from "react";
-import { ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import { gsap, registerGsap } from "@/lib/gsap";
 import { cn } from "@/lib/cn";
-import { socials } from "@/content";
 import { Reveal } from "./Reveal";
+import {
+  ACCESS_BODY,
+  ACCESS_SUBJECT,
+  CONTACT_EMAIL,
+  gmailCompose,
+} from "./contact";
 
-const START_SESSION_MAILTO = `mailto:${socials.email}?subject=${encodeURIComponent(
-  "Stop Being Shy — I'd like to start a session",
-)}&body=${encodeURIComponent(
-  "Hey Rohit — I'd like to try a Stop Being Shy session. Here's a bit about me:",
-)}`;
+const START_HREF = gmailCompose(ACCESS_SUBJECT, ACCESS_BODY);
 
 /**
  * The "presence" — a calm breathing glow with concentric rings and a pupil that
@@ -118,19 +119,31 @@ export function StopShyHero() {
         </Reveal>
 
         <Reveal delay={320}>
-          <div className="mt-11 flex flex-col items-center gap-5 sm:flex-row">
+          <div className="mt-11 flex flex-col items-center gap-4">
             <a
-              href={START_SESSION_MAILTO}
-              className="inline-flex items-center justify-center rounded-full bg-text px-7 py-3.5 font-body text-[12px] uppercase tracking-[0.14em] text-bg transition-transform duration-300 ease-soft hover:scale-[1.04]"
+              href={START_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-text px-8 py-4 font-body text-[12px] uppercase tracking-[0.14em] text-bg transition-transform duration-300 ease-soft hover:scale-[1.04]"
             >
-              Start a session
+              Email me to start
+              <ArrowUpRight
+                size={16}
+                strokeWidth={1.5}
+                className="transition-transform duration-300 ease-soft group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
             </a>
-            <a
-              href="#how"
-              className="link-underline font-body text-[12px] uppercase tracking-[0.14em] text-text"
-            >
-              See how it works
-            </a>
+            <p className="label-micro opacity-70">
+              Opens Gmail to{" "}
+              <a
+                href={START_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline text-text"
+              >
+                {CONTACT_EMAIL}
+              </a>
+            </p>
           </div>
         </Reveal>
 

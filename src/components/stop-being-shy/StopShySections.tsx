@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowRight,
   ArrowUpRight,
   AudioLines,
   Eye,
@@ -10,9 +9,14 @@ import {
   MessageSquare,
   Repeat2,
 } from "lucide-react";
-import { socials } from "@/content";
 import { AnimatedRule } from "@/components/AnimatedRule";
 import { Reveal } from "./Reveal";
+import {
+  ACCESS_BODY,
+  ACCESS_SUBJECT,
+  CONTACT_EMAIL,
+  gmailCompose,
+} from "./contact";
 
 const STEPS = [
   {
@@ -158,11 +162,7 @@ function Features() {
 }
 
 function ClosingCTA() {
-  const requestAccess = `mailto:${socials.email}?subject=${encodeURIComponent(
-    "Stop Being Shy — early access",
-  )}&body=${encodeURIComponent(
-    "Hey Rohit — I'd like to try Stop Being Shy when it opens up.",
-  )}`;
+  const startHref = gmailCompose(ACCESS_SUBJECT, ACCESS_BODY);
 
   return (
     <section
@@ -181,38 +181,45 @@ function ClosingCTA() {
         </Reveal>
         <Reveal delay={200}>
           <p className="body-editorial mt-7 max-w-md normal-case tracking-normal text-[15px] leading-[1.7]">
-            Stop Being Shy is in private beta. Send me a note and I'll hand you
-            the keys to the first sessions.
+            Stop Being Shy is in private beta. One email and I'll hand you the
+            keys to the first sessions.
           </p>
         </Reveal>
 
         <Reveal delay={320}>
-          <div className="mt-10 flex flex-col items-center gap-5 sm:flex-row">
+          <div className="mt-10 flex flex-col items-center gap-4">
             <a
-              href={requestAccess}
-              className="group inline-flex items-center gap-2 rounded-full bg-text px-7 py-3.5 font-body text-[12px] uppercase tracking-[0.14em] text-bg transition-transform duration-300 ease-soft hover:scale-[1.04]"
+              href={startHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full bg-text px-8 py-4 font-body text-[12px] uppercase tracking-[0.14em] text-bg transition-transform duration-300 ease-soft hover:scale-[1.04]"
             >
-              Request early access
+              Email me to start
               <ArrowUpRight
                 size={16}
                 strokeWidth={1.5}
                 className="transition-transform duration-300 ease-soft group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </a>
-            <a
-              href="/"
-              className="link-underline inline-flex items-center gap-1.5 font-body text-[12px] uppercase tracking-[0.14em] text-text"
-            >
-              <ArrowRight size={14} strokeWidth={1.5} className="rotate-180" />
-              Back to the portfolio
-            </a>
+            <p className="label-micro opacity-70">
+              Opens Gmail to{" "}
+              <a
+                href={startHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline text-text"
+              >
+                {CONTACT_EMAIL}
+              </a>
+            </p>
           </div>
         </Reveal>
       </div>
 
-      <footer className="mt-32 flex items-center justify-between border-t border-border pt-6">
-        <p className="label-micro m-0">&copy; 2026 Rohit Pandit</p>
-        <p className="label-micro m-0">Stop Being Shy · Private beta</p>
+      <footer className="mt-32 flex items-center justify-center border-t border-border pt-6">
+        <p className="label-micro m-0">
+          &copy; 2026 Rohit Pandit · Stop Being Shy — private beta
+        </p>
       </footer>
     </section>
   );

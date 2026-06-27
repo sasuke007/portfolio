@@ -1,8 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { identity, navLinks } from "@/content";
 import { cn } from "@/lib/cn";
+
+/** Routes that opt out of the global nav (e.g. the /stop-being-shy squeeze
+ *  page, which deliberately exposes no outbound avenues but its one CTA). */
+const NAVLESS_ROUTES = new Set(["/stop-being-shy"]);
 import { SpotifyPill } from "./SpotifyPill";
 import { XPill } from "./XPill";
 import { GithubPill } from "./GithubPill";
@@ -11,6 +16,7 @@ import { EmailLink } from "./EmailLink";
 import { Tooltip } from "./Tooltip";
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -19,6 +25,8 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  if (NAVLESS_ROUTES.has(pathname)) return null;
 
   return (
     <header
