@@ -61,3 +61,6 @@ node_modules/
 tasks.json
 tasks/ 
 .env*.local
+
+# Playwright MCP verification artifacts
+.playwright-mcp/
